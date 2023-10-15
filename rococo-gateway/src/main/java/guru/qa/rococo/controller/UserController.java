@@ -1,0 +1,36 @@
+package guru.qa.rococo.controller;
+
+
+import guru.qa.rococo.model.UserJson;
+import guru.qa.rococo.service.UserDataClient;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.web.bind.annotation.*;
+
+
+@RestController
+@RequestMapping("/api/user")
+public class UserController {
+
+
+    private final UserDataClient userDataClient;
+
+    @Autowired
+    public UserController(UserDataClient userDataClient) {
+        this.userDataClient = userDataClient;
+    }
+
+
+    @GetMapping
+    public UserJson getUser(@AuthenticationPrincipal Jwt principal) {
+        String username = principal.getClaim("sub");
+        return userDataClient.currentUser(username);
+    }
+
+    @PatchMapping
+    public UserJson updateUser(@RequestBody UserJson userJson) {
+        return userDataClient.updateUser(userJson);
+    }
+
+}

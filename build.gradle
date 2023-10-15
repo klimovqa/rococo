@@ -3,14 +3,32 @@ plugins {
 }
 
 group = 'guru.qa'
-sourceCompatibility = '17'
+sourceCompatibility = '19'
 
 subprojects {
     repositories {
         mavenCentral()
     }
+
+    ext {
+        oauth2AuthorizationServerVersion = '1.1.1'
+        jsr305Version = '3.0.2'
+        lombokVersion = '1.18.30'
+        kafkaVersion = '3.0.7'
+        dockerImage = System.getProperty("os.arch") == "aarch64" || System.getProperty("os.arch") == "arm64"
+                ? "arm64v8/eclipse-temurin:19-jre"
+                : "eclipse-temurin:19-jre"
+
+        dockerArch = System.getProperty("os.arch") == "aarch64" || System.getProperty("os.arch") == "arm64"
+                ? "arm64"
+                : "amd64"
+        registry = 'medved93'
+    }
 }
+
+
 
 tasks.named('test') {
     useJUnitPlatform()
 }
+
