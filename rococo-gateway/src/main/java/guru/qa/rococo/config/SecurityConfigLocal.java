@@ -34,6 +34,7 @@ public class SecurityConfigLocal {
                                 antMatcher(HttpMethod.GET, "/api/session"),
                                 antMatcher(HttpMethod.GET, "/api/artist/**"),
                                 antMatcher(HttpMethod.GET, "/api/museum/**"),
+                                antMatcher(HttpMethod.GET, "/api/country/**"),
                                 antMatcher(HttpMethod.GET, "/api/painting/**"))
                         .permitAll()
                         .anyRequest()

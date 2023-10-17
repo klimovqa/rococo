@@ -25,7 +25,7 @@ public class GeoService {
     }
 
 
-    public Page<CountryEntity> getAllCountries(Pageable pageable) {
+    public Page<CountryEntity> getCountries(Pageable pageable) {
         return repository.findAll(pageable);
     }
 
