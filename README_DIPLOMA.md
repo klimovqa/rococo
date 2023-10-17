@@ -1,21 +1,17 @@
 ## **Технологии, использованные в Rococo**
-ETS
 - [Spring Authorization Server](https://spring.io/projects/spring-authorization-server)
 - [Spring OAuth 2.0 Resource Server](https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/index.html)
 - [Spring data JPA](https://spring.io/projects/spring-data-jpa)
 - [Spring Web](https://docs.spring.io/spring-framework/docs/current/reference/html/web.html#spring-web)
 - [Spring actuator](https://docs.spring.io/spring-boot/docs/current/reference/html/actuator.html)
-- [Spring gRPC by https://github.com/yidongnan](https://yidongnan.github.io/grpc-spring-boot-starter/en/server/getting-started.html)
 - [Spring web-services](https://docs.spring.io/spring-ws/docs/current/reference/html/)
 - [Apache Kafka](https://developer.confluent.io/quickstart/kafka-docker/)
 - [Docker](https://www.docker.com/resources/what-container/)
 - [Docker-compose](https://docs.docker.com/compose/)
 - [Postgres](https://www.postgresql.org/about/)
-- [React](https://ru.reactjs.org/docs/getting-started.html)
-- [GraphQL](https://graphql.org/)
+- [Svelte](https://svelte.dev/)
 - [Thymeleaf](https://www.thymeleaf.org/)
 - [Jakarta Bean Validation](https://beanvalidation.org/)
-- [Jakarta JAXB](https://eclipse-ee4j.github.io/jaxb-ri/)
 - [JUnit 5 (Extensions, Resolvers, etc)](https://junit.org/junit5/docs/current/user-guide/)
 - [Retrofit 2](https://square.github.io/retrofit/)
 - [Allure](https://docs.qameta.io/allure/)
@@ -25,12 +21,6 @@ ETS
 - [Java 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
 - [Gradle 7.6](https://docs.gradle.org/7.6/release-notes.html)
 - And much more:)
-
-Рекомендуемые материалы к просмотру:
-
-- [Implementing an OAuth 2 authorization server with Spring Security - the new way! by Laurentiu Spilca](https://youtu.be/DaUGKnA7aro)
-- [Spring Data? Да, та! by Евгений Борисов](https://youtu.be/nwM7A4TwU3M)
-- [Перенимаем опыт Google в построении микросервисов с gRPC by Александр Борисов](https://youtu.be/zPbaKUIcFx0)
 
 **Минимальные предусловия для работы с проектом Rococo**
 

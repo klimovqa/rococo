@@ -29,7 +29,10 @@ public class UserController {
     }
 
     @PatchMapping
-    public UserJson updateUser(@RequestBody UserJson userJson) {
+    public UserJson updateUser(@AuthenticationPrincipal Jwt principal,
+                               @RequestBody UserJson userJson) {
+        String username = principal.getClaim("sub");
+        userJson.setUsername(username);
         return userDataClient.updateUser(userJson);
     }
 
