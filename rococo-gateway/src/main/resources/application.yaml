@@ -30,6 +30,8 @@ spring:
     graphiql:
       enabled: true
 
+rococo-geo:
+  base-uri: 'http://127.0.0.1:8087'
 rococo-userdata:
   base-uri: 'http://127.0.0.1:8089'
 rococo-front:
@@ -46,6 +48,8 @@ spring:
         jwt:
           issuer-uri: 'http://auth.rococo.dc:9000'
 
+rococo-geo:
+  base-uri: 'http://geo.rococo.dc:8087'
 rococo-userdata:
   base-uri: 'http://userdata.rococo.dc:8089'
 rococo-front:
