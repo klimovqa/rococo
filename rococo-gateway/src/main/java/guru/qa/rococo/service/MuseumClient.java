@@ -10,6 +10,8 @@ public interface MuseumClient {
     @Nonnull
     Page<MuseumJson> getMuseums(@Nonnull Integer size, @Nonnull Integer page);
     @Nonnull
+    Page<MuseumJson> search(@Nonnull String title);
+    @Nonnull
     MuseumJson getMuseum(@Nonnull String id);
 
     @Nonnull

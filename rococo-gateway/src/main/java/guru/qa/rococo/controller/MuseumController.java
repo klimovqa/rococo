@@ -5,8 +5,6 @@ import guru.qa.rococo.service.MuseumClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -23,27 +21,27 @@ public class MuseumController {
     }
 
     @GetMapping
-    public Page<MuseumJson> museum(@AuthenticationPrincipal Jwt principal,
-                                   @RequestParam int size,
-                                   @RequestParam int page) {
+    public Page<MuseumJson> museum(@RequestParam(required = false) Integer size,
+                                   @RequestParam(required = false) Integer page,
+                                   @RequestParam(required = false) String title) {
+        if (title != null) {
+            return museumClient.search(title);
+        }
         return museumClient.getMuseums(size, page);
     }
 
     @GetMapping("{id}")
-    public MuseumJson museum(@AuthenticationPrincipal Jwt principal,
-                                   @PathVariable String id) {
+    public MuseumJson museum(@PathVariable String id) {
         return museumClient.getMuseum(id);
     }
 
     @PatchMapping
-    public MuseumJson updateMuseum(@AuthenticationPrincipal Jwt principal,
-                                   @RequestBody MuseumJson museumJson) {
+    public MuseumJson updateMuseum(@RequestBody MuseumJson museumJson) {
         return museumClient.updateMuseum(museumJson);
     }
 
     @PostMapping
-    public MuseumJson addMuseum(@AuthenticationPrincipal Jwt principal,
-                                   @RequestBody MuseumJson museumJson){
+    public MuseumJson addMuseum(@RequestBody MuseumJson museumJson){
         return museumClient.addMuseum(museumJson);
     }
 }

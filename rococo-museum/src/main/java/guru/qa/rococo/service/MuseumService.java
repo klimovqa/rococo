@@ -48,4 +48,8 @@ public class MuseumService {
         MuseumEntity entity = new MuseumEntity();
         return repository.save(entity.fromJson(museum));
     }
+
+    public Page<MuseumEntity> getMuseumByTitle(Pageable pageable, String title) {
+        return repository.findByTitleContainsIgnoreCase(title, pageable);
+    }
 }

@@ -58,6 +58,25 @@ public class RestMuseumClient implements MuseumClient {
 
     @Nonnull
     @Override
+    public Page<MuseumJson> search(@Nonnull String title) {
+        URI uri = UriComponentsBuilder
+                .fromHttpUrl(format("%s/api/museum/search?title=%s",
+                        rococoMuseumBaseUri,
+                        title
+                ))
+                .build()
+                .toUri();
+
+        return webClient.get()
+                .uri(uri)
+                .retrieve()
+                .bodyToMono(new ParameterizedTypeReference<MyPage>() {
+                })
+                .block();
+    }
+
+    @Nonnull
+    @Override
     public MuseumJson getMuseum(@Nonnull String id) {
         URI uri = UriComponentsBuilder
                 .fromHttpUrl(format("%s/api/museum/%s",
@@ -115,4 +134,5 @@ public class RestMuseumClient implements MuseumClient {
                 .bodyToMono(MuseumJson.class)
                 .block());
     }
+
 }

@@ -28,9 +28,17 @@ public class MuseumController {
         Page<MuseumEntity> partMuseums = service.getMuseums(pageable);
         return partMuseums.map(MuseumEntity::toMuseumJson);
     }
+
     @GetMapping("{id}")
     public MuseumJson getMuseumById(@PathVariable String id) {
         return MuseumJson.toUserJson(service.getMuseumById(id));
+    }
+
+    @GetMapping("/search")
+    public Page<MuseumJson> search(@PageableDefault Pageable pageable,
+                                   @RequestParam String title) {
+        Page<MuseumEntity> partMuseums = service.getMuseumByTitle(pageable, title);
+        return partMuseums.map(MuseumEntity::toMuseumJson);
     }
 
     @PatchMapping
