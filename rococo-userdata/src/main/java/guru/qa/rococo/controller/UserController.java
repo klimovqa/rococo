@@ -13,20 +13,20 @@ import guru.qa.rococo.service.UserDataService;
 public class UserController {
 
 
-    private final UserDataService userService;
+    private final UserDataService service;
 
     @Autowired
-    public UserController(UserDataService userService) {
-        this.userService = userService;
+    public UserController(UserDataService service) {
+        this.service = service;
     }
 
     @GetMapping("/currentUser")
     public UserJson currentUserInfo(@RequestParam String username) {
-        return UserJson.toUserJson(userService.getCurrentUser(username));
+        return UserJson.toUserJson(service.getCurrentUser(username));
     }
     @PatchMapping("/updateUser")
     public UserJson updateUserInfo(@RequestBody UserJson userJson) {
-        return UserJson.toUserJson(userService.updateUser(userJson));
+        return UserJson.toUserJson(service.updateUser(userJson));
     }
 
 }

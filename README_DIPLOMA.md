@@ -113,6 +113,10 @@ create
     database "rococo-userdata" with owner postgres;
 create
     database "rococo-auth" with owner postgres;
+create
+    database "rococo-museum" with owner postgres;
+create
+    database "rococo-geo" with owner postgres;
 ```
 
 #### 7. Установить Java версии 17 или новее. Это необходимо, т.к. проект не поддерживает версии <17

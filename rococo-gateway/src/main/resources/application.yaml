@@ -32,6 +32,8 @@ spring:
 
 rococo-geo:
   base-uri: 'http://127.0.0.1:8087'
+rococo-museum:
+  base-uri: 'http://127.0.0.1:8088'
 rococo-userdata:
   base-uri: 'http://127.0.0.1:8089'
 rococo-front:

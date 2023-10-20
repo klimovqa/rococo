@@ -9,12 +9,12 @@ import org.springframework.data.domain.PageRequest;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true, value = {"pageable"})
-public class CountryPage<T> extends PageImpl<T> {
+public class MyPage<T> extends PageImpl<T> {
     @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
-    public CountryPage(@JsonProperty("content") List<T> content,
-                       @JsonProperty("number") int page,
-                       @JsonProperty("size") int size,
-                       @JsonProperty("totalElements") long total) {
+    public MyPage(@JsonProperty("content") List<T> content,
+                  @JsonProperty("number") int page,
+                  @JsonProperty("size") int size,
+                  @JsonProperty("totalElements") long total) {
         super(content, PageRequest.of(page, size), total);
     }
 }

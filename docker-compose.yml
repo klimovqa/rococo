@@ -101,6 +101,20 @@ services:
       - rococo-network
     dns_search: .
 
+
+  museum.rococo.dc:
+    container_name: museum.rococo.dc
+    image: medved93/rococo-museum:latest
+    expose:
+      - "8088"
+    restart: always
+    depends_on:
+      auth.rococo.dc:
+        condition: service_healthy
+    networks:
+      - rococo-network
+    dns_search: .
+
 #  frontend.rococo.dc:
 #    container_name: frontend.rococo.dc
 #    image: "${FRONT_IMAGE}"

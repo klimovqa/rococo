@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Slf4j
 @Component
@@ -48,5 +49,13 @@ public class GeoService {
 
     public void clear() {
         repository.deleteAll();
+    }
+
+    public CountryEntity getCountryById(UUID uuid) {
+        Optional<CountryEntity> entity = repository.findById(uuid);
+        if (entity.isEmpty()) {
+            throw new CountryNotFoundException("Country not found.");
+        }
+        return entity.get();
     }
 }

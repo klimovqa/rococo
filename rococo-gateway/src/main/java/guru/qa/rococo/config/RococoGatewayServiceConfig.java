@@ -8,13 +8,13 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Configuration
 public class RococoGatewayServiceConfig {
 
-    public static final int THREE_MB = 3145728;
+    public static final int SIX_MB = 6291456;
 
     @Bean
     public WebClient webClient() {
         return WebClient.builder()
                 .exchangeStrategies(ExchangeStrategies.builder().codecs(
-                        configurer -> configurer.defaultCodecs().maxInMemorySize(THREE_MB)).build())
+                        configurer -> configurer.defaultCodecs().maxInMemorySize(SIX_MB)).build())
                 .build();
     }
 }
