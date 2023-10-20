@@ -15,11 +15,11 @@ import guru.qa.rococo.ex.NotFoundException;
 @Component
 public class UserDataService {
 
-    private final UserRepository userRepository;
+    private final UserRepository repository;
 
     @Autowired
-    public UserDataService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserDataService(UserRepository repository) {
+        this.repository = repository;
     }
 
     @KafkaListener(topics = "users", groupId = "userdata")
@@ -28,7 +28,7 @@ public class UserDataService {
         log.info("### Kafka consumer record: " + cr.toString());
         UserEntity userDataEntity = new UserEntity();
         userDataEntity.setUsername(user.getUsername());
-        UserEntity userEntity = userRepository.save(userDataEntity);
+        UserEntity userEntity = repository.save(userDataEntity);
         log.info(String.format(
                 "### User '%s' successfully saved to database with id: %s",
                 user.getUsername(),
@@ -39,7 +39,7 @@ public class UserDataService {
 
     public @Nonnull
     UserEntity getCurrentUser(@Nonnull String username) {
-        UserEntity user = userRepository.findByUsername(username);
+        UserEntity user = repository.findByUsername(username);
         if (user == null) {
             throw new NotFoundException("Can`t find user by username: " + username);
         }
@@ -52,6 +52,6 @@ public class UserDataService {
         currentUser.setFirstname(user.getFirstname());
         currentUser.setLastname(user.getLastname());
         currentUser.setAvatar(user.getAvatar());
-        return userRepository.save(currentUser);
+        return repository.save(currentUser);
     }
 }

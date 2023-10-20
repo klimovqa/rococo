@@ -22,6 +22,6 @@ public class UserJson {
     @Size(max = 50, message = "Lastname can`t be longer than 50 characters")
     private String lastname;
     @JsonProperty("avatar")
-    @Size(max = RococoGatewayServiceConfig.THREE_MB)
+    @Size(max = RococoGatewayServiceConfig.SIX_MB)
     private String avatar;
 }
