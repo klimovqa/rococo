@@ -1,7 +1,7 @@
-package guru.qa.rococo.service.imp;
+package guru.qa.rococo.service.client.imp;
 
 import guru.qa.rococo.model.UserJson;
-import guru.qa.rococo.service.UserDataClient;
+import guru.qa.rococo.service.client.UserDataClient;
 import jakarta.annotation.Nonnull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,6 +12,9 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.Objects;
+
+import static java.util.Objects.*;
 
 @Component
 public class RestUserDataClient implements UserDataClient {
@@ -38,11 +41,11 @@ public class RestUserDataClient implements UserDataClient {
                 .build()
                 .toUri();
 
-        return webClient.get()
+        return requireNonNull(webClient.get()
                 .uri(uri)
                 .retrieve()
                 .bodyToMono(UserJson.class)
-                .block();
+                .block());
     }
 
     @Nonnull
@@ -53,12 +56,12 @@ public class RestUserDataClient implements UserDataClient {
                 .build()
                 .toUri();
 
-        return webClient.patch()
+        return requireNonNull(webClient.patch()
                 .uri(uri)
                 .bodyValue(userJson)
                 .retrieve()
                 .bodyToMono(UserJson.class)
-                .block();
+                .block());
     }
 
 }

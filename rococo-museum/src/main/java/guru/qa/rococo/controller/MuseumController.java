@@ -31,7 +31,7 @@ public class MuseumController {
 
     @GetMapping("{id}")
     public MuseumJson getMuseumById(@PathVariable String id) {
-        return MuseumJson.toUserJson(service.getMuseumById(id));
+        return MuseumJson.toJson(service.getMuseumById(id));
     }
 
     @GetMapping("/search")
@@ -43,12 +43,12 @@ public class MuseumController {
 
     @PatchMapping
     public MuseumJson updateMuseum(@RequestBody MuseumJson museum) {
-        return MuseumJson.toUserJson(service.updateMuseum(museum));
+        return MuseumJson.toJson(service.updateMuseum(museum));
     }
 
     @PostMapping
     public MuseumJson addMuseum(@RequestBody MuseumJson museum) {
-        return MuseumJson.toUserJson(service.addMuseum(museum));
+        return MuseumJson.toJson(service.addMuseum(museum));
     }
 
 }

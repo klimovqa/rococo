@@ -1,4 +1,4 @@
-package guru.qa.rococo.service;
+package guru.qa.rococo.service.client;
 
 import guru.qa.rococo.model.MuseumJson;
 import jakarta.annotation.Nonnull;

@@ -1,9 +1,9 @@
-package guru.qa.rococo.service.imp;
+package guru.qa.rococo.service.client.imp;
 
 import guru.qa.rococo.model.CountryJson;
 import guru.qa.rococo.model.MuseumJson;
-import guru.qa.rococo.service.GeoClient;
-import guru.qa.rococo.service.MuseumClient;
+import guru.qa.rococo.service.client.GeoClient;
+import guru.qa.rococo.service.client.MuseumClient;
 import guru.qa.rococo.service.pageable.MyPage;
 import jakarta.annotation.Nonnull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +18,7 @@ import java.net.URI;
 import java.util.Objects;
 
 import static java.lang.String.format;
+import static java.util.Objects.*;
 
 @Component
 public class RestMuseumClient implements MuseumClient {
@@ -48,12 +49,12 @@ public class RestMuseumClient implements MuseumClient {
                 .build()
                 .toUri();
 
-        return webClient.get()
+        return requireNonNull(webClient.get()
                 .uri(uri)
                 .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<MyPage>() {
+                .bodyToMono(new ParameterizedTypeReference<MyPage<MuseumJson>>() {
                 })
-                .block();
+                .block());
     }
 
     @Nonnull
@@ -67,12 +68,12 @@ public class RestMuseumClient implements MuseumClient {
                 .build()
                 .toUri();
 
-        return webClient.get()
+        return requireNonNull(webClient.get()
                 .uri(uri)
                 .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<MyPage>() {
+                .bodyToMono(new ParameterizedTypeReference<MyPage<MuseumJson>>() {
                 })
-                .block();
+                .block());
     }
 
     @Nonnull
@@ -86,7 +87,7 @@ public class RestMuseumClient implements MuseumClient {
                 .build()
                 .toUri();
 
-        return Objects.requireNonNull(webClient.get()
+        return requireNonNull(webClient.get()
                 .uri(uri)
                 .retrieve()
                 .bodyToMono(MuseumJson.class)
@@ -106,7 +107,7 @@ public class RestMuseumClient implements MuseumClient {
                 .build()
                 .toUri();
 
-        return Objects.requireNonNull(webClient.patch()
+        return requireNonNull(webClient.patch()
                 .uri(uri)
                 .bodyValue(museumJson)
                 .retrieve()
@@ -127,7 +128,7 @@ public class RestMuseumClient implements MuseumClient {
                 .build()
                 .toUri();
 
-        return Objects.requireNonNull(webClient.post()
+        return requireNonNull(webClient.post()
                 .uri(uri)
                 .bodyValue(museumJson)
                 .retrieve()

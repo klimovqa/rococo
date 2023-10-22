@@ -1,7 +1,7 @@
 package guru.qa.rococo.controller;
 
 import guru.qa.rococo.model.MuseumJson;
-import guru.qa.rococo.service.MuseumClient;
+import guru.qa.rococo.service.client.MuseumClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
