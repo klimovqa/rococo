@@ -1,6 +1,5 @@
 package guru.qa.rococo.service.client.imp;
 
-import guru.qa.rococo.model.CountryJson;
 import guru.qa.rococo.model.ArtistJson;
 import guru.qa.rococo.service.client.GeoClient;
 import guru.qa.rococo.service.client.ArtistClient;
@@ -15,7 +14,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
-import java.util.Objects;
 
 import static java.lang.String.format;
 import static java.util.Objects.*;

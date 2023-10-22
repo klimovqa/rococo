@@ -1,8 +1,5 @@
 package guru.qa.rococo.data;
 
-import guru.qa.rococo.model.CountryJson;
-import guru.qa.rococo.model.GeoJson;
-import guru.qa.rococo.model.MuseumJson;
 import guru.qa.rococo.model.PaintingJson;
 import jakarta.persistence.*;
 import lombok.Data;
