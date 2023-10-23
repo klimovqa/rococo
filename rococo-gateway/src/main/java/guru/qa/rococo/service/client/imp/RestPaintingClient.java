@@ -147,13 +147,6 @@ public class RestPaintingClient implements PaintingClient {
         return painting;
     }
 
-    private void getInfoAboutArtistAndMuseums(PaintingJson painting) {
-        ArtistJson artist = artistClient.getArtist(painting.getArtist().getId().toString());
-        painting.setArtist(artist);
-        MuseumJson museum = museumClient.getMuseum(painting.getMuseum().getId().toString());
-        painting.setMuseum(museum);
-    }
-
     @Nonnull
     @Override
     public PaintingJson updatePainting(@Nonnull PaintingJson paintingJson) {
@@ -165,12 +158,15 @@ public class RestPaintingClient implements PaintingClient {
                 .build()
                 .toUri();
 
-        return requireNonNull(webClient.patch()
+        PaintingJson result = requireNonNull(webClient.patch()
                 .uri(uri)
                 .bodyValue(paintingJson)
                 .retrieve()
                 .bodyToMono(PaintingJson.class)
                 .block());
+
+        getInfoAboutArtistAndMuseums(result);
+        return result;
     }
 
     @Nonnull
@@ -190,6 +186,15 @@ public class RestPaintingClient implements PaintingClient {
                 .retrieve()
                 .bodyToMono(PaintingJson.class)
                 .block());
+    }
+
+
+
+    private void getInfoAboutArtistAndMuseums(PaintingJson painting) {
+        ArtistJson artist = artistClient.getArtist(painting.getArtist().getId().toString());
+        painting.setArtist(artist);
+        MuseumJson museum = museumClient.getMuseum(painting.getMuseum().getId().toString());
+        painting.setMuseum(museum);
     }
 
 }
