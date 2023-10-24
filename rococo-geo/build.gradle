@@ -5,7 +5,7 @@ plugins {
     id 'com.google.cloud.tools.jib' version '3.3.2'
 }
 
-version = '0.0.1-SNAPSHOT'
+version = '0.0.6-SNAPSHOT'
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -26,6 +26,7 @@ jib {
         ports = ['8087']
         jvmFlags = ["-Dspring.profiles.active=docker"]
         creationTime = 'USE_CURRENT_TIMESTAMP'
+
     }
     from {
         image = "${project.ext.dockerImage}"

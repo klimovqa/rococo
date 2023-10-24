@@ -70,13 +70,13 @@ services:
       - rococo-network
     dns_search: .
 
-  gateway.rococo.dc:
-    container_name: gateway.rococo.dc
+  api.rococo.dc:
+    container_name: api.rococo.dc
     image: medved93/rococo-gateway:latest
     ports:
-      - "8090:8090"
+      - "8080:8080"
     healthcheck:
-      test: "wget --spider http://localhost:8090/actuator/health || exit 1"
+      test: "wget --spider http://localhost:8080/actuator/health || exit 1"
       interval: 5s
       timeout: 5s
       retries: 10
@@ -150,16 +150,16 @@ services:
       auth.rococo.dc:
         condition: service_healthy
     networks:
-      - rococo-networ
+      - rococo-network
 
-  frontend.rococo.dc:
-    container_name: frontend.rococo.dc
-    image: "${FRONT_IMAGE}"
+  client.rococo.dc:
+    container_name: client.rococo.dc
+    image: medved93/rococo-fronted:latest
     ports:
       - "80:80"
     restart: always
     depends_on:
-      gateway.rococo.dc:
+      api.rococo.dc:
         condition: service_healthy
     networks:
       - rococo-network

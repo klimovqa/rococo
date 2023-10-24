@@ -5,7 +5,7 @@ plugins {
     id 'com.google.cloud.tools.jib' version '3.3.2'
 }
 
-version = '0.0.2-SNAPSHOT'
+version = '0.0.5-SNAPSHOT'
 
 dependencies {
     implementation 'org.springframework.data:spring-data-commons'
@@ -14,6 +14,7 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-validation"
     implementation "org.springframework.security:spring-security-oauth2-authorization-server:${project.ext.oauth2AuthorizationServerVersion}"
     implementation "com.google.code.findbugs:jsr305:${project.ext.jsr305Version}"
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
     annotationProcessor "org.projectlombok:lombok:${project.ext.lombokVersion}"
     compileOnly "org.projectlombok:lombok:${project.ext.lombokVersion}"
     implementation "org.springframework:spring-webflux"
