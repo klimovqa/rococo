@@ -70,13 +70,13 @@ services:
       - rococo-network
     dns_search: .
 
-  gateway.rococo.dc:
-    container_name: gateway.rococo.dc
+  api.rococo.dc:
+    container_name: api.rococo.dc
     image: medved93/rococo-gateway:latest
     ports:
-      - "8090:8090"
+      - "8080:8080"
     healthcheck:
-      test: "wget --spider http://localhost:8090/actuator/health || exit 1"
+      test: "wget --spider http://localhost:8080/actuator/health || exit 1"
       interval: 5s
       timeout: 5s
       retries: 10
@@ -101,7 +101,6 @@ services:
       - rococo-network
     dns_search: .
 
-
   museum.rococo.dc:
     container_name: museum.rococo.dc
     image: medved93/rococo-museum:latest
@@ -115,18 +114,56 @@ services:
       - rococo-network
     dns_search: .
 
-#  frontend.rococo.dc:
-#    container_name: frontend.rococo.dc
-#    image: "${FRONT_IMAGE}"
-#    ports:
-#      - "80:80"
-#    restart: always
-#    depends_on:
-#      gateway.rococo.dc:
-#        condition: service_healthy
-#    networks:
-#      - rococo-network
-#    dns_search: .
+  geo.rococo.dc:
+    container_name: geo.rococo.dc
+    image: medved93/rococo-geo:latest
+    expose:
+      - "8087"
+    restart: always
+    depends_on:
+      auth.rococo.dc:
+        condition: service_healthy
+    networks:
+      - rococo-network
+    dns_search: .
+
+  artist.rococo.dc:
+    container_name: artist.rococo.dc
+    image: medved93/rococo-artist:latest
+    expose:
+        - "8086"
+    restart: always
+    depends_on:
+      auth.rococo.dc:
+        condition: service_healthy
+    networks:
+      - rococo-network
+    dns_search: .
+
+  painting.rococo.dc:
+    container_name: painting.rococo.dc
+    image: medved93/rococo-painting:latest
+    expose:
+      - "8085"
+    restart: always
+    depends_on:
+      auth.rococo.dc:
+        condition: service_healthy
+    networks:
+      - rococo-network
+
+  client.rococo.dc:
+    container_name: client.rococo.dc
+    image: medved93/rococo-fronted:latest
+    ports:
+      - "80:80"
+    restart: always
+    depends_on:
+      api.rococo.dc:
+        condition: service_healthy
+    networks:
+      - rococo-network
+    dns_search: .
 
 volumes:
   rococo:

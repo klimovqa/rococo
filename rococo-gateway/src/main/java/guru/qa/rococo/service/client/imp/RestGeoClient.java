@@ -1,7 +1,7 @@
-package guru.qa.rococo.service.imp;
+package guru.qa.rococo.service.client.imp;
 
 import guru.qa.rococo.model.CountryJson;
-import guru.qa.rococo.service.GeoClient;
+import guru.qa.rococo.service.client.GeoClient;
 import guru.qa.rococo.service.pageable.MyPage;
 import jakarta.annotation.Nonnull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +13,10 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
-import java.util.Objects;
 import java.util.UUID;
 
 import static java.lang.String.format;
+import static java.util.Objects.*;
 
 @Component
 public class RestGeoClient implements GeoClient {
@@ -44,12 +44,12 @@ public class RestGeoClient implements GeoClient {
                 .build()
                 .toUri();
 
-        return webClient.get()
+        return requireNonNull(webClient.get()
                 .uri(uri)
                 .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<MyPage>() {
+                .bodyToMono(new ParameterizedTypeReference<MyPage<CountryJson>>() {
                 })
-                .block();
+                .block());
 
     }
 
@@ -64,7 +64,7 @@ public class RestGeoClient implements GeoClient {
                 .build()
                 .toUri();
 
-        return Objects.requireNonNull(webClient.get()
+        return requireNonNull(webClient.get()
                 .uri(uri)
                 .retrieve()
                 .bodyToMono(CountryJson.class)

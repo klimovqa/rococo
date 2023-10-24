@@ -30,6 +30,10 @@ spring:
     graphiql:
       enabled: true
 
+rococo-painting:
+  base-uri: 'http://127.0.0.1:8085'
+rococo-artist:
+  base-uri: 'http://127.0.0.1:8086'
 rococo-geo:
   base-uri: 'http://127.0.0.1:8087'
 rococo-museum:
@@ -50,10 +54,16 @@ spring:
         jwt:
           issuer-uri: 'http://auth.rococo.dc:9000'
 
+rococo-painting:
+  base-uri: 'http://painting.rococo.dc:8085'
+rococo-museum:
+  base-uri: 'http://museum.rococo.dc:8088'
+rococo-artist:
+  base-uri: 'http://artist.rococo.dc:8086'
 rococo-geo:
   base-uri: 'http://geo.rococo.dc:8087'
 rococo-userdata:
   base-uri: 'http://userdata.rococo.dc:8089'
 rococo-front:
-  base-uri: 'http://frontend.rococo.dc'
+  base-uri: 'http://client.rococo.dc'
 ---

@@ -1,18 +1,14 @@
 <script lang="ts">
-	import type { PageData } from './$types';
 	import ToastHandler from "$lib/components/ToastHandler.svelte";
 	import {apiClient} from "$lib/helpers/apiClient";
-	import NewPaintingForm from '$lib/components/forms/painting/NewPaintingForm.svelte';
 	import CommonPage from "$lib/components/content/CommonPage.svelte";
 	import PaintingList from "$lib/components/PaintingList.svelte";
 	import {paintingsStore} from "$lib/stores/painting.store";
-	export let data: PageData;
-
+	import NewPaintingForm from "$lib/components/forms/painting/NewPaintingForm.svelte";
 </script>
 
 <ToastHandler let:triggerError let:triggerSuccess>
 	<CommonPage
-			{data}
 			errorTrigger={triggerError}
 			successTrigger={triggerSuccess}
 			store={paintingsStore}

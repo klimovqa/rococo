@@ -2,7 +2,7 @@ package guru.qa.rococo.controller;
 
 
 import guru.qa.rococo.model.UserJson;
-import guru.qa.rococo.service.UserDataClient;
+import guru.qa.rococo.service.client.UserDataClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
