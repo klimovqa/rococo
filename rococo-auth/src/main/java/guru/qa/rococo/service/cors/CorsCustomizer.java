@@ -15,15 +15,12 @@ public class CorsCustomizer {
 
     private final String rococoFrontUri;
     private final String authUri;
-    private final String apiUri;
 
     @Autowired
     public CorsCustomizer(@Value("${rococo-front.base-uri}") String rococoFrontUri,
-                          @Value("${rococo-auth.base-uri}") String authUri,
-                          @Value("${rococo-gateway.base-uri}") String apiUri) {
+                          @Value("${rococo-auth.base-uri}") String authUri) {
         this.rococoFrontUri = rococoFrontUri;
         this.authUri = authUri;
-        this.apiUri = apiUri;
     }
 
     public void corsCustomizer(@Nonnull HttpSecurity http) throws Exception {
@@ -31,7 +28,7 @@ public class CorsCustomizer {
             CorsConfigurationSource source = s -> {
                 CorsConfiguration cc = new CorsConfiguration();
                 cc.setAllowCredentials(true);
-                cc.setAllowedOrigins(List.of(rococoFrontUri, authUri, apiUri));
+                cc.setAllowedOrigins(List.of(rococoFrontUri, authUri));
                 cc.setAllowedHeaders(List.of("*"));
                 cc.setAllowedMethods(List.of("*"));
                 return cc;

@@ -64,8 +64,6 @@ rococo-geo:
   base-uri: 'http://geo.rococo.dc:8087'
 rococo-userdata:
   base-uri: 'http://userdata.rococo.dc:8089'
-rococo-gateway:
-  base-uri: 'http://api.rococo.dc:8080'
 rococo-front:
   base-uri: 'http://client.rococo.dc'
 ---
