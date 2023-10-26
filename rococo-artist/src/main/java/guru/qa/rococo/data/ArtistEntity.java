@@ -3,7 +3,6 @@ package guru.qa.rococo.data;
 import guru.qa.rococo.model.ArtistJson;
 import jakarta.persistence.*;
 import lombok.Data;
-import org.modelmapper.ModelMapper;
 
 import java.util.UUID;
 

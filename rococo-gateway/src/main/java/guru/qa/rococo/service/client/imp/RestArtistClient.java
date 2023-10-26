@@ -37,7 +37,7 @@ public class RestArtistClient implements ArtistClient {
 
     @Nonnull
     @Override
-    public Page<ArtistJson> findAll(@Nonnull String name, @Nonnull Pageable pageable) {
+    public Page<ArtistJson> findAll(String name, Pageable pageable) {
         URI uri;
         if (name != null) {
             uri = UriComponentsBuilder

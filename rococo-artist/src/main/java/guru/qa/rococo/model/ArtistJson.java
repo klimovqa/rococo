@@ -25,12 +25,6 @@ public class ArtistJson {
     @JsonProperty("photo")
     private String photo;
 
-
-    public ArtistJson fromEntity() {
-        ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(this, ArtistJson.class);
-    }
-
     public static ArtistJson fromEntity(ArtistEntity entity) {
         ArtistJson museum = new ArtistJson();
         museum.setId(entity.getId());

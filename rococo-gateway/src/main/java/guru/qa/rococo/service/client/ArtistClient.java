@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 public interface ArtistClient {
 
     @Nonnull
-    Page<ArtistJson> findAll(@Nonnull String name, @Nonnull Pageable pageable);
+    Page<ArtistJson> findAll(String name, Pageable pageable);
     @Nonnull
     ArtistJson findById(@Nonnull String id);
 
