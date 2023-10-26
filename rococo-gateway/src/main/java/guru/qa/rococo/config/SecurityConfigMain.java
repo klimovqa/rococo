@@ -15,7 +15,6 @@ import static org.springframework.security.web.util.matcher.AntPathRequestMatche
 
 @EnableWebSecurity
 @Configuration
-@Profile("!local")
 public class SecurityConfigMain {
 
     private final CorsCustomizer corsCustomizer;
@@ -35,6 +34,7 @@ public class SecurityConfigMain {
                                 antMatcher(HttpMethod.GET, "/api/artist/**"),
                                 antMatcher(HttpMethod.GET, "/api/museum/**"),
                                 antMatcher(HttpMethod.GET, "/api/country/**"),
+                                antMatcher( "/actuator/health"),
                                 antMatcher(HttpMethod.GET, "/api/painting/**"))
                         .permitAll()
                         .anyRequest()
