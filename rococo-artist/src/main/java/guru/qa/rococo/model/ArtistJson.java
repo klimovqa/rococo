@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.modelmapper.ModelMapper;
 
 import java.util.UUID;
 
@@ -24,7 +25,13 @@ public class ArtistJson {
     @JsonProperty("photo")
     private String photo;
 
-    public static ArtistJson toJson(ArtistEntity entity) {
+
+    public ArtistJson fromEntity() {
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(this, ArtistJson.class);
+    }
+
+    public static ArtistJson fromEntity(ArtistEntity entity) {
         ArtistJson museum = new ArtistJson();
         museum.setId(entity.getId());
         museum.setName(entity.getName());

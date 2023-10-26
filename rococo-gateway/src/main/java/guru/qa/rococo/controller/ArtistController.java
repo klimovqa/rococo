@@ -5,6 +5,8 @@ import guru.qa.rococo.service.client.ArtistClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,35 +15,31 @@ import org.springframework.web.bind.annotation.*;
 public class ArtistController {
 
 
-    private final ArtistClient artistClient;
+    private final ArtistClient client;
 
     @Autowired
-    public ArtistController(ArtistClient artistClient) {
-        this.artistClient = artistClient;
+    public ArtistController(ArtistClient client) {
+        this.client = client;
     }
 
     @GetMapping
-    public Page<ArtistJson> artist(@RequestParam(required = false) Integer size,
-                                   @RequestParam(required = false) Integer page,
-                                   @RequestParam(required = false) String name) {
-        if (name != null) {
-            return artistClient.search(name);
-        }
-        return artistClient.getArtists(size, page);
+    public Page<ArtistJson> findAll(@RequestParam(required = false) String name,
+                                    @PageableDefault Pageable pageable) {
+        return client.findAll(name, pageable);
     }
 
     @GetMapping("{id}")
-    public ArtistJson artist(@PathVariable String id) {
-        return artistClient.getArtist(id);
+    public ArtistJson findById(@PathVariable String id) {
+        return client.findById(id);
     }
 
     @PatchMapping
-    public ArtistJson updateArtist(@RequestBody ArtistJson artistJson) {
-        return artistClient.updateArtist(artistJson);
+    public ArtistJson update(@RequestBody ArtistJson artist) {
+        return client.update(artist);
     }
 
     @PostMapping
-    public ArtistJson addArtist(@RequestBody ArtistJson artistJson){
-        return artistClient.addArtist(artistJson);
+    public ArtistJson add(@RequestBody ArtistJson artist){
+        return client.add(artist);
     }
 }

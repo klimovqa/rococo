@@ -24,31 +24,31 @@ public class ArtistController {
     }
 
     @GetMapping
-    public Page<ArtistJson> getArtists(@PageableDefault Pageable pageable) {
-        Page<ArtistEntity> partArtist = service.getArtist(pageable);
-        return partArtist.map(ArtistJson::toJson);
+    public Page<ArtistJson> findALl(@PageableDefault Pageable pageable) {
+        Page<ArtistEntity> all = service.findAll(pageable);
+        return all.map(ArtistJson::fromEntity);
     }
 
     @GetMapping("{id}")
-    public ArtistJson getArtistById(@PathVariable String id) {
-        return ArtistJson.toJson(service.getArtistById(id));
+    public ArtistJson findById(@PathVariable String id) {
+        return ArtistJson.fromEntity(service.findById(id));
     }
 
-    @GetMapping("/search")
-    public Page<ArtistJson> search(@PageableDefault Pageable pageable,
-                                   @RequestParam String name) {
-        Page<ArtistEntity> partMuseums = service.getArtistByName(pageable, name);
-        return partMuseums.map(ArtistEntity::toArtistJson);
+    @GetMapping("/name/{name}")
+    public Page<ArtistJson> findByName(@PageableDefault Pageable pageable,
+                                       @PathVariable String name) {
+        Page<ArtistEntity> all = service.findByName(pageable, name);
+        return all.map(ArtistJson::fromEntity);
     }
 
     @PatchMapping
-    public ArtistJson updateArtist(@RequestBody ArtistJson artist) {
-        return ArtistJson.toJson(service.updateArtist(artist));
+    public ArtistJson update(@RequestBody ArtistJson artist) {
+        return ArtistJson.fromEntity(service.update(artist));
     }
 
     @PostMapping
-    public ArtistJson addMuseum(@RequestBody ArtistJson museum) {
-        return ArtistJson.toJson(service.addArtist(museum));
+    public ArtistJson add(@RequestBody ArtistJson artist) {
+        return ArtistJson.fromEntity(service.add(artist));
     }
 
 }

@@ -25,11 +25,6 @@ public class ArtistEntity {
     @Column
     private String photo;
 
-    public ArtistJson toArtistJson() {
-        ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(this, ArtistJson.class);
-    }
-
     public ArtistEntity fromJson(ArtistJson artist) {
         this.setName(artist.getName());
         this.setBiography(artist.getBiography());

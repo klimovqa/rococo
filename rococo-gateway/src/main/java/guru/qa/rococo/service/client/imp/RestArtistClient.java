@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -22,49 +23,41 @@ import static java.util.Objects.*;
 public class RestArtistClient implements ArtistClient {
 
     private final WebClient webClient;
-    private final String rococoArtistBaseUri;
+    private final String uriArtistService;
     private final GeoClient geoClient;
 
     @Autowired
     public RestArtistClient(WebClient webClient,
-                            @Value("${rococo-artist.base-uri}") String rococoArtistBaseUri,
+                            @Value("${rococo-artist.base-uri}") String uriArtistService,
                             GeoClient geoClient) {
         this.webClient = webClient;
-        this.rococoArtistBaseUri = rococoArtistBaseUri;
+        this.uriArtistService = uriArtistService;
         this.geoClient = geoClient;
     }
 
     @Nonnull
     @Override
-    public Page<ArtistJson> getArtists(@Nonnull Integer size, @Nonnull Integer page) {
+    public Page<ArtistJson> findAll(@Nonnull String name, @Nonnull Pageable pageable) {
+        URI uri;
+        if (name != null) {
+            uri = UriComponentsBuilder
+                    .fromHttpUrl(format("%s/api/artist/name/%s",
+                            uriArtistService,
+                            name
+                    ))
+                    .build()
+                    .toUri();
 
-        URI uri = UriComponentsBuilder
-                .fromHttpUrl(format("%s/api/artist?size=%d&page=%d",
-                        rococoArtistBaseUri,
-                        size,
-                        page
-                ))
-                .build()
-                .toUri();
-
-        return requireNonNull(webClient.get()
-                .uri(uri)
-                .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<MyPage<ArtistJson>>() {
-                })
-                .block());
-    }
-
-    @Nonnull
-    @Override
-    public Page<ArtistJson> search(@Nonnull String name) {
-        URI uri = UriComponentsBuilder
-                .fromHttpUrl(format("%s/api/artist/search?name=%s",
-                        rococoArtistBaseUri,
-                        name
-                ))
-                .build()
-                .toUri();
+        } else {
+            uri = UriComponentsBuilder
+                    .fromHttpUrl(format("%s/api/artist?size=%d&page=%d",
+                            uriArtistService,
+                            pageable.getPageSize(),
+                            pageable.getPageNumber()
+                    ))
+                    .build()
+                    .toUri();
+        }
 
         return requireNonNull(webClient.get()
                 .uri(uri)
@@ -76,10 +69,10 @@ public class RestArtistClient implements ArtistClient {
 
     @Nonnull
     @Override
-    public ArtistJson getArtist(@Nonnull String id) {
+    public ArtistJson findById(@Nonnull String id) {
         URI uri = UriComponentsBuilder
                 .fromHttpUrl(format("%s/api/artist/%s",
-                        rococoArtistBaseUri,
+                        uriArtistService,
                         id
                 ))
                 .build()
@@ -94,18 +87,18 @@ public class RestArtistClient implements ArtistClient {
 
     @Nonnull
     @Override
-    public ArtistJson updateArtist(@Nonnull ArtistJson artistJson) {
+    public ArtistJson update(@Nonnull ArtistJson artist) {
 
         URI uri = UriComponentsBuilder
                 .fromHttpUrl(format("%s/api/artist",
-                        rococoArtistBaseUri
+                        uriArtistService
                 ))
                 .build()
                 .toUri();
 
         return requireNonNull(webClient.patch()
                 .uri(uri)
-                .bodyValue(artistJson)
+                .bodyValue(artist)
                 .retrieve()
                 .bodyToMono(ArtistJson.class)
                 .block());
@@ -113,18 +106,18 @@ public class RestArtistClient implements ArtistClient {
 
     @Nonnull
     @Override
-    public ArtistJson addArtist(@Nonnull ArtistJson artistJson) {
+    public ArtistJson add(@Nonnull ArtistJson artist) {
 
         URI uri = UriComponentsBuilder
                 .fromHttpUrl(format("%s/api/artist",
-                        rococoArtistBaseUri
+                        uriArtistService
                 ))
                 .build()
                 .toUri();
 
         return requireNonNull(webClient.post()
                 .uri(uri)
-                .bodyValue(artistJson)
+                .bodyValue(artist)
                 .retrieve()
                 .bodyToMono(ArtistJson.class)
                 .block());

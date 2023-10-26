@@ -191,7 +191,7 @@ public class RestPaintingClient implements PaintingClient {
 
 
     private void getInfoAboutArtistAndMuseums(PaintingJson painting) {
-        ArtistJson artist = artistClient.getArtist(painting.getArtist().getId().toString());
+        ArtistJson artist = artistClient.findById(painting.getArtist().getId().toString());
         painting.setArtist(artist);
         MuseumJson museum = museumClient.getMuseum(painting.getMuseum().getId().toString());
         painting.setMuseum(museum);

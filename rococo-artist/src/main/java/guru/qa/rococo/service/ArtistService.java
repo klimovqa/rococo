@@ -1,4 +1,5 @@
 package guru.qa.rococo.service;
+
 import guru.qa.rococo.data.ArtistEntity;
 import guru.qa.rococo.data.repository.ArtistRepository;
 import guru.qa.rococo.ex.ArtistNotFoundException;
@@ -8,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
 import java.util.UUID;
+
+import static java.lang.String.format;
 
 @Slf4j
 @Component
@@ -23,33 +26,35 @@ public class ArtistService {
         this.repository = repository;
     }
 
-
-    public Page<ArtistEntity> getArtist(Pageable pageable) {
+    @Transactional(readOnly = true)
+    public Page<ArtistEntity> findAll(Pageable pageable) {
         return repository.findAll(pageable);
     }
 
-    public ArtistEntity getArtistById(String id) {
-        Optional<ArtistEntity> entity = repository.findById(UUID.fromString(id));
-        if (entity.isEmpty()) {
-            throw new ArtistNotFoundException("Artist not found.");
-        }
-        return entity.get();
+    @Transactional(readOnly = true)
+    public ArtistEntity findById(String id) {
+        return repository.findById(UUID.fromString(id))
+                .orElseThrow(() ->
+                        new ArtistNotFoundException(format("Artist with id - %s not found.", id)));
     }
 
-    public ArtistEntity updateArtist(ArtistJson artist) {
-        Optional<ArtistEntity> entity = repository.findById(artist.getId());
-        if (entity.isEmpty()) {
-            throw new ArtistNotFoundException("Artist not found.");
-        }
-        return repository.save(entity.get().fromJson(artist));
+
+    @Transactional(readOnly = true)
+    public Page<ArtistEntity> findByName(Pageable pageable, String name) {
+        return repository.findByNameContainsIgnoreCase(name, pageable);
     }
 
-    public ArtistEntity addArtist(ArtistJson artist) {
-        ArtistEntity entity = new ArtistEntity();
+
+    @Transactional
+    public ArtistEntity update(ArtistJson artist) {
+        ArtistEntity entity = repository.findById(artist.getId())
+                .orElseThrow(() ->
+                        new ArtistNotFoundException(format("Artist with id - %s not found.", artist.getId())));
         return repository.save(entity.fromJson(artist));
     }
 
-    public Page<ArtistEntity> getArtistByName(Pageable pageable, String name) {
-        return repository.findByNameContainsIgnoreCase(name, pageable);
+    @Transactional
+    public ArtistEntity add(ArtistJson artist) {
+        return repository.save(new ArtistEntity().fromJson(artist));
     }
 }
