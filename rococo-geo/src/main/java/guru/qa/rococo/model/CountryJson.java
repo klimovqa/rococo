@@ -6,8 +6,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 
 import java.util.UUID;
 

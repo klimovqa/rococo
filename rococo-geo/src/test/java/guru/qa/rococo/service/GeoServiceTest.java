@@ -3,7 +3,6 @@ package guru.qa.rococo.service;
 import guru.qa.rococo.data.CountryEntity;
 import guru.qa.rococo.data.repository.GeoRepository;
 import guru.qa.rococo.ex.CountryNotFoundException;
-import guru.qa.rococo.ex.DuplicateCountryNameException;
 import guru.qa.rococo.model.CountryJson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -52,7 +51,7 @@ class GeoServiceTest {
 
         testedObject = new GeoService(repository);
 
-        CountryEntity actual = testedObject.getCountryByName(countryName);
+        CountryEntity actual = testedObject.findByName(countryName);
 
         assertEquals(countryEntity, actual,
                 "The essence of the country is not equal to the expected");
@@ -67,44 +66,11 @@ class GeoServiceTest {
         testedObject = new GeoService(repository);
 
         final CountryNotFoundException exception = assertThrows(CountryNotFoundException.class,
-                () -> testedObject.getCountryByName(countryNameNotExist));
+                () -> testedObject.findByName(countryNameNotExist));
         assertEquals(
                 "Country not found.",
                 exception.getMessage()
         );
-    }
-
-    @Test
-    void addCountryShouldThrowDuplicateCountryNameExceptionIfCountryExist(
-            @Mock GeoRepository repository) {
-
-        when(repository.findByName(eq(countryName)))
-                .thenReturn(countryEntityOptional);
-
-        testedObject = new GeoService(repository);
-
-        final DuplicateCountryNameException exception = assertThrows(DuplicateCountryNameException.class,
-                () -> testedObject.addCountry(countryJson));
-        assertEquals(
-                "A country with this name already exists.",
-                exception.getMessage()
-        );
-    }
-
-    @Test
-    void addCountryReturnCorrectEntityAfterSave(@Mock GeoRepository repository) {
-        when(repository.save(any(CountryEntity.class)))
-                .thenAnswer(answer -> answer.getArguments()[0]);
-
-        when(repository.findByName(eq(countryName)))
-                .thenReturn(countryEntityOptionalNotExist);
-
-        testedObject = new GeoService(repository);
-
-        CountryEntity actual = testedObject.addCountry(countryJson);
-
-        assertEquals(countryEntity, actual,
-                "The essence of the country is not equal to the expected");
     }
 
 

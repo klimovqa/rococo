@@ -29,19 +29,19 @@ public class GeoController {
     }
 
     @GetMapping
-    public Page<CountryJson> getCountries(@PageableDefault Pageable pageable) {
-        Page<CountryEntity> allCountries = service.getCountries(pageable);
-        return allCountries.map(CountryEntity::toCountryJson);
+    public Page<CountryJson> findAll(@PageableDefault Pageable pageable) {
+        Page<CountryEntity> allCountries = service.findAll(pageable);
+        return allCountries.map(CountryJson::fromEntity);
     }
 
-    @GetMapping("name/{countryName}")
-    public ResponseEntity<CountryJson> getCountryByName(@PathVariable String countryName) {
-        CountryJson resp = CountryJson.fromEntity(service.getCountryByName(countryName));
+    @GetMapping("name/{country}")
+    public ResponseEntity<CountryJson> findByName(@PathVariable String country) {
+        CountryJson resp = CountryJson.fromEntity(service.findByName(country));
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }
     @GetMapping("{uuid}")
-    public ResponseEntity<CountryJson> getCountryById(@PathVariable UUID uuid) {
-        CountryJson resp = CountryJson.fromEntity(service.getCountryById(uuid));
+    public ResponseEntity<CountryJson> findById(@PathVariable UUID uuid) {
+        CountryJson resp = CountryJson.fromEntity(service.findById(uuid));
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }
 }

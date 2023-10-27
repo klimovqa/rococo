@@ -96,7 +96,7 @@ public class RestMuseumClient implements MuseumClient {
     @Nonnull
     @Override
     public MuseumJson updateMuseum(@Nonnull MuseumJson museumJson) {
-        CountryJson country = geoClient.getCountryById(museumJson.getGeo().getCountry().getId());
+        CountryJson country = geoClient.findById(museumJson.getGeo().getCountry().getId());
         museumJson.getGeo().getCountry().setName(country.getName());
 
         URI uri = UriComponentsBuilder
@@ -117,7 +117,7 @@ public class RestMuseumClient implements MuseumClient {
     @Nonnull
     @Override
     public MuseumJson addMuseum(@Nonnull MuseumJson museumJson) {
-        CountryJson country = geoClient.getCountryById(museumJson.getGeo().getCountry().getId());
+        CountryJson country = geoClient.findById(museumJson.getGeo().getCountry().getId());
         museumJson.getGeo().getCountry().setName(country.getName());
 
         URI uri = UriComponentsBuilder
