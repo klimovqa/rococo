@@ -10,6 +10,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import guru.qa.rococo.service.PaintingService;
 
+import java.util.UUID;
+
 
 @Slf4j
 @RestController
@@ -24,37 +26,38 @@ public class PaintingController {
     }
 
     @GetMapping
-    public Page<PaintingJson> getPainting(@PageableDefault Pageable pageable) {
-        Page<PaintingEntity> partPainting = service.getPainting(pageable);
-        return partPainting.map(PaintingEntity::toJson);
-    }
-    @GetMapping("/author/{id}")
-    public Page<PaintingJson> getPaintingByAuthor(@PathVariable String id,
-                                                  @PageableDefault Pageable pageable) {
-        Page<PaintingEntity> partPainting = service.getPaintingByAuthor(id, pageable);
-        return partPainting.map(PaintingEntity::toJson);
+    public Page<PaintingJson> findAll(@PageableDefault Pageable pageable) {
+        Page<PaintingEntity> all = service.getPainting(pageable);
+        return all.map(PaintingEntity::toJson);
     }
 
-    @GetMapping("{id}")
-    public PaintingJson getPaintingById(@PathVariable String id) {
-        return PaintingJson.toJson(service.getPaintingById(id));
+    @GetMapping("{uuid}")
+    public PaintingJson findById(@PathVariable String uuid) {
+        return PaintingJson.toJson(service.findById(UUID.fromString(uuid)));
     }
 
-    @GetMapping("/search")
-    public Page<PaintingJson> search(@PageableDefault Pageable pageable,
-                                   @RequestParam String title) {
-        Page<PaintingEntity> partPainting = service.getPaintingByTitle(pageable, title);
-        return partPainting.map(PaintingEntity::toJson);
+    @GetMapping("/title/{name}")
+    public Page<PaintingJson> findByTitle(@PageableDefault Pageable pageable,
+                                          @PathVariable String name) {
+        Page<PaintingEntity> all = service.findByTitle(pageable, name);
+        return all.map(PaintingEntity::toJson);
+    }
+
+    @GetMapping("/author/{uuid}")
+    public Page<PaintingJson> findByAuthor(@PathVariable String uuid,
+                                           @PageableDefault Pageable pageable) {
+        Page<PaintingEntity> all = service.findByAuthor(UUID.fromString(uuid), pageable);
+        return all.map(PaintingEntity::toJson);
     }
 
     @PatchMapping
-    public PaintingJson updatePainting(@RequestBody PaintingJson paining) {
-        return PaintingJson.toJson(service.updatePainting(paining));
+    public PaintingJson update(@RequestBody PaintingJson paining) {
+        return PaintingJson.toJson(service.update(paining));
     }
 
     @PostMapping
-    public PaintingJson addPainting(@RequestBody PaintingJson paining) {
-        return PaintingJson.toJson(service.addPainting(paining));
+    public PaintingJson add(@RequestBody PaintingJson paining) {
+        return PaintingJson.toJson(service.add(paining));
     }
 
 }

@@ -3,25 +3,22 @@ package guru.qa.rococo.service.client;
 import guru.qa.rococo.model.PaintingJson;
 import jakarta.annotation.Nonnull;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 
 public interface PaintingClient {
 
     @Nonnull
-    Page<PaintingJson> getPaintings(@Nonnull Integer size, @Nonnull Integer page);
+    Page<PaintingJson> findAll(String title, Pageable page);
 
     @Nonnull
-    Page<PaintingJson> getPaintingsByAuthor(@Nonnull String id,
-                                            @Nonnull Integer size,
-                                            @Nonnull Integer page);
+    Page<PaintingJson> findByAuthor(@Nonnull String uuid, @Nonnull Pageable page);
     @Nonnull
-    Page<PaintingJson> search(@Nonnull String title);
-    @Nonnull
-    PaintingJson getPainting(@Nonnull String id);
+    PaintingJson findById(@Nonnull String id);
 
     @Nonnull
-    PaintingJson updatePainting(@Nonnull PaintingJson paintingJson);
+    PaintingJson update(@Nonnull PaintingJson paintingJson);
 
     @Nonnull
-    PaintingJson addPainting(@Nonnull PaintingJson paintingJson);
+    PaintingJson add(@Nonnull PaintingJson paintingJson);
 }

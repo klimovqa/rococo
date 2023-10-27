@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -25,33 +26,43 @@ import static java.util.Objects.*;
 public class RestPaintingClient implements PaintingClient {
 
     private final WebClient webClient;
-    private final String rococoPaintingBaseUri;
+    private final String uriPaintingService;
     private final ArtistClient artistClient;
     private final MuseumClient museumClient;
 
     @Autowired
     public RestPaintingClient(WebClient webClient,
-                              @Value("${rococo-painting.base-uri}") String rococoPaintingBaseUri,
+                              @Value("${rococo-painting.base-uri}") String uriPaintingService,
                               ArtistClient artistClient,
                               MuseumClient museumClient) {
         this.webClient = webClient;
-        this.rococoPaintingBaseUri = rococoPaintingBaseUri;
+        this.uriPaintingService = uriPaintingService;
         this.artistClient = artistClient;
         this.museumClient = museumClient;
     }
 
     @Nonnull
     @Override
-    public Page<PaintingJson> getPaintings(@Nonnull Integer size, @Nonnull Integer page) {
-
-        URI uri = UriComponentsBuilder
-                .fromHttpUrl(format("%s/api/painting?size=%d&page=%d",
-                        rococoPaintingBaseUri,
-                        size,
-                        page
-                ))
-                .build()
-                .toUri();
+    public Page<PaintingJson> findAll(String title, Pageable page) {
+        URI uri;
+        if (title != null) {
+            uri = UriComponentsBuilder
+                    .fromHttpUrl(format("%s/api/painting/title/%s",
+                            uriPaintingService,
+                            title
+                    ))
+                    .build()
+                    .toUri();
+        } else {
+            uri = UriComponentsBuilder
+                    .fromHttpUrl(format("%s/api/painting?size=%d&page=%d",
+                            uriPaintingService,
+                            page.getPageSize(),
+                            page.getPageNumber()
+                    ))
+                    .build()
+                    .toUri();
+        }
 
         Page<PaintingJson> results = webClient.get()
                 .uri(uri)
@@ -61,23 +72,20 @@ public class RestPaintingClient implements PaintingClient {
                 .block();
 
         if (results.getContent() != null && !results.getContent().isEmpty()) {
-            results.getContent().forEach(painting -> {
-                getInfoAboutArtistAndMuseums(painting);
-            });
+            results.getContent().forEach(this::getInfoAboutArtistAndMuseums);
         }
-
         return results;
     }
 
     @Nonnull
     @Override
-    public Page<PaintingJson> getPaintingsByAuthor(@Nonnull String id, @Nonnull Integer size, @Nonnull Integer page) {
+    public Page<PaintingJson> findByAuthor(@Nonnull String uuid, @Nonnull Pageable page) {
         URI uri = UriComponentsBuilder
                 .fromHttpUrl(format("%s/api/painting/author/%s?size=%d&page=%d",
-                        rococoPaintingBaseUri,
-                        id,
-                        size,
-                        page
+                        uriPaintingService,
+                        uuid,
+                        page.getPageSize(),
+                        page.getPageNumber()
                 ))
                 .build()
                 .toUri();
@@ -90,47 +98,17 @@ public class RestPaintingClient implements PaintingClient {
                 .block();
 
         if (results.getContent() != null && !results.getContent().isEmpty()) {
-            results.getContent().forEach(painting -> {
-                getInfoAboutArtistAndMuseums(painting);
-            });
-        }
-
-        return results;
-    }
-
-    @Nonnull
-    @Override
-    public Page<PaintingJson> search(@Nonnull String title) {
-        URI uri = UriComponentsBuilder
-                .fromHttpUrl(format("%s/api/painting/search?title=%s",
-                        rococoPaintingBaseUri,
-                        title
-                ))
-                .build()
-                .toUri();
-
-        MyPage<PaintingJson> results = requireNonNull(webClient.get()
-                .uri(uri)
-                .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<MyPage<PaintingJson>>() {
-                })
-                .block());
-
-
-        if (results.getContent() != null && !results.getContent().isEmpty()) {
-            results.getContent().forEach(painting -> {
-                getInfoAboutArtistAndMuseums(painting);
-            });
+            results.getContent().forEach(this::getInfoAboutArtistAndMuseums);
         }
         return results;
     }
 
     @Nonnull
     @Override
-    public PaintingJson getPainting(@Nonnull String id) {
+    public PaintingJson findById(@Nonnull String id) {
         URI uri = UriComponentsBuilder
                 .fromHttpUrl(format("%s/api/painting/%s",
-                        rococoPaintingBaseUri,
+                        uriPaintingService,
                         id
                 ))
                 .build()
@@ -149,18 +127,17 @@ public class RestPaintingClient implements PaintingClient {
 
     @Nonnull
     @Override
-    public PaintingJson updatePainting(@Nonnull PaintingJson paintingJson) {
-
+    public PaintingJson update(@Nonnull PaintingJson painting) {
         URI uri = UriComponentsBuilder
                 .fromHttpUrl(format("%s/api/painting",
-                        rococoPaintingBaseUri
+                        uriPaintingService
                 ))
                 .build()
                 .toUri();
 
         PaintingJson result = requireNonNull(webClient.patch()
                 .uri(uri)
-                .bodyValue(paintingJson)
+                .bodyValue(painting)
                 .retrieve()
                 .bodyToMono(PaintingJson.class)
                 .block());
@@ -171,23 +148,21 @@ public class RestPaintingClient implements PaintingClient {
 
     @Nonnull
     @Override
-    public PaintingJson addPainting(@Nonnull PaintingJson paintingJson) {
-
+    public PaintingJson add(@Nonnull PaintingJson painting) {
         URI uri = UriComponentsBuilder
                 .fromHttpUrl(format("%s/api/painting",
-                        rococoPaintingBaseUri
+                        uriPaintingService
                 ))
                 .build()
                 .toUri();
 
         return requireNonNull(webClient.post()
                 .uri(uri)
-                .bodyValue(paintingJson)
+                .bodyValue(painting)
                 .retrieve()
                 .bodyToMono(PaintingJson.class)
                 .block());
     }
-
 
 
     private void getInfoAboutArtistAndMuseums(PaintingJson painting) {
