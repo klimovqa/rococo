@@ -19,23 +19,23 @@ import static java.util.Objects.*;
 public class RestUserDataClient implements UserDataClient {
 
     private final WebClient webClient;
-    private final String rococoUserdataBaseUri;
+    private final String uriUserDataService;
 
     @Autowired
     public RestUserDataClient(WebClient webClient,
-                              @Value("${rococo-userdata.base-uri}") String rococoUserdataBaseUri) {
+                              @Value("${rococo-userdata.base-uri}") String uriUserDataService) {
         this.webClient = webClient;
-        this.rococoUserdataBaseUri = rococoUserdataBaseUri;
+        this.uriUserDataService = uriUserDataService;
     }
 
 
     @Override
     public @Nonnull
-    UserJson currentUser(@Nonnull String username) {
+    UserJson findByUsername(@Nonnull String username) {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("username", username);
         URI uri = UriComponentsBuilder
-                .fromHttpUrl(rococoUserdataBaseUri + "/api/userdata/currentUser")
+                .fromHttpUrl(uriUserDataService + "/api/userdata/user")
                 .queryParams(params)
                 .build()
                 .toUri();
@@ -49,15 +49,15 @@ public class RestUserDataClient implements UserDataClient {
 
     @Nonnull
     @Override
-    public UserJson updateUser(@Nonnull UserJson userJson) {
+    public UserJson update(@Nonnull UserJson user) {
         URI uri = UriComponentsBuilder
-                .fromHttpUrl(rococoUserdataBaseUri + "/api/userdata/updateUser")
+                .fromHttpUrl(uriUserDataService + "/api/userdata/update")
                 .build()
                 .toUri();
 
         return requireNonNull(webClient.patch()
                 .uri(uri)
-                .bodyValue(userJson)
+                .bodyValue(user)
                 .retrieve()
                 .bodyToMono(UserJson.class)
                 .block());

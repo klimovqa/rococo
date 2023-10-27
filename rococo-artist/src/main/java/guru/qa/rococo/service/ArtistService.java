@@ -13,8 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
-import static java.lang.String.format;
-
 @Slf4j
 @Component
 public class ArtistService {

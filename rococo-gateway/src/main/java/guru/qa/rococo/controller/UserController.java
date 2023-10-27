@@ -14,26 +14,26 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
 
-    private final UserDataClient userDataClient;
+    private final UserDataClient client;
 
     @Autowired
-    public UserController(UserDataClient userDataClient) {
-        this.userDataClient = userDataClient;
+    public UserController(UserDataClient client) {
+        this.client = client;
     }
 
 
     @GetMapping
-    public UserJson getUser(@AuthenticationPrincipal Jwt principal) {
+    public UserJson findByUsername(@AuthenticationPrincipal Jwt principal) {
         String username = principal.getClaim("sub");
-        return userDataClient.currentUser(username);
+        return client.findByUsername(username);
     }
 
     @PatchMapping
-    public UserJson updateUser(@AuthenticationPrincipal Jwt principal,
-                               @RequestBody UserJson userJson) {
+    public UserJson update(@AuthenticationPrincipal Jwt principal,
+                           @RequestBody UserJson user) {
         String username = principal.getClaim("sub");
-        userJson.setUsername(username);
-        return userDataClient.updateUser(userJson);
+        user.setUsername(username);
+        return client.update(user);
     }
 
 }

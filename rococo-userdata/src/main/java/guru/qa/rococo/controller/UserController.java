@@ -20,13 +20,13 @@ public class UserController {
         this.service = service;
     }
 
-    @GetMapping("/currentUser")
-    public UserJson currentUserInfo(@RequestParam String username) {
-        return UserJson.toUserJson(service.getCurrentUser(username));
+    @GetMapping("/user")
+    public UserJson findByUsername(@RequestParam String username) {
+        return UserJson.fromEntity(service.findByUsername(username));
     }
-    @PatchMapping("/updateUser")
-    public UserJson updateUserInfo(@RequestBody UserJson userJson) {
-        return UserJson.toUserJson(service.updateUser(userJson));
+    @PatchMapping("/update")
+    public UserJson update(@RequestBody UserJson user) {
+        return UserJson.fromEntity(service.update(user));
     }
 
 }

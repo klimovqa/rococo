@@ -61,7 +61,7 @@ class UserDataServiceTest {
         toBeUpdated.setFirstname("FirstName");
         toBeUpdated.setLastname("LastName");
         toBeUpdated.setAvatar(avatarForTest);
-        final UserEntity result = testedObject.updateUser(toBeUpdated);
+        final UserEntity result = testedObject.update(toBeUpdated);
         assertEquals(mainTestUserUuid, result.getId());
         assertEquals("FirstName", result.getFirstname());
         assertEquals("LastName", result.getLastname());
@@ -77,7 +77,7 @@ class UserDataServiceTest {
 
         testedObject = new UserDataService(userRepository);
 
-        final UserEntity requiredUser = testedObject.getCurrentUser(mainTestUserName);
+        final UserEntity requiredUser = testedObject.findByUsername(mainTestUserName);
         assertEquals(mainTestUserUuid, requiredUser.getId(), "check id");
         assertEquals(mainTestUserName, requiredUser.getUsername(), "check username");
         assertEquals(mainTestFirstname, requiredUser.getFirstname(), "check firstname");
@@ -93,7 +93,7 @@ class UserDataServiceTest {
         testedObject = new UserDataService(userRepository);
 
         final NotFoundException exception = assertThrows(NotFoundException.class,
-                () -> testedObject.getCurrentUser(notExistingUser));
+                () -> testedObject.findByUsername(notExistingUser));
         assertEquals(
                 "Can`t find user by username: " + notExistingUser,
                 exception.getMessage()
