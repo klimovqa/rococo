@@ -1,4 +1,5 @@
 package guru.qa.rococo.service;
+
 import guru.qa.rococo.data.UserEntity;
 import guru.qa.rococo.data.repository.UserRepository;
 import guru.qa.rococo.model.UserJson;
@@ -38,17 +39,15 @@ public class UserDataService {
 
 
     public @Nonnull
-    UserEntity getCurrentUser(@Nonnull String username) {
-        UserEntity user = repository.findByUsername(username);
-        if (user == null) {
-            throw new NotFoundException("Can`t find user by username: " + username);
-        }
-        return user;
+    UserEntity findByUsername(@Nonnull String username) {
+        return repository.findByUsername(username)
+                .orElseThrow(() ->
+                        new NotFoundException("Can`t find user by username: " + username));
     }
 
     public @Nonnull
-    UserEntity updateUser(@Nonnull UserJson user) {
-        UserEntity currentUser = getCurrentUser(user.getUsername());
+    UserEntity update(@Nonnull UserJson user) {
+        UserEntity currentUser = findByUsername(user.getUsername());
         currentUser.setFirstname(user.getFirstname());
         currentUser.setLastname(user.getLastname());
         currentUser.setAvatar(user.getAvatar());

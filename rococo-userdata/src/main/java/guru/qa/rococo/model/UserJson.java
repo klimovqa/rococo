@@ -26,7 +26,7 @@ public class UserJson {
     @JsonProperty("avatar")
     private String avatar;
 
-    public static UserJson toUserJson(UserEntity entity) {
+    public static UserJson fromEntity(UserEntity entity) {
         UserJson userJson = new UserJson();
         userJson.setId(entity.getId());
         userJson.setUsername(entity.getUsername());

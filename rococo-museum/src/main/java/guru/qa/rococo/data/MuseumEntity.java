@@ -31,7 +31,8 @@ public class MuseumEntity {
     @JoinColumn(name = "location_id", referencedColumnName = "id")
     private LocationEntity location;
 
-    public MuseumJson toMuseumJson() {
+
+    public MuseumJson toJson() {
         ModelMapper modelMapper = new ModelMapper();
         GeoJson geo = modelMapper.map(this.location, GeoJson.class);
         MuseumJson museum = modelMapper.map(this, MuseumJson.class);

@@ -5,6 +5,8 @@ import guru.qa.rococo.service.client.MuseumClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,35 +15,31 @@ import org.springframework.web.bind.annotation.*;
 public class MuseumController {
 
 
-    private final MuseumClient museumClient;
+    private final MuseumClient client;
 
     @Autowired
-    public MuseumController(MuseumClient museumClient) {
-        this.museumClient = museumClient;
+    public MuseumController(MuseumClient client) {
+        this.client = client;
     }
 
     @GetMapping
-    public Page<MuseumJson> museum(@RequestParam(required = false) Integer size,
-                                   @RequestParam(required = false) Integer page,
+    public Page<MuseumJson> museum(@PageableDefault Pageable pageable,
                                    @RequestParam(required = false) String title) {
-        if (title != null) {
-            return museumClient.search(title);
-        }
-        return museumClient.getMuseums(size, page);
+        return client.findAll(title, pageable);
     }
 
     @GetMapping("{id}")
     public MuseumJson museum(@PathVariable String id) {
-        return museumClient.getMuseum(id);
+        return client.findById(id);
     }
 
     @PatchMapping
     public MuseumJson updateMuseum(@RequestBody MuseumJson museumJson) {
-        return museumClient.updateMuseum(museumJson);
+        return client.update(museumJson);
     }
 
     @PostMapping
     public MuseumJson addMuseum(@RequestBody MuseumJson museumJson){
-        return museumClient.addMuseum(museumJson);
+        return client.add(museumJson);
     }
 }

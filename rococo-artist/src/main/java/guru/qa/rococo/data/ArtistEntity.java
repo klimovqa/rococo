@@ -3,7 +3,6 @@ package guru.qa.rococo.data;
 import guru.qa.rococo.model.ArtistJson;
 import jakarta.persistence.*;
 import lombok.Data;
-import org.modelmapper.ModelMapper;
 
 import java.util.UUID;
 
@@ -24,11 +23,6 @@ public class ArtistEntity {
 
     @Column
     private String photo;
-
-    public ArtistJson toArtistJson() {
-        ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(this, ArtistJson.class);
-    }
 
     public ArtistEntity fromJson(ArtistJson artist) {
         this.setName(artist.getName());

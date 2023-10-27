@@ -1,10 +1,8 @@
 package guru.qa.rococo.data;
 
-import guru.qa.rococo.model.CountryJson;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.modelmapper.ModelMapper;
 
 import java.util.UUID;
 
@@ -19,17 +17,4 @@ public class CountryEntity {
 
     @Column(nullable = false, unique = true)
     private String name;
-
-    public static CountryEntity fromJson(CountryJson country) {
-        CountryEntity entity = new CountryEntity();
-        entity.setId(country.getId());
-        entity.setName(country.getName());
-        return entity;
-    }
-
-    public CountryJson toCountryJson() {
-        ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(this, CountryJson.class);
-    }
-
 }

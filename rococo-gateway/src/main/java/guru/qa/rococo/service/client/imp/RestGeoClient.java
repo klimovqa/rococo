@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -22,24 +23,24 @@ import static java.util.Objects.*;
 public class RestGeoClient implements GeoClient {
 
     private final WebClient webClient;
-    private final String rococoGeoBaseUri;
+    private final String uriGeoService;
 
     @Autowired
     public RestGeoClient(WebClient webClient,
-                         @Value("${rococo-geo.base-uri}") String rococoGeoBaseUri) {
+                         @Value("${rococo-geo.base-uri}") String uriGeoService) {
         this.webClient = webClient;
-        this.rococoGeoBaseUri = rococoGeoBaseUri;
+        this.uriGeoService = uriGeoService;
     }
 
     @Nonnull
     @Override
-    public Page<CountryJson> getCountries(@Nonnull Integer size, @Nonnull Integer page) {
+    public Page<CountryJson> findAll(Pageable pageable) {
 
         URI uri = UriComponentsBuilder
                 .fromHttpUrl(format("%s/api/geo?size=%d&page=%d",
-                        rococoGeoBaseUri,
-                        size,
-                        page
+                        uriGeoService,
+                        pageable.getPageSize(),
+                        pageable.getPageNumber()
                         ))
                 .build()
                 .toUri();
@@ -55,10 +56,10 @@ public class RestGeoClient implements GeoClient {
 
     @Nonnull
     @Override
-    public CountryJson getCountryById(@Nonnull UUID uuid) {
+    public CountryJson findById(@Nonnull UUID uuid) {
         URI uri = UriComponentsBuilder
                 .fromHttpUrl(format("%s/api/geo/%s",
-                        rococoGeoBaseUri,
+                        uriGeoService,
                         uuid
                 ))
                 .build()

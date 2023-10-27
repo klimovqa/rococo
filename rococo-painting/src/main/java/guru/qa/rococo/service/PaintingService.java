@@ -1,4 +1,5 @@
 package guru.qa.rococo.service;
+
 import guru.qa.rococo.data.PaintingEntity;
 import guru.qa.rococo.data.repository.PaintingRepository;
 import guru.qa.rococo.ex.PaintingNotFoundException;
@@ -9,7 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @Slf4j
@@ -29,33 +29,28 @@ public class PaintingService {
     }
 
 
-    public Page<PaintingEntity> getPaintingByAuthor(String id, Pageable pageable) {
-        return repository.findByArtistId(UUID.fromString(id), pageable);
+    public Page<PaintingEntity> findByAuthor(UUID uuid, Pageable pageable) {
+        return repository.findByArtistId(uuid, pageable);
     }
 
-    public PaintingEntity getPaintingById(String id) {
-        Optional<PaintingEntity> entity = repository.findById(UUID.fromString(id));
-        if (entity.isEmpty()) {
-            throw new PaintingNotFoundException("Painting not found.");
-        }
-        return entity.get();
+    public PaintingEntity findById(UUID uuid) {
+        return repository.findById(uuid)
+                .orElseThrow(() ->
+                        new PaintingNotFoundException("Painting uuid " + uuid + " not found.")
+                );
     }
 
-    public PaintingEntity updatePainting(PaintingJson painting) {
-        Optional<PaintingEntity> entity = repository.findById(painting.getId());
-        if (entity.isEmpty()) {
-            throw new PaintingNotFoundException("Painting not found.");
-        }
-        return repository.save(entity.get().fromJson(painting));
+    public Page<PaintingEntity> findByTitle(Pageable pageable, String title) {
+        return repository.findByTitleContainsIgnoreCase(title, pageable);
     }
 
-    public PaintingEntity addPainting(PaintingJson painting) {
-        PaintingEntity entity = new PaintingEntity();
+    public PaintingEntity update(PaintingJson painting) {
+        PaintingEntity entity = findById(painting.getId());
         return repository.save(entity.fromJson(painting));
     }
 
-    public Page<PaintingEntity> getPaintingByTitle(Pageable pageable, String title) {
-        return repository.findByTitleContainsIgnoreCase(title, pageable);
+    public PaintingEntity add(PaintingJson painting) {
+        return repository.save(new PaintingEntity().fromJson(painting));
     }
 
 }

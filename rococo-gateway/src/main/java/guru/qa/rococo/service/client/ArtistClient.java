@@ -3,20 +3,19 @@ package guru.qa.rococo.service.client;
 import guru.qa.rococo.model.ArtistJson;
 import jakarta.annotation.Nonnull;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 
 public interface ArtistClient {
 
     @Nonnull
-    Page<ArtistJson> getArtists(@Nonnull Integer size, @Nonnull Integer page);
+    Page<ArtistJson> findAll(String name, Pageable pageable);
     @Nonnull
-    Page<ArtistJson> search(@Nonnull String title);
-    @Nonnull
-    ArtistJson getArtist(@Nonnull String id);
+    ArtistJson findById(@Nonnull String id);
 
     @Nonnull
-    ArtistJson updateArtist(@Nonnull ArtistJson artistJson);
+    ArtistJson update(@Nonnull ArtistJson artistJson);
 
     @Nonnull
-    ArtistJson addArtist(@Nonnull ArtistJson artistJson);
+    ArtistJson add(@Nonnull ArtistJson artistJson);
 }
