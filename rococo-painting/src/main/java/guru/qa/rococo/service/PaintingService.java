@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
@@ -23,16 +24,18 @@ public class PaintingService {
         this.repository = repository;
     }
 
-
-    public Page<PaintingEntity> getPainting(Pageable pageable) {
+    @Transactional(readOnly = true)
+    public Page<PaintingEntity> findAll(Pageable pageable) {
         return repository.findAll(pageable);
     }
 
 
+    @Transactional(readOnly = true)
     public Page<PaintingEntity> findByAuthor(UUID uuid, Pageable pageable) {
         return repository.findByArtistId(uuid, pageable);
     }
 
+    @Transactional(readOnly = true)
     public PaintingEntity findById(UUID uuid) {
         return repository.findById(uuid)
                 .orElseThrow(() ->
@@ -40,15 +43,18 @@ public class PaintingService {
                 );
     }
 
+    @Transactional(readOnly = true)
     public Page<PaintingEntity> findByTitle(Pageable pageable, String title) {
         return repository.findByTitleContainsIgnoreCase(title, pageable);
     }
 
+    @Transactional
     public PaintingEntity update(PaintingJson painting) {
         PaintingEntity entity = findById(painting.getId());
         return repository.save(entity.fromJson(painting));
     }
 
+    @Transactional
     public PaintingEntity add(PaintingJson painting) {
         return repository.save(new PaintingEntity().fromJson(painting));
     }

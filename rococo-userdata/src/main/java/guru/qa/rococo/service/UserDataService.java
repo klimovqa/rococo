@@ -11,6 +11,7 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 import guru.qa.rococo.ex.NotFoundException;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Component
@@ -38,6 +39,7 @@ public class UserDataService {
     }
 
 
+    @Transactional(readOnly = true)
     public @Nonnull
     UserEntity findByUsername(@Nonnull String username) {
         return repository.findByUsername(username)
@@ -45,6 +47,7 @@ public class UserDataService {
                         new NotFoundException("Can`t find user by username: " + username));
     }
 
+    @Transactional
     public @Nonnull
     UserEntity update(@Nonnull UserJson user) {
         UserEntity currentUser = findByUsername(user.getUsername());
