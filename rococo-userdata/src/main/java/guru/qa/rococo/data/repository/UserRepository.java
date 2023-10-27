@@ -9,6 +9,5 @@ import java.util.UUID;
 
 public interface UserRepository extends JpaRepository<UserEntity, UUID> {
 
-    @Nullable
     Optional<UserEntity> findByUsername(String username);
 }
