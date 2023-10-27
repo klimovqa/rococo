@@ -26,7 +26,7 @@ public class MuseumJson {
     @JsonProperty("geo")
     private GeoJson geo;
 
-    public static MuseumJson toJson(MuseumEntity entity) {
+    public static MuseumJson fromEntity(MuseumEntity entity) {
         MuseumJson museum = new MuseumJson();
         museum.setId(entity.getId());
         museum.setTitle(entity.getTitle());

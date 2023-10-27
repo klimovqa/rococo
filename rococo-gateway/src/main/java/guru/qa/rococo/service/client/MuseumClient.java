@@ -3,20 +3,19 @@ package guru.qa.rococo.service.client;
 import guru.qa.rococo.model.MuseumJson;
 import jakarta.annotation.Nonnull;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 
 public interface MuseumClient {
 
     @Nonnull
-    Page<MuseumJson> getMuseums(@Nonnull Integer size, @Nonnull Integer page);
+    Page<MuseumJson> findAll(String title, Pageable page);
     @Nonnull
-    Page<MuseumJson> search(@Nonnull String title);
-    @Nonnull
-    MuseumJson getMuseum(@Nonnull String id);
+    MuseumJson findById(@Nonnull String id);
 
     @Nonnull
-    MuseumJson updateMuseum(@Nonnull MuseumJson museumJson);
+    MuseumJson update(@Nonnull MuseumJson museumJson);
 
     @Nonnull
-    MuseumJson addMuseum(@Nonnull MuseumJson museumJson);
+    MuseumJson add(@Nonnull MuseumJson museumJson);
 }

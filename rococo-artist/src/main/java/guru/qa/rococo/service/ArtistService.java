@@ -32,10 +32,10 @@ public class ArtistService {
     }
 
     @Transactional(readOnly = true)
-    public ArtistEntity findById(String id) {
-        return repository.findById(UUID.fromString(id))
+    public ArtistEntity findById(UUID uuid) {
+        return repository.findById(uuid)
                 .orElseThrow(() ->
-                        new ArtistNotFoundException("Artist with id - " + id + " not found."));
+                        new ArtistNotFoundException("Artist with id - " + uuid + " not found."));
     }
 
 
@@ -47,9 +47,7 @@ public class ArtistService {
 
     @Transactional
     public ArtistEntity update(ArtistJson artist) {
-        ArtistEntity entity = repository.findById(artist.getId())
-                .orElseThrow(() ->
-                        new ArtistNotFoundException(format("Artist with id - %s not found.", artist.getId())));
+        ArtistEntity entity = findById(artist.getId());
         return repository.save(entity.fromJson(artist));
     }
 

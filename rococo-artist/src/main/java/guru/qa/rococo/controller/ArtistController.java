@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import guru.qa.rococo.model.ArtistJson;
 import guru.qa.rococo.service.ArtistService;
 
+import java.util.UUID;
+
 
 @Slf4j
 @RestController
@@ -33,7 +35,8 @@ public class ArtistController {
 
     @GetMapping("{id}")
     public ResponseEntity<ArtistJson> findById(@PathVariable String id) {
-        return new ResponseEntity<>(ArtistJson.fromEntity(service.findById(id)), HttpStatus.OK);
+        return new ResponseEntity<>(ArtistJson
+                .fromEntity(service.findById(UUID.fromString(id))), HttpStatus.OK);
     }
 
     @GetMapping("/name/{name}")

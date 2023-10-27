@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import guru.qa.rococo.model.MuseumJson;
 import guru.qa.rococo.service.MuseumService;
 
+import java.util.UUID;
+
 
 @Slf4j
 @RestController
@@ -24,31 +26,31 @@ public class MuseumController {
     }
 
     @GetMapping
-    public Page<MuseumJson> getMuseums(@PageableDefault Pageable pageable) {
-        Page<MuseumEntity> partMuseums = service.getMuseums(pageable);
-        return partMuseums.map(MuseumEntity::toMuseumJson);
+    public Page<MuseumJson> findAll(@PageableDefault Pageable pageable) {
+        Page<MuseumEntity> all = service.findAll(pageable);
+        return all.map(MuseumEntity::toJson);
     }
 
     @GetMapping("{id}")
-    public MuseumJson getMuseumById(@PathVariable String id) {
-        return MuseumJson.toJson(service.getMuseumById(id));
+    public MuseumJson findById(@PathVariable String id) {
+        return MuseumJson.fromEntity(service.findById(UUID.fromString(id)));
     }
 
-    @GetMapping("/search")
-    public Page<MuseumJson> search(@PageableDefault Pageable pageable,
-                                   @RequestParam String title) {
-        Page<MuseumEntity> partMuseums = service.getMuseumByTitle(pageable, title);
-        return partMuseums.map(MuseumEntity::toMuseumJson);
+    @GetMapping("/title/{title}")
+    public Page<MuseumJson> findByTitle(@PageableDefault Pageable pageable,
+                                        @PathVariable String title) {
+        Page<MuseumEntity> all = service.findByTitle(pageable, title);
+        return all.map(MuseumEntity::toJson);
     }
 
     @PatchMapping
-    public MuseumJson updateMuseum(@RequestBody MuseumJson museum) {
-        return MuseumJson.toJson(service.updateMuseum(museum));
+    public MuseumJson update(@RequestBody MuseumJson museum) {
+        return MuseumJson.fromEntity(service.update(museum));
     }
 
     @PostMapping
-    public MuseumJson addMuseum(@RequestBody MuseumJson museum) {
-        return MuseumJson.toJson(service.addMuseum(museum));
+    public MuseumJson add(@RequestBody MuseumJson museum) {
+        return MuseumJson.fromEntity(service.add(museum));
     }
 
 }
