@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import guru.qa.rococo.model.ArtistJson;
 import guru.qa.rococo.service.ArtistService;
@@ -30,8 +32,8 @@ public class ArtistController {
     }
 
     @GetMapping("{id}")
-    public ArtistJson findById(@PathVariable String id) {
-        return ArtistJson.fromEntity(service.findById(id));
+    public ResponseEntity<ArtistJson> findById(@PathVariable String id) {
+        return new ResponseEntity<>(ArtistJson.fromEntity(service.findById(id)), HttpStatus.OK);
     }
 
     @GetMapping("/name/{name}")

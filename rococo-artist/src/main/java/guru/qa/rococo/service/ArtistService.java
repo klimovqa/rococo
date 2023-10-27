@@ -35,7 +35,7 @@ public class ArtistService {
     public ArtistEntity findById(String id) {
         return repository.findById(UUID.fromString(id))
                 .orElseThrow(() ->
-                        new ArtistNotFoundException(format("Artist with id - %s not found.", id)));
+                        new ArtistNotFoundException("Artist with id - " + id + " not found."));
     }
 
 
