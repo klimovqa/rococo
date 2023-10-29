@@ -39,7 +39,7 @@ public class PaintingService {
     public PaintingEntity findById(UUID uuid) {
         return repository.findById(uuid)
                 .orElseThrow(() ->
-                        new PaintingNotFoundException("Painting uuid " + uuid + " not found.")
+                        new PaintingNotFoundException("Painting with uuid " + uuid + " not found.")
                 );
     }
 

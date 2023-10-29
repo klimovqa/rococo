@@ -22,11 +22,11 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class ArtistServiceTest {
     private ArtistService testedObject;
-    private final UUID uuid = UUID.randomUUID();;
-    private final UUID uuidNotExist = UUID.randomUUID();;
-    private final String testName = "test";;
-    private final String bio = "bio";;
-    private final String photo = "photo";;
+    private final UUID uuid = UUID.randomUUID();
+    private final UUID uuidNotExist = UUID.randomUUID();
+    private final String testName = "test";
+    private final String bio = "bio";
+    private final String photo = "photo";
     private ArtistEntity artistEntity;
 
     @BeforeEach

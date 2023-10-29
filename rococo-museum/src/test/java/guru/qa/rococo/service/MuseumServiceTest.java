@@ -26,19 +26,19 @@ import static org.mockito.Mockito.times;
 @ExtendWith(MockitoExtension.class)
 class MuseumServiceTest {
     private MuseumService testedObject;
-    private final UUID uuid = UUID.randomUUID();;
-    private final UUID uuidCountry = UUID.randomUUID();;
-    private final UUID uuidLocation = UUID.randomUUID();;
-    private final UUID uuidNotExist = UUID.randomUUID();;
-    private final String title = "title";;
-    private final String desc = "desc";;
-    private final String photo = "photo";;
+    private final UUID uuid = UUID.randomUUID();
+    private final UUID uuidCountry = UUID.randomUUID();
+    private final UUID uuidLocation = UUID.randomUUID();
+    private final UUID uuidNotExist = UUID.randomUUID();
+    private final String title = "title";
+    private final String desc = "desc";
+    private final String photo = "photo";
     private final String city = "Moscow";
     private final String country = "Russia";
     private MuseumEntity museumEntity;
 
     @BeforeEach
-    void init(){
+    void init() {
         LocationEntity location = new LocationEntity();
         location.setCity(city);
         location.setId(uuidLocation);
@@ -70,6 +70,7 @@ class MuseumServiceTest {
         assertEquals(loc.getCountryId(), uuidCountry);
         assertEquals(loc.getCountryName(), country);
     }
+
     @Test
     void findByIdThrowExceptionIfNotFoundUuid(@Mock MuseumRepository repository) {
         when(repository.findById(eq(uuidNotExist)))
