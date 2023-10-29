@@ -4,13 +4,11 @@
 - [Spring data JPA](https://spring.io/projects/spring-data-jpa)
 - [Spring Web](https://docs.spring.io/spring-framework/docs/current/reference/html/web.html#spring-web)
 - [Spring actuator](https://docs.spring.io/spring-boot/docs/current/reference/html/actuator.html)
-- [Spring web-services](https://docs.spring.io/spring-ws/docs/current/reference/html/)
 - [Apache Kafka](https://developer.confluent.io/quickstart/kafka-docker/)
 - [Docker](https://www.docker.com/resources/what-container/)
 - [Docker-compose](https://docs.docker.com/compose/)
 - [Postgres](https://www.postgresql.org/about/)
 - [Svelte](https://svelte.dev/)
-- [Thymeleaf](https://www.thymeleaf.org/)
 - [Jakarta Bean Validation](https://beanvalidation.org/)
 - [JUnit 5 (Extensions, Resolvers, etc)](https://junit.org/junit5/docs/current/user-guide/)
 - [Retrofit 2](https://square.github.io/retrofit/)
@@ -46,7 +44,7 @@
 После установки и запуска docker daemon необходимо убедиться в работе команд docker, например `docker -v`:
 
 ```posh
-Dmitriis-MacBook-Pro ~ % docker -v
+michailklimov@Michails-MacBook-Air ~ % docker -v
 Docker version 20.10.14, build a224086
 ```
 
@@ -104,9 +102,9 @@ https://github.com/confluentinc/cp-docker-images/issues/801#issuecomment-6920851
 
 #### 5. Установить одну из программ для визуальной работы с Postgres
 
-Например, DBeaver или Datagrip. Мы рекомендуем бесплатную PgAdmin 4.
+Например, DBeaver.
 
-#### 6. Подключиться к БД postgres (host: localhost, port: 5432, user: postgres, pass: secret, database name: postgres) из PgAdmin и создать пустые БД микросервисов
+#### 6. Подключиться к БД postgres (host: localhost, port: 5432, user: postgres, pass: secret, database name: postgres) и создать пустые БД микросервисов
 
 ```sql
 create
@@ -128,7 +126,7 @@ create
 Версию установленной Java необходимо проверить командой `java -version`
 
 ```posh
-Dmitriis-MacBook-Pro ~ % java -version
+michailklimov@Michails-MacBook-Air ~ % java -version
 openjdk version "19.0.1" 2022-10-18
 OpenJDK Runtime Environment Homebrew (build 19.0.1)
 ```
@@ -148,28 +146,28 @@ OpenJDK Runtime Environment Homebrew (build 19.0.1)
 для REST:
 
 ```posh
-Dmitriis-MacBook-Pro niffler % cd niffler-frontend
+michailklimov@Michails-MacBook-Air niffler % cd niffler-frontend
 ```
 
 или для GraphQL:
 
 ```posh
-Dmitriis-MacBook-Pro niffler % cd niffler-frontend-gql
+michailklimov@Michails-MacBook-Air niffler % cd niffler-frontend-gql
 ```
 
 #### 2. Запустить фронтенд (сначала обновить зависимости)
 Для *nix:
 
 ```posh
-Dmitriis-MacBook-Pro niffler-frontend % npm i
-Dmitriis-MacBook-Pro niffler-frontend % npm run build:dev
+michailklimov@Michails-MacBook-Air niffler-frontend % npm i
+michailklimov@Michails-MacBook-Air niffler-frontend % npm run build:dev
 ```
 
 Для Windows:
 
 ```posh
-Dmitriis-MacBook-Pro niffler-frontend % npm i
-Dmitriis-MacBook-Pro niffler-frontend % npm run build:windows
+michailklimov@Michails-MacBook-Air niffler-frontend % npm i
+michailklimov@Michails-MacBook-Air niffler-frontend % npm run build:windows
 ```
 
 #### 3. Прописать run конфигурацию для всех сервисов niffler-* - Active profiles local
@@ -183,8 +181,8 @@ Dmitriis-MacBook-Pro niffler-frontend % npm run build:windows
 - Запустить сервис auth
 
 ```posh
-Dmitriis-MacBook-Pro niffler % cd niffler-auth
-Dmitriis-MacBook-Pro niffler-auth % gradle bootRun --args='--spring.profiles.active=local'
+michailklimov@Michails-MacBook-Air niffler % cd niffler-auth
+michailklimov@Michails-MacBook-Air niffler-auth % gradle bootRun --args='--spring.profiles.active=local'
 ```
 
 Или просто перейдя к main-классу приложения NifflerAuthApplication выбрать run в IDEA (предварительно удостовериться что
@@ -211,7 +209,7 @@ Dmitriis-MacBook-Pro niffler-auth % gradle bootRun --args='--spring.profiles.act
 #### gateway:   127.0.0.1 gateway.niffler.dc
 
 ```posh
-Dmitriis-MacBook-Pro niffler % vi /etc/hosts
+michailklimov@Michails-MacBook-Air niffler % vi /etc/hosts
 ```
 
 ```posh
@@ -230,7 +228,7 @@ Dmitriis-MacBook-Pro niffler % vi /etc/hosts
 #### 5. Перейти в корневой каталог проекта
 
 ```posh
-Dmitriis-MacBook-Pro niffler % cd niffler
+michailklimov@Michails-MacBook-Air niffler % cd niffler
 ```
 
 #### 6. Запустить все сервисы, если необходим фронтенд GraphQL, то это указывается аргументом к скрипту:
@@ -238,13 +236,13 @@ Dmitriis-MacBook-Pro niffler % cd niffler
 для REST:
 
 ```posh
-Dmitriis-MacBook-Pro  niffler % bash docker-compose-dev.sh
+michailklimov@Michails-MacBook-Air  niffler % bash docker-compose-dev.sh
 ```
 
 для GraphQL:
 
 ```posh
-Dmitriis-MacBook-Pro  niffler % bash docker-compose-dev.sh gql
+michailklimov@Michails-MacBook-Air  niffler % bash docker-compose-dev.sh gql
 ```
 
 Niffler при запуске в докере будет работать для вас по адресу http://niffler-frontend:80/, этот порт НЕ НУЖНО указывать
@@ -285,7 +283,7 @@ Niffler при запуске в докере будет работать для
 #### 3. Перейти в корневой каталог проекта
 
 ```posh
-Dmitriis-MacBook-Pro niffler % cd niffler
+michailklimov@Michails-MacBook-Air niffler % cd niffler
 ```
 
 #### 4. Собрать все имеджи, запушить и запустить niffler одной командой, если необходим фронтенд GraphQL, то это указывается аргументом к скрипту:
@@ -293,13 +291,13 @@ Dmitriis-MacBook-Pro niffler % cd niffler
 для REST:
 
 ```posh
-Dmitriis-MacBook-Pro  niffler % bash docker-compose-dev.sh push
+michailklimov@Michails-MacBook-Air  niffler % bash docker-compose-dev.sh push
 ```
 
 для GraphQL:
 
 ```posh
-Dmitriis-MacBook-Pro  niffler % bash docker-compose-dev.sh gql push
+michailklimov@Michails-MacBook-Air  niffler % bash docker-compose-dev.sh gql push
 ```
 
 # Запуск e-2-e тестов в Docker network изолированно Niffler в докере:
@@ -307,7 +305,7 @@ Dmitriis-MacBook-Pro  niffler % bash docker-compose-dev.sh gql push
 #### 1. Перейти в корневой каталог проекта
 
 ```posh
-Dmitriis-MacBook-Pro niffler % cd niffler
+michailklimov@Michails-MacBook-Air niffler % cd niffler
 ```
 
 #### 2. Запустить все сервисы и тесты, если необходим фронтенд GraphQL, то это указывается аргументом к скрипту:
@@ -315,13 +313,13 @@ Dmitriis-MacBook-Pro niffler % cd niffler
 для REST:
 
 ```posh
-Dmitriis-MacBook-Pro  niffler % bash docker-compose-e2e.sh
+michailklimov@Michails-MacBook-Air  niffler % bash docker-compose-e2e.sh
 ```
 
 для GraphQL:
 
 ```posh
-Dmitriis-MacBook-Pro  niffler % bash docker-compose-e2e.sh gql
+michailklimov@Michails-MacBook-Air  niffler % bash docker-compose-e2e.sh gql
 ```
 
 #### 3. Selenoid UI доступен по адресу: http://localhost:9090/

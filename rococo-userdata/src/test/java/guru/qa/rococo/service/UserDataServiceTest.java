@@ -12,6 +12,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -47,7 +48,7 @@ class UserDataServiceTest {
     @ParameterizedTest
     void userShouldBeUpdated(String avatar, @Mock UserRepository userRepository) {
         when(userRepository.findByUsername(eq(mainTestUserName)))
-                .thenReturn(mainTestUser);
+                .thenReturn(Optional.of(mainTestUser));
 
         when(userRepository.save(any(UserEntity.class)))
                 .thenAnswer(answer -> answer.getArguments()[0]);
@@ -73,7 +74,7 @@ class UserDataServiceTest {
     @Test
     void requiredUserShouldReturnCorrectUser(@Mock UserRepository userRepository) {
         when(userRepository.findByUsername(eq(mainTestUserName)))
-                .thenReturn(mainTestUser);
+                .thenReturn(Optional.of(mainTestUser));
 
         testedObject = new UserDataService(userRepository);
 
@@ -86,9 +87,9 @@ class UserDataServiceTest {
     }
 
     @Test
-    void getRequiredUserShouldThrowNotFoundExceptionIfUserNotFound(@Mock UserRepository userRepository) {
+    void requiredUserShouldThrowNotFoundExceptionIfUserNotFound(@Mock UserRepository userRepository) {
         when(userRepository.findByUsername(eq(notExistingUser)))
-                .thenReturn(null);
+                .thenReturn(Optional.empty());
 
         testedObject = new UserDataService(userRepository);
 

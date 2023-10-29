@@ -27,7 +27,7 @@ public class PaintingController {
 
     @GetMapping
     public Page<PaintingJson> findAll(@PageableDefault Pageable pageable) {
-        Page<PaintingEntity> all = service.getPainting(pageable);
+        Page<PaintingEntity> all = service.findAll(pageable);
         return all.map(PaintingEntity::toJson);
     }
 

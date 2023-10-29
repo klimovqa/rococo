@@ -45,7 +45,7 @@ class GeoServiceTest {
     }
 
     @Test
-    void getCountryByNameReturnCorrectResult(@Mock GeoRepository repository) {
+    void serviceGeoFindByNameReturnCorrectResult(@Mock GeoRepository repository) {
         when(repository.findByName(eq(countryName)))
                 .thenReturn(countryEntityOptional);
 
@@ -58,7 +58,20 @@ class GeoServiceTest {
     }
 
     @Test
-    void getCountryByNameShouldThrowCountryNotFoundExceptionIfCountryNotFound(
+    void serviceGeoFindByIdReturnCorrectResult(@Mock GeoRepository repository) {
+        when(repository.findById(eq(countryUUID)))
+                .thenReturn(countryEntityOptional);
+
+        testedObject = new GeoService(repository);
+
+        CountryEntity actual = testedObject.findById(countryUUID);
+
+        assertEquals(countryEntity, actual,
+                "The essence of the country is not equal to the expected");
+    }
+
+    @Test
+    void serviceGeoShouldThrowCountryNotFoundExceptionIfCountryNotFound(
             @Mock GeoRepository repository) {
         when(repository.findByName(eq(countryNameNotExist)))
                 .thenReturn(countryEntityOptionalNotExist);
@@ -68,7 +81,7 @@ class GeoServiceTest {
         final CountryNotFoundException exception = assertThrows(CountryNotFoundException.class,
                 () -> testedObject.findByName(countryNameNotExist));
         assertEquals(
-                "Country not found.",
+                "Country name - ТакойСтраныНеСуществует not found.",
                 exception.getMessage()
         );
     }
