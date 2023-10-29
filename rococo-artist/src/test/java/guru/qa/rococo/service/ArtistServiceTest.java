@@ -21,8 +21,6 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ArtistServiceTest {
-
-
     private ArtistService testedObject;
     private final UUID uuid = UUID.randomUUID();;
     private final UUID uuidNotExist = UUID.randomUUID();;
@@ -70,7 +68,7 @@ class ArtistServiceTest {
     }
 
     @Test
-    void requiredArtisShouldUpdated(@Mock ArtistRepository repository) {
+    void requiredArtistShouldUpdated(@Mock ArtistRepository repository) {
         when(repository.findById(eq(uuid)))
                 .thenReturn(Optional.of(artistEntity));
 
@@ -94,10 +92,9 @@ class ArtistServiceTest {
     }
 
     @Test
-    void requiredArtisShouldAdded(@Mock ArtistRepository repository) {
+    void requiredArtistShouldAdded(@Mock ArtistRepository repository) {
         when(repository.save(any(ArtistEntity.class)))
                 .thenReturn(artistEntity);
-                //.thenAnswer(answer -> answer.getArguments()[0]);
 
         testedObject = new ArtistService(repository);
 

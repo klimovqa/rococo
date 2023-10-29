@@ -33,7 +33,7 @@ public class MuseumService {
     public MuseumEntity findById(UUID uuid) {
         return repository.findById(uuid).
                 orElseThrow(() ->
-                        new MuseumNotFoundException("Museum uuid " + uuid + "not found."));
+                        new MuseumNotFoundException("Museum with uuid " + uuid + " not found."));
     }
 
 
