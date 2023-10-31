@@ -6,3 +6,5 @@ include('rococo-museum')
 include('rococo-artist')
 include('rococo-painting')
 include('rococo-geo')
+include('rococo-tests')
+
