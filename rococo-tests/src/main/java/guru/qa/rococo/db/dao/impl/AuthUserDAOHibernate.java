@@ -2,9 +2,9 @@ package guru.qa.rococo.db.dao.impl;
 
 import guru.qa.rococo.db.ServiceDB;
 import guru.qa.rococo.db.dao.AuthUserDAO;
+import guru.qa.rococo.db.entity.auth.AuthUserEntity;
 import guru.qa.rococo.db.jpa.EntityManagerFactoryProvider;
 import guru.qa.rococo.db.jpa.JpaService;
-import guru.qa.rococo.db.model.auth.AuthUserEntity;
 
 import java.util.UUID;
 
@@ -37,7 +37,7 @@ public class AuthUserDAOHibernate extends JpaService implements AuthUserDAO {
         return em.createQuery("select u from AuthUserEntity u where u.id=:userId",
                         AuthUserEntity.class)
                 .setParameter("userId", userId)
-                .getSingleResult();
+                .getResultStream().findFirst().orElse(null);
     }
 
     @Override
@@ -45,6 +45,6 @@ public class AuthUserDAOHibernate extends JpaService implements AuthUserDAO {
         return em.createQuery("select u from AuthUserEntity u where u.username=:name",
                         AuthUserEntity.class)
                 .setParameter("name", name)
-                .getSingleResult();
+                .getResultStream().findFirst().orElse(null);
     }
 }

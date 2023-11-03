@@ -2,7 +2,7 @@ package guru.qa.rococo.rest;
 
 import guru.qa.rococo.db.dao.AuthUserDAO;
 import guru.qa.rococo.db.dao.impl.AuthUserDAOHibernate;
-import guru.qa.rococo.db.model.auth.AuthUserEntity;
+import guru.qa.rococo.db.entity.auth.AuthUserEntity;
 import io.qameta.allure.AllureId;
 import io.qameta.allure.Epic;
 import org.junit.jupiter.api.DisplayName;

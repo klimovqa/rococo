@@ -5,9 +5,7 @@ import guru.qa.rococo.db.ServiceDB;
 import guru.qa.rococo.db.dao.UserDataUserDAO;
 import guru.qa.rococo.db.jpa.EntityManagerFactoryProvider;
 import guru.qa.rococo.db.jpa.JpaService;
-import guru.qa.rococo.db.model.userdata.UserDataEntity;
-
-import java.util.List;
+import guru.qa.rococo.db.entity.userdata.UserDataEntity;
 import java.util.UUID;
 
 public class UserdataUserDAOHibernate extends JpaService implements UserDataUserDAO {
@@ -41,7 +39,7 @@ public class UserdataUserDAOHibernate extends JpaService implements UserDataUser
         return em.createQuery("select u from UserDataEntity u where u.username=:username",
                         UserDataEntity.class)
                 .setParameter("username", username)
-                .getSingleResult();
+                .getResultStream().findFirst().orElse(null);
     }
 
     @Override

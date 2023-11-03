@@ -1,35 +1,63 @@
 package guru.qa.rococo.web;
 
-import guru.qa.rococo.db.dao.AuthUserDAO;
-import guru.qa.rococo.db.dao.impl.AuthUserDAOHibernate;
-import guru.qa.rococo.db.model.auth.AuthUserEntity;
-import io.qameta.allure.AllureId;
+import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.WebDriverRunner;
+import guru.qa.rococo.jupiter.annotation.ApiLogin;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Epic;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+
+import java.io.ByteArrayInputStream;
+
 @Epic("[WEB][rococo-frontend]: Художники")
 @DisplayName("[WEB][rococo-frontend]: Художники")
-public class SameTest {
+@Tag("WEB")
+public class SameTest extends BaseWebTest{
 
     @DisplayName("WEB: Пользователь должен видеть список Художников")
-    @Tag("WEB")
-    @AllureId("500018")
-    @Test
+    @ApiLogin(
+            username = "dima7",
+            password = "12345"
+    )
     void testWeb(){
-        System.out.println("test");
-        AuthUserDAO authUserDAO = new AuthUserDAOHibernate();
-        AuthUserEntity dima = authUserDAO.findByName("dima");
-        System.out.println(dima);
+        Selenide.open(CFG.baseUrl());
+        Selenide.sleep(2000);
+        if (WebDriverRunner.hasWebDriverStarted()) {
+            Allure.addAttachment("Dima", new ByteArrayInputStream(
+                    ((TakesScreenshot) WebDriverRunner.getWebDriver()).getScreenshotAs(OutputType.BYTES)
+            ));
+        }
     }
     @DisplayName("WEB: Пользователь должен видеть список Художников 2")
-    @Tag("WEB")
-    @AllureId("500019")
-    @Test
+    @ApiLogin(
+            username = "vova7",
+            password = "12345"
+    )
     void testWeb2(){
-        System.out.println("test");
-        AuthUserDAO authUserDAO = new AuthUserDAOHibernate();
-        AuthUserEntity dima = authUserDAO.findByName("dima");
-        System.out.println(dima);
+        Selenide.open(CFG.baseUrl());
+        Selenide.sleep(2000);
+        if (WebDriverRunner.hasWebDriverStarted()) {
+            Allure.addAttachment("vova", new ByteArrayInputStream(
+                    ((TakesScreenshot) WebDriverRunner.getWebDriver()).getScreenshotAs(OutputType.BYTES)
+            ));
+        }
+    }
+
+    @DisplayName("WEB: Пользователь должен видеть список Художников 3")
+    @ApiLogin(
+            username = "valentin7",
+            password = "12345"
+    )
+    void testWeb3(){
+        Selenide.open(CFG.baseUrl());
+        Selenide.sleep(2000);
+        if (WebDriverRunner.hasWebDriverStarted()) {
+            Allure.addAttachment("valentin", new ByteArrayInputStream(
+                    ((TakesScreenshot) WebDriverRunner.getWebDriver()).getScreenshotAs(OutputType.BYTES)
+            ));
+        }
     }
 }

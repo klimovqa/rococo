@@ -1,17 +1,15 @@
-package guru.qa.rococo.db.model.auth;
+package guru.qa.rococo.db.entity.auth;
 
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 import java.util.UUID;
 
-@Data
-@ToString(exclude = "user")
-@EqualsAndHashCode
 @Entity
 @Table(name = "authorities")
+@Data
+@EqualsAndHashCode
 public class AuthorityEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

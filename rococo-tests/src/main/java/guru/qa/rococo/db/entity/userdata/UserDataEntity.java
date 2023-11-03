@@ -1,4 +1,4 @@
-package guru.qa.rococo.db.model.userdata;
+package guru.qa.rococo.db.entity.userdata;
 
 import jakarta.persistence.*;
 import lombok.Data;

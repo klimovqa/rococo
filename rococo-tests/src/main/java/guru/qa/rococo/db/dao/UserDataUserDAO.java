@@ -1,7 +1,7 @@
 package guru.qa.rococo.db.dao;
 
 
-import guru.qa.rococo.db.model.userdata.UserDataEntity;
+import guru.qa.rococo.db.entity.userdata.UserDataEntity;
 
 import java.util.UUID;
 

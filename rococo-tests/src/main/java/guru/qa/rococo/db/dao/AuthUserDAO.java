@@ -1,6 +1,6 @@
 package guru.qa.rococo.db.dao;
 
-import guru.qa.rococo.db.model.auth.AuthUserEntity;
+import guru.qa.rococo.db.entity.auth.AuthUserEntity;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 

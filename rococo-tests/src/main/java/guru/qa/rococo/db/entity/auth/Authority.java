@@ -1,4 +1,4 @@
-package guru.qa.rococo.db.model.auth;
+package guru.qa.rococo.db.entity.auth;
 
 public enum Authority {
     read, write
