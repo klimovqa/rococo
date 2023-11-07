@@ -13,6 +13,7 @@ import guru.qa.rococo.db.repository.UserRepository;
 import guru.qa.rococo.db.repository.UserRepositoryImp;
 import guru.qa.rococo.jupiter.annotation.ApiLogin;
 import guru.qa.rococo.util.OauthUtils;
+import io.qameta.allure.Step;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -32,6 +33,7 @@ public class ApiLoginExtension implements BeforeEachCallback, AfterEachCallback 
     private final AuthClient authClient = new AuthClient();
 
     @Override
+    @Step("Api login")
     public void beforeEach(ExtensionContext context) throws Exception {
         ApiLogin apiLogin = AnnotationSupport
                 .findAnnotation(

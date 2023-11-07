@@ -1,4 +1,4 @@
-package guru.qa.rococo.web;
+package guru.qa.rococo.rest;
 
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
@@ -12,31 +12,36 @@ import org.openqa.selenium.TakesScreenshot;
 
 import java.io.ByteArrayInputStream;
 
-@Epic("[WEB][rococo-frontend]: Художники")
-@DisplayName("[WEB][rococo-frontend]: Художники")
+@Epic("[WEB]")
+@DisplayName("[WEB]")
 @Tag("WEB")
-public class SameTest extends BaseWebTest{
+public class WebTest extends BaseWebTest {
 
-    @DisplayName("WEB: Пользователь должен видеть список Художников")
-    @ApiLogin(
-            username = "dima7",
-            password = "12345"
-    )
+    @DisplayName("WEB: 1")
+//    @ApiLogin(
+//            username = "dima7",
+//            password = "12345"
+//    )
     void testWeb(){
+        System.out.println("##### start web test");
         Selenide.open(CFG.baseUrl());
+        System.out.println("##### after open url");
+        System.out.println("dima7");
         Selenide.sleep(2000);
         if (WebDriverRunner.hasWebDriverStarted()) {
             Allure.addAttachment("Dima", new ByteArrayInputStream(
                     ((TakesScreenshot) WebDriverRunner.getWebDriver()).getScreenshotAs(OutputType.BYTES)
             ));
         }
+        System.out.println("##### end web test");
     }
-    @DisplayName("WEB: Пользователь должен видеть список Художников 2")
-    @ApiLogin(
-            username = "vova7",
-            password = "12345"
-    )
+    @DisplayName("WEB: 2")
+//    @ApiLogin(
+//            username = "vova7",
+//            password = "12345"
+//    )
     void testWeb2(){
+        System.out.println("vova7");
         Selenide.open(CFG.baseUrl());
         Selenide.sleep(2000);
         if (WebDriverRunner.hasWebDriverStarted()) {
@@ -46,12 +51,14 @@ public class SameTest extends BaseWebTest{
         }
     }
 
-    @DisplayName("WEB: Пользователь должен видеть список Художников 3")
-    @ApiLogin(
-            username = "valentin7",
-            password = "12345"
-    )
+    @DisplayName("WEB: 3")
+//    @ApiLogin(
+//            username = "valentin7",
+//            password = "12345"
+//    )
+//    @Test
     void testWeb3(){
+        System.out.println("valentin7");
         Selenide.open(CFG.baseUrl());
         Selenide.sleep(2000);
         if (WebDriverRunner.hasWebDriverStarted()) {
@@ -59,5 +66,12 @@ public class SameTest extends BaseWebTest{
                     ((TakesScreenshot) WebDriverRunner.getWebDriver()).getScreenshotAs(OutputType.BYTES)
             ));
         }
+
+        System.out.println("end");
+    }
+
+//    @Test
+    void testWeb4(){
+        Selenide.open(CFG.baseUrl());
     }
 }

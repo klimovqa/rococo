@@ -5,7 +5,6 @@ buildscript {
         selenideVersion = '6.18.0'
         retrofitVersion = '2.9.0'
         okhttp3Version = '3.14.9'
-        springJdbcVersion = '6.0.12'
     }
 }
 
@@ -66,10 +65,10 @@ tasks.withType(JavaCompile) {
 }
 
 test {
-    useJUnitPlatform()
     options {
         systemProperties(System.getProperties())
     }
     testLogging.showStandardStreams = true
     testLogging.exceptionFormat = 'full'
+    useJUnitPlatform()
 }

@@ -1,4 +1,4 @@
-package guru.qa.rococo.web;
+package guru.qa.rococo.rest;
 
 import guru.qa.rococo.config.Config;
 import guru.qa.rococo.jupiter.annotation.WebTest;
