@@ -13,12 +13,8 @@ public class DockerConfig implements Config {
         Configuration.timeout = 10000;
         Configuration.browser = "chrome";
         Configuration.browserVersion = "110.0";
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--no-sandbox");
-        options.addArguments("--headless");
-        options.addArguments("--disable-gpu");
-        options.addArguments("--disable-dev-shm-usage");
-        Configuration.browserCapabilities = options;
+        Configuration.browserCapabilities = new ChromeOptions().addArguments("--no-sandbox");
+
     }
 
     private DockerConfig() {

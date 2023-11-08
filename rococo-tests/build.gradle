@@ -27,7 +27,6 @@ allure {
 }
 
 
-
 dependencies {
     // JUnit
     implementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
@@ -47,6 +46,8 @@ dependencies {
     implementation 'com.github.javafaker:javafaker:1.0.2'
     implementation 'commons-io:commons-io:2.11.0'
     implementation 'commons-logging:commons-logging:1.2'
+    implementation 'org.apache.commons:commons-csv:1.8'
+
 
     // Lombok
     annotationProcessor "org.projectlombok:lombok:${project.ext.lombokVersion}"

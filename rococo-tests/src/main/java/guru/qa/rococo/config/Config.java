@@ -42,5 +42,9 @@ public interface Config {
         return 5432;
     }
 
+    default String pathArtistCsv() {
+        return "rococo-tests/src/main/resources/data/artist.csv";
+    }
+
 
 }
