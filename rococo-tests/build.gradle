@@ -1,0 +1,75 @@
+buildscript {
+    ext {
+        junitVersion = '5.10.0'
+        allureVersion = '2.24.0'
+        selenideVersion = '6.18.0'
+        retrofitVersion = '2.9.0'
+        okhttp3Version = '3.14.9'
+    }
+}
+
+plugins {
+    id 'java'
+    id 'io.qameta.allure' version '2.11.2'
+    id 'io.qameta.allure-adapter' version '2.11.2'
+}
+
+group 'guru.qa'
+version '0.0.1-SNAPSHOT'
+
+allure {
+    version.set("${allureVersion}")
+    adapter {
+        aspectjVersion.set("1.9.19")
+        autoconfigure.set(true)
+        aspectjWeaver.set(true)
+    }
+}
+
+
+dependencies {
+    // JUnit
+    implementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
+    // REST
+    implementation "com.squareup.retrofit2:retrofit:${retrofitVersion}"
+    implementation "com.squareup.retrofit2:converter-jackson:${retrofitVersion}"
+    implementation "com.squareup.okhttp3:okhttp-urlconnection:${okhttp3Version}"
+    implementation "com.squareup.okhttp3:logging-interceptor:${okhttp3Version}"
+    // Allure
+    implementation("io.qameta.allure:allure-junit5:${allureVersion}") {
+        exclude group: "org.junit.jupiter"
+    }
+    implementation "io.qameta.allure:allure-attachments:${allureVersion}"
+    // WEB
+    implementation "com.codeborne:selenide:${selenideVersion}"
+    // Utils
+    implementation 'com.github.javafaker:javafaker:1.0.2'
+    implementation 'commons-io:commons-io:2.11.0'
+    implementation 'commons-logging:commons-logging:1.2'
+    implementation 'org.apache.commons:commons-csv:1.8'
+
+
+    // Lombok
+    annotationProcessor "org.projectlombok:lombok:${project.ext.lombokVersion}"
+    compileOnly "org.projectlombok:lombok:${project.ext.lombokVersion}"
+    // DB
+    implementation 'org.postgresql:postgresql:42.5.3'
+    implementation 'p6spy:p6spy:3.9.1'
+    implementation 'org.hibernate:hibernate-core:6.1.7.Final'
+    implementation 'com.github.vertical-blank:sql-formatter:2.0.3'
+    implementation 'org.springframework.security:spring-security-crypto:6.1.0'
+
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+test {
+    options {
+        systemProperties(System.getProperties())
+    }
+    testLogging.showStandardStreams = true
+    testLogging.exceptionFormat = 'full'
+    useJUnitPlatform()
+}
