@@ -1,6 +1,7 @@
 package guru.qa.rococo.api.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import guru.qa.rococo.db.entity.painting.PaintingEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -26,4 +27,14 @@ public class PaintingJson {
     private MuseumJson museum;
     @JsonProperty("artist")
     private ArtistJson artist;
+
+    public static PaintingEntity toEntity(PaintingJson painting) {
+        PaintingEntity paintingEntity = new PaintingEntity();
+        paintingEntity.setTitle(painting.getTitle());
+        paintingEntity.setDescription(painting.getDescription());
+        paintingEntity.setContent(painting.getContent());
+        paintingEntity.setMuseumId(painting.getMuseum().getId());
+        paintingEntity.setArtistId(painting.getArtist().getId());
+        return paintingEntity;
+    }
 }

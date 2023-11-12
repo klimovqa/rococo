@@ -16,4 +16,17 @@ public class ArtistDAOHibernate extends JpaService implements ArtistDAO {
     public void createArtist(ArtistEntity artist) {
         persist(artist);
     }
+
+    @Override
+    public ArtistEntity findByName(String name) {
+        return em.createQuery("select u from ArtistEntity u where u.name=:name",
+                        ArtistEntity.class)
+                .setParameter("name", name)
+                .getResultStream().findFirst().orElse(null);
+    }
+
+    @Override
+    public void removeAll() {
+        removeAll("delete from ArtistEntity");
+    }
 }

@@ -10,7 +10,7 @@ import guru.qa.rococo.db.entity.auth.Authority;
 import guru.qa.rococo.db.entity.auth.AuthorityEntity;
 import guru.qa.rococo.db.entity.userdata.UserDataEntity;
 import guru.qa.rococo.db.repository.UserRepository;
-import guru.qa.rococo.db.repository.UserRepositoryImp;
+import guru.qa.rococo.db.repository.imp.UserRepositoryImp;
 import guru.qa.rococo.jupiter.annotation.ApiLogin;
 import guru.qa.rococo.util.OauthUtils;
 import io.qameta.allure.Step;

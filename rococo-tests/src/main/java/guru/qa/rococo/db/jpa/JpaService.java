@@ -21,6 +21,9 @@ public abstract class JpaService {
     protected <T> void remove(T entity) {
         tx(em -> em.remove(entity));
     }
+    protected void removeAll(String query) {
+        tx(em -> em.createQuery(query).executeUpdate());
+    }
 
     protected <T> T merge(T entity) {
         return txWithResult(em -> em.merge(entity));
