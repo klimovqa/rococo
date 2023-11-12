@@ -33,7 +33,6 @@ public class ApiLoginExtension implements BeforeEachCallback, AfterEachCallback 
     private final AuthClient authClient = new AuthClient();
 
     @Override
-    @Step("Api login")
     public void beforeEach(ExtensionContext context) throws Exception {
         ApiLogin apiLogin = AnnotationSupport
                 .findAnnotation(
