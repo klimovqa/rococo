@@ -47,6 +47,7 @@ dependencies {
     implementation 'commons-io:commons-io:2.11.0'
     implementation 'commons-logging:commons-logging:1.2'
     implementation 'org.apache.commons:commons-csv:1.8'
+    implementation 'org.modelmapper:modelmapper:2.4.4'
 
 
     // Lombok

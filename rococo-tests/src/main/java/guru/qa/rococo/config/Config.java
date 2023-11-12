@@ -45,6 +45,12 @@ public interface Config {
     default String pathArtistCsv() {
         return "rococo-tests/src/main/resources/data/artist.csv";
     }
+    default String pathMuseumCsv() {
+        return "rococo-tests/src/main/resources/data/museum.csv";
+    }
+    default String pathPaintingCsv() {
+        return "rococo-tests/src/main/resources/data/painting.csv";
+    }
 
 
 }
