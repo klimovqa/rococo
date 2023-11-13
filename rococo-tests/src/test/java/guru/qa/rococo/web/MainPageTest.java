@@ -1,6 +1,9 @@
 package guru.qa.rococo.web;
 
+import guru.qa.rococo.page.ArtistPage;
 import guru.qa.rococo.page.MainPage;
+import guru.qa.rococo.page.MuseumPage;
+import guru.qa.rococo.page.PaintingPage;
 import io.qameta.allure.Epic;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -14,12 +17,15 @@ import org.junit.jupiter.api.Test;
 public class MainPageTest extends BaseWebTest {
 
     private final MainPage mainPage = new MainPage();
+    private final MuseumPage museumPage = new MuseumPage();
+    private final ArtistPage artistPage = new ArtistPage();
+    private final PaintingPage paintingPage = new PaintingPage();
+
     @DisplayName("Проверка главной страницы")
     @Test
     void checkMainPageTest(){
         mainPage.openPage();
-        mainPage.checkByTextShouldBeVisible("Проверяем заголовок на главной странице Rococo",
-                "Ваши любимые картины и художники всегда рядом");
+        mainPage.checkTitleMainPage();
         mainPage.checkByTextShouldBeVisible("Проверяем отображение надписи Картины",
                 "Картины");
         mainPage.checkByTextShouldBeVisible("Проверяем отображение надписи Музеи",
@@ -32,5 +38,35 @@ public class MainPageTest extends BaseWebTest {
         mainPage.checkLinkOfMenu("/artist");
         mainPage.checkLinkOfMenu("/museum");
         mainPage.checkLinkOfMenu("/painting");
+    }
+
+    @DisplayName("Проверка переключения темы")
+    @Test
+    void checkChangeThemeTest(){
+        mainPage.openPage();
+        String theme = mainPage.getCurrentTheme();
+        mainPage.checkChangeTheme(theme);
+        mainPage.changeThemeClick();
+        String theme2 = mainPage.getCurrentTheme();
+        mainPage.checkChangeTheme(theme2);
+        mainPage.changeThemeClick();
+        String theme3 = mainPage.getCurrentTheme();
+        mainPage.checkChangeTheme(theme3);
+    }
+
+    @DisplayName("Проверка линка логотипа на главной страницы")
+    @Test
+    void checkCheckLinkMainPageTest(){
+        museumPage.openPage();
+        mainPage.goToMainPage();
+        mainPage.checkTitleMainPage();
+
+        artistPage.openPage();
+        mainPage.goToMainPage();
+        mainPage.checkTitleMainPage();
+
+        paintingPage.openPage();
+        mainPage.goToMainPage();
+        mainPage.checkTitleMainPage();
     }
 }
