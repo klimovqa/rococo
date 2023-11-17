@@ -9,6 +9,7 @@ public class LocalConfig implements Config {
 
     static {
         Configuration.browserSize = "1980x1024";
+        Configuration.headless = true;
     }
 
     private LocalConfig() {

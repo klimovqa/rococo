@@ -9,9 +9,11 @@ import guru.qa.rococo.db.entity.museum.MuseumEntity;
 import guru.qa.rococo.db.repository.ArtistRepository;
 import guru.qa.rococo.db.repository.MuseumRepository;
 import guru.qa.rococo.db.repository.PaintingRepository;
+import guru.qa.rococo.db.repository.UserRepository;
 import guru.qa.rococo.db.repository.imp.ArtistRepositoryImp;
 import guru.qa.rococo.db.repository.imp.MuseumRepositoryImp;
 import guru.qa.rococo.db.repository.imp.PaintingRepositoryImp;
+import guru.qa.rococo.db.repository.imp.UserRepositoryImp;
 import guru.qa.rococo.jupiter.annotation.AroundTestExtension;
 import guru.qa.rococo.util.CsvUtils;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -20,6 +22,7 @@ import java.util.List;
 
 public class DataProviderExtension implements AroundTestExtension {
 
+    private final UserRepository userRepository = new UserRepositoryImp();
     private final ArtistRepository artistRepository = new ArtistRepositoryImp();
     private final MuseumRepository museumRepository = new MuseumRepositoryImp();
     private final PaintingRepository paintingRepository = new PaintingRepositoryImp();
@@ -28,6 +31,7 @@ public class DataProviderExtension implements AroundTestExtension {
     @Override
     public void beforeAllTests(ExtensionContext extensionContext) {
         //Очистка бд
+        userRepository.removeAll();
         artistRepository.removeAll();
         museumRepository.removeAll();
         paintingRepository.removeAll();

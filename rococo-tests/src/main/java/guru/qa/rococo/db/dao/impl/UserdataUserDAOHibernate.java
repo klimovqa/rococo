@@ -46,4 +46,9 @@ public class UserdataUserDAOHibernate extends JpaService implements UserDataUser
     public void updateUser(UserDataEntity user) {
         merge(user);
     }
+
+    @Override
+    public void removeAll() {
+        removeAll("delete from UserDataEntity");
+    }
 }

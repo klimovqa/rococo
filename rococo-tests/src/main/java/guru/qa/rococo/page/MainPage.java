@@ -11,6 +11,11 @@ public class MainPage extends BasePage {
     private final static String DARK = "Toggle Dark Mode";
     private final static String LIGHT = "Toggle Light Mode";
 
+    public void goToLogin() {
+        step("Нажимаем кнопку Войти на главной странице", () ->
+                $(byText("Войти")).click());
+    }
+
     public void openPage() {
         step("Открываем главную страницу Rococo", () ->
                 open(CFG.rococoFrontUrl()));
@@ -53,4 +58,18 @@ public class MainPage extends BasePage {
     }
 
 
+    public void goToMuseumPage() {
+        step("Переходим на страницу Музеи", () ->
+                $("header a[href='/museum']").click());
+    }
+
+    public void goToPaintingPage() {
+        step("Переходим на страницу Картинки", () ->
+                $("header a[href='/painting']").click());
+    }
+
+    public void goToArtistPage() {
+        step("Переходим на страницу Художники", () ->
+                $("header a[href='/artist']").click());
+    }
 }

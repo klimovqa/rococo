@@ -45,6 +45,12 @@ public class UserRepositoryImp implements UserRepository {
         return udUserDAO.findByUsername(username);
     }
 
+    @Override
+    public void removeAll() {
+        udUserDAO.removeAll();
+        authUserDAO.removeAll();
+    }
+
     private UserDataEntity fromAuthUser(AuthUserEntity user) {
         UserDataEntity userdataUser = new UserDataEntity();
         userdataUser.setUsername(user.getUsername());

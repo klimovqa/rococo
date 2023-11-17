@@ -5,6 +5,7 @@ import guru.qa.rococo.page.MainPage;
 import guru.qa.rococo.page.MuseumPage;
 import guru.qa.rococo.page.PaintingPage;
 import io.qameta.allure.Epic;
+import io.qameta.allure.Story;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 
 @Epic("[WEB]")
+@Story("Главная страница")
 @DisplayName("[WEB] Главная страница")
 @Tag("WEB")
 public class MainPageTest extends BaseWebTest {

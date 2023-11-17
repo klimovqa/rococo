@@ -16,4 +16,6 @@ public interface UserDataUserDAO {
     UserDataEntity findByUsername(String username);
 
     void updateUser(UserDataEntity user);
+
+    void removeAll();
 }

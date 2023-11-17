@@ -13,7 +13,7 @@ public class AllureSqlLogger extends StdoutLogger {
 
     @Override
     public void logSQL(int connectionId, String now, long elapsed, Category category, String prepared, String sql, String url) {
-        super.logSQL(connectionId, now, elapsed, category, prepared, sql, url);
+        //super.logSQL(connectionId, now, elapsed, category, prepared, sql, url);
         if (isNotEmpty(sql) && isNotEmpty(prepared)) {
             SqlAttachment sqlAttachment = new SqlAttachment("SQL query", sql, prepared);
             attachmentProcessor.addAttachment(sqlAttachment, attachmentRenderer);

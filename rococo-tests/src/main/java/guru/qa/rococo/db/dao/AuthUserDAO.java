@@ -19,4 +19,6 @@ public interface AuthUserDAO {
     AuthUserEntity findById(UUID userId);
 
     AuthUserEntity findByName(String name);
+
+    void removeAll();
 }

@@ -47,4 +47,10 @@ public class AuthUserDAOHibernate extends JpaService implements AuthUserDAO {
                 .setParameter("name", name)
                 .getResultStream().findFirst().orElse(null);
     }
+
+    @Override
+    public void removeAll() {
+        removeAll("delete from AuthorityEntity");
+        removeAll("delete from AuthUserEntity");
+    }
 }
