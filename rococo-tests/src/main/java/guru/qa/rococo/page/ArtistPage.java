@@ -35,4 +35,25 @@ public class ArtistPage extends BasePage {
         step("Нажимаем на поиск", () ->
                 $("button img[alt='Иконка поиска']").click());
     }
+
+
+    public void clickArtistCard(String name) {
+        step("Нажать на художника - " + name, () ->
+                $(byText(name)).click());
+    }
+
+    public void checkArtistNameOfArtistCard(String name) {
+        step("Проверить что отображается картинка у художника - " + name, () ->
+                $("section img").shouldBe(visible));
+    }
+
+    public void checkNameOfArtistCard(String artistName) {
+        step("Проверяем что в карточке отображается - " + artistName, () ->
+                $("header.card-header").shouldBe(text(artistName)));
+    }
+
+    public void checkDescription(String description) {
+        step("Проверяем что в карточке отображается описание", () ->
+                $(byText(description)).shouldBe(visible));
+    }
 }

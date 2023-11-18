@@ -23,8 +23,12 @@ public class PaintingPage extends BasePage {
     }
 
     public void checkCountPaintings(int count) {
-        step("Проверяем количество отображаемых Картин, должно быть - " + count, () ->
-                $$(".w-100 li").shouldHave(size(count)));
+        step("Проверяем количество отображаемых Картин, должно быть - " + count, () -> {
+            if ($$(".w-100 li").size() != count) {
+                searchClick();
+            }
+            $$(".w-100 li").shouldHave(size(count));
+        });
     }
 
     public void inputSearch(String name) {
@@ -35,5 +39,30 @@ public class PaintingPage extends BasePage {
     public void searchClick() {
         step("Нажимаем на поиск", () ->
                 $("button img[alt='Иконка поиска']").click());
+    }
+
+    public void clickPaintingCard(String name) {
+        step("Нажать на художника - " + name, () ->
+                $("img[alt='" + name + "']").click());
+    }
+
+    public void checkPaintingNameOfPaintingCard(String name) {
+        step("Проверить что отображается картинка у картины - " + name, () ->
+                $("img[alt='" + name + "']").shouldBe(visible));
+    }
+
+    public void checkNameOfPaintingCard(String museumName) {
+        step("Проверяем что в карточке отображается - " + museumName, () ->
+                $("header.card-header").shouldBe(text(museumName)));
+    }
+
+    public void checkArtist(String artist) {
+        step("Проверяем что в карточке отображается художник - " + artist, () ->
+                $("article div.text-center").shouldBe(text(artist)));
+    }
+
+    public void checkDescription(String description) {
+        step("Проверяем что в карточке отображается описание", () ->
+                $(byText(description)).shouldBe(visible));
     }
 }

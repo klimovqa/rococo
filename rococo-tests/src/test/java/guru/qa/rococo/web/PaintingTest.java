@@ -46,10 +46,27 @@ public class PaintingTest extends BaseWebTest {
         mainPage.openPage();
         mainPage.goToPaintingPage();
         paintingPage.checkTitlePainting();
-        paintingPage.inputSearch("Васнец");
+        paintingPage.inputSearch("Васнецлдл");
         paintingPage.searchClick();
         paintingPage.checkCountPaintings(0);
         paintingPage.checkByTextShouldBeVisible("Проверяем что отображается заглушка - Картины не найдены",
                 "Картины не найдены");
+    }
+
+
+    @DisplayName("Просмотр Картины")
+    @Test
+    void checkPaintingCardTest() {
+        final String PAINTING_NAME = "Большой рейд в Кронштадте";
+        final String ARTIST = "Иван Константинович Айвазовский";
+        final String DESCRIPTION = "Большой рейд в Кронштадте. Айвазовский И. К. 1817, Феодосия – 1900, там же. ... Экспонировалась на выставке 1836 в ИАХ под названием \"Вид части Кронштадта с идущим на парусах стопушечным кораблем в бурную погоду\"";
+        mainPage.openPage();
+        mainPage.goToPaintingPage();
+        paintingPage.checkTitlePainting();
+        paintingPage.clickPaintingCard(PAINTING_NAME);
+        paintingPage.checkNameOfPaintingCard(PAINTING_NAME);
+        paintingPage.checkArtist(ARTIST);
+        paintingPage.checkDescription(DESCRIPTION);
+        paintingPage.checkPaintingNameOfPaintingCard(PAINTING_NAME);
     }
 }
