@@ -1,5 +1,6 @@
 package guru.qa.rococo.web;
 
+import guru.qa.rococo.jupiter.annotation.ApiLogin;
 import guru.qa.rococo.page.ArtistPage;
 import guru.qa.rococo.page.MainPage;
 import io.qameta.allure.Epic;
@@ -24,7 +25,7 @@ public class ArtistTest extends BaseWebTest {
         mainPage.openPage();
         mainPage.goToArtistPage();
         artistPage.checkTitleArtist();
-        artistPage.checkCountArtists(6);
+        artistPage.checkCountArtists(9);
     }
 
     @DisplayName("Поиск существующего Художника")
@@ -83,5 +84,29 @@ public class ArtistTest extends BaseWebTest {
         artistPage.checkDescription(DESCRIPTION);
         artistPage.checkArtistNameOfArtistCard(ARTIST_NAME);
         artistPage.checkByTextShouldBeVisible("Проверить что отображается картина " + PAINTING, PAINTING);
+    }
+
+
+    @DisplayName("Добавление художника")
+    @ApiLogin(
+            username = "sacha",
+            password = "12345")
+    void addArtistTest() {
+        final String ARTIST = "Рембрандт";
+        mainPage.openPage();
+        mainPage.goToArtistPage();
+        artistPage.checkTitleArtist();
+        artistPage.clickAddArtist();
+        artistPage.inputArtistName(ARTIST);
+        artistPage.uploadArtistPhoto("photo/artist/artist.jpeg");
+        artistPage.inputArtistBiography("Рембрандт – голландский художник. Стал крупнейшим представителем Золотого века голландской живописи.");
+        artistPage.addedArtist();
+        artistPage.checkByTextShouldBeVisible("Проверяем что отображается тостер Добавлен художник: " + ARTIST,
+                "Добавлен художник: " + ARTIST);
+
+        artistPage.inputSearch(ARTIST);
+        artistPage.searchClick();
+        artistPage.checkCountArtists(1);
+        artistPage.checkByTextShouldBeVisible("Проверяем что отображается именно " + ARTIST, ARTIST);
     }
 }

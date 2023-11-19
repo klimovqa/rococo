@@ -3,6 +3,7 @@ package guru.qa.rococo.web;
 import guru.qa.rococo.jupiter.annotation.CreateUser;
 import guru.qa.rococo.page.LoginPage;
 import guru.qa.rococo.page.MainPage;
+import guru.qa.rococo.page.UserPage;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Story;
 import org.junit.jupiter.api.DisplayName;
@@ -18,6 +19,7 @@ public class AuthorizationTest extends BaseWebTest {
 
     private final MainPage mainPage = new MainPage();
     private final LoginPage loginPage = new LoginPage();
+    private final UserPage userPage = new UserPage();
 
     private final static String USERNAME = "igor666";
     private final static String USERNAME2 = "igor222";
@@ -172,11 +174,11 @@ public class AuthorizationTest extends BaseWebTest {
         loginPage.inputPassword(PASSWORD);
         loginPage.clickSubmit();
         loginPage.clickAvatar(USERNAME3);
-        loginPage.uploadAvatar();
-        loginPage.fillFirstname("Иван");
-        loginPage.fillSurname("Петров");
-        loginPage.updateProfileClick();
-        loginPage.checkUpdateProfile();
-        loginPage.checkAvatarImage();
+        userPage.uploadAvatar();
+        userPage.fillFirstname("Иван");
+        userPage.fillSurname("Петров");
+        userPage.updateProfileClick();
+        userPage.checkUpdateProfile();
+        userPage.checkAvatarImage();
     }
 }

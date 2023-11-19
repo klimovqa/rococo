@@ -1,5 +1,6 @@
 package guru.qa.rococo.web;
 
+import guru.qa.rococo.jupiter.annotation.ApiLogin;
 import guru.qa.rococo.page.*;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Story;
@@ -66,5 +67,30 @@ public class MuseumTest extends BaseWebTest {
         museumPage.checkCountMuseums(0);
         museumPage.checkByTextShouldBeVisible("Проверяем что отображается заглушка - Музеи не найдены",
                 "Музеи не найдены");
+    }
+
+    @DisplayName("Добавление музея")
+    @ApiLogin(
+            username = "misha",
+            password = "12345")
+    void addMuseumTest() {
+        final String MUSEUM = "Национальный музей икон Онуфрия";
+        mainPage.openPage();
+        mainPage.goToMuseumPage();
+        museumPage.checkTitleMuseum();
+        museumPage.clickAddMuseum();
+        museumPage.inputMuseumName(MUSEUM);
+        museumPage.inputMuseumCountry("Албания");
+        museumPage.inputMuseumCity("Берат");
+        museumPage.uploadMuseumPhoto("photo/museum/museum.jpeg");
+        museumPage.inputMuseumDescription("Национальный музей икон (иконографики) Онуфрия (алб. Muzeu Ikonografik Onufri) — национальный музей Албании, расположен в помещении церкви «Сон Девы Марии», в крепости города Берат.");
+        museumPage.addedMuseum();
+        museumPage.checkByTextShouldBeVisible("Проверяем что отображается тостер Добавлен музей: " + MUSEUM,
+                "Добавлен музей: " + MUSEUM);
+
+        museumPage.inputSearch(MUSEUM);
+        museumPage.searchClick();
+        museumPage.checkCountMuseums(1);
+        museumPage.checkByTextShouldBeVisible("Проверяем что отображается именно " + MUSEUM, MUSEUM);
     }
 }

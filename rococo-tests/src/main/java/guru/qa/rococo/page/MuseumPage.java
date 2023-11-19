@@ -31,6 +31,38 @@ public class MuseumPage extends BasePage {
                 $("input.input").val(name));
     }
 
+    public void inputMuseumName(String name) {
+        step("Вводим название музея - " + name, () ->
+                $("input[name='title']").val(name));
+    }
+
+    public void inputMuseumCity(String city) {
+        step("Вводим название города - " + city, () ->
+                $("input[name='city']").val(city));
+    }
+
+    public void inputMuseumDescription(String desc) {
+        step("Вводим описание музея", () ->
+                $("textarea[name='description']").val(desc));
+    }
+
+    public void inputMuseumCountry(String country) {
+        step("Выбираем страну - " + country, () ->
+                $("select.select").selectOptionContainingText(country));
+    }
+
+    public void uploadMuseumPhoto(String pathPhoto) {
+        step("Загружаем фото музея", () ->
+                $("input[type='file'][name]")
+                        .uploadFromClasspath(pathPhoto));
+    }
+
+    public void addedMuseum() {
+        step("Нажимаем кнопку Добавить", () ->
+                $(byText("Добавить"))
+                        .click());
+    }
+
     public void searchClick() {
         step("Нажимаем на поиск", () ->
                 $("button img[alt='Иконка поиска']").click());
@@ -59,5 +91,10 @@ public class MuseumPage extends BasePage {
     public void checkDescription(String description) {
         step("Проверяем что в карточке отображается описание", () ->
                 $(byText(description)).shouldBe(visible));
+    }
+
+    public void clickAddMuseum() {
+        step("Нажимаем Добавить музей", () ->
+                $(byText("Добавить музей")).click());
     }
 }

@@ -56,4 +56,32 @@ public class ArtistPage extends BasePage {
         step("Проверяем что в карточке отображается описание", () ->
                 $(byText(description)).shouldBe(visible));
     }
+    
+    public void clickAddArtist() {
+        step("Нажимаем Добавить художника", () ->
+                $(byText("Добавить художника")).click());
+    }
+
+
+    public void inputArtistName(String name) {
+        step("Вводим имя художника - " + name, () ->
+                $("input[name='name']").val(name));
+    }
+
+    public void inputArtistBiography(String bio) {
+        step("Вводим описание художника", () ->
+                $("textarea[name='biography']").val(bio));
+    }
+
+    public void uploadArtistPhoto(String pathPhoto) {
+        step("Загружаем фото картины", () ->
+                $("input[type='file'][name]")
+                        .uploadFromClasspath(pathPhoto));
+    }
+
+    public void addedArtist() {
+        step("Нажимаем кнопку Добавить", () ->
+                $(byText("Добавить"))
+                        .click());
+    }
 }

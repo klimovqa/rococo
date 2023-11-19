@@ -65,4 +65,43 @@ public class PaintingPage extends BasePage {
         step("Проверяем что в карточке отображается описание", () ->
                 $(byText(description)).shouldBe(visible));
     }
+    
+    public void clickAddPainting() {
+        step("Нажимаем Добавить картину", () ->
+                $(byText("Добавить картину")).click());
+    }
+
+
+    public void inputPaintingName(String name) {
+        step("Вводим название музея - " + name, () ->
+                $("input[name='title']").val(name));
+    }
+
+    public void selectMuseum(String museum) {
+        step("Выбираем музей - " + museum, () ->
+                $("select.select[name=museumId]").selectOptionContainingText(museum));
+    }
+
+    public void inputPaintingDescription(String desc) {
+        step("Вводим описание картины", () ->
+                $("textarea[name='description']").val(desc));
+    }
+
+    public void selectArtist(String artist) {
+        step("Выбираем художника - " + artist, () ->
+                $("select.select[name=authorId]").selectOptionContainingText(artist));
+    }
+
+    public void uploadPaintingContent(String pathPhoto) {
+        step("Загружаем фото картины", () ->
+                $("input[type='file'][name]")
+                        .uploadFromClasspath(pathPhoto));
+    }
+
+    public void addedPainting() {
+        step("Нажимаем кнопку Добавить", () ->
+                $(byText("Добавить"))
+                        .click());
+    }
+
 }
