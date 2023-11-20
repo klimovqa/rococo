@@ -62,6 +62,11 @@ public class ArtistPage extends BasePage {
                 $(byText("Добавить художника")).click());
     }
 
+    public void clickAddPainting() {
+        step("Нажимаем Добавить картину", () ->
+                $(byText("Добавить картину")).click());
+    }
+
 
     public void inputArtistName(String name) {
         step("Вводим имя художника - " + name, () ->
@@ -82,6 +87,18 @@ public class ArtistPage extends BasePage {
     public void addedArtist() {
         step("Нажимаем кнопку Добавить", () ->
                 $(byText("Добавить"))
+                        .click());
+    }
+
+    public void saveArtist() {
+        step("Нажимаем кнопку Сохранить", () ->
+                $(byText("Сохранить"))
+                        .click());
+    }
+
+    public void editArtist() {
+        step("Нажимаем кнопку Редактировать", () ->
+                $(byText("Редактировать"))
                         .click());
     }
 }

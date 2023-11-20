@@ -3,6 +3,7 @@ package guru.qa.rococo.web;
 import guru.qa.rococo.jupiter.annotation.ApiLogin;
 import guru.qa.rococo.page.ArtistPage;
 import guru.qa.rococo.page.MainPage;
+import guru.qa.rococo.page.PaintingPage;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Story;
 import org.junit.jupiter.api.DisplayName;
@@ -18,6 +19,7 @@ public class ArtistTest extends BaseWebTest {
 
     private final MainPage mainPage = new MainPage();
     private final ArtistPage artistPage = new ArtistPage();
+    private final PaintingPage paintingPage = new PaintingPage();
 
     @DisplayName("Отображение страницы Художники")
     @Test
@@ -108,5 +110,54 @@ public class ArtistTest extends BaseWebTest {
         artistPage.searchClick();
         artistPage.checkCountArtists(1);
         artistPage.checkByTextShouldBeVisible("Проверяем что отображается именно " + ARTIST, ARTIST);
+    }
+
+    @DisplayName("Изменить художника")
+    @ApiLogin(
+            username = "maria",
+            password = "12345")
+    void editArtistTest() {
+        final String ARTIST = "Серов, Валентин Александрович";
+        final String BIO = "Серов, Валентин Александрович.";
+        mainPage.openPage();
+        mainPage.goToArtistPage();
+        artistPage.checkTitleArtist();
+        artistPage.clickArtistCard(ARTIST);
+        artistPage.editArtist();
+        artistPage.inputArtistBiography(BIO);
+        artistPage.saveArtist();
+        artistPage.checkByTextShouldBeVisible("Проверяем что отображается тостер Обновлен художник: " + ARTIST,
+                "Обновлен художник: " + ARTIST);
+        artistPage.checkByTextShouldBeVisible("Проверяем что отображается измененное описание " + BIO, BIO);
+    }
+
+
+    @DisplayName("Добавление картины через форму художника")
+    @ApiLogin(
+            username = "sacha2",
+            password = "12345")
+    void addingPaintingsThroughArtistFormTest() {
+        final String ARTIST = "Малевич, Казимир Северинович";
+        final String PAINTING = "Черный квадрат";
+        mainPage.openPage();
+        mainPage.goToArtistPage();
+        artistPage.checkTitleArtist();
+        artistPage.clickArtistCard(ARTIST);
+        artistPage.clickAddPainting();
+
+
+        paintingPage.inputPaintingName(PAINTING);
+        paintingPage.selectMuseum("Эрмитаж");
+        paintingPage.uploadPaintingContent("photo/painting/black.png");
+        paintingPage.inputPaintingDescription("«Чёрный квадрат» — картина Казимира Малевича, созданная в 1915 году.");
+        paintingPage.addedPainting();
+        paintingPage.checkByTextShouldBeVisible("Проверяем что отображается тостер Добавлена картина: " + PAINTING,
+                "Добавлена картина: " + PAINTING);
+
+        mainPage.goToPaintingPage();
+        paintingPage.inputSearch(PAINTING);
+        paintingPage.searchClick();
+        paintingPage.checkCountPaintings(1);
+        paintingPage.checkByTextShouldBeVisible("Проверяем что отображается именно " + PAINTING, PAINTING);
     }
 }

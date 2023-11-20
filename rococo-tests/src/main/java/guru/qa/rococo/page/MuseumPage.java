@@ -63,6 +63,12 @@ public class MuseumPage extends BasePage {
                         .click());
     }
 
+    public void saveMuseum() {
+        step("Нажимаем кнопку Сохранить", () ->
+                $(byText("Сохранить"))
+                        .click());
+    }
+
     public void searchClick() {
         step("Нажимаем на поиск", () ->
                 $("button img[alt='Иконка поиска']").click());
@@ -96,5 +102,10 @@ public class MuseumPage extends BasePage {
     public void clickAddMuseum() {
         step("Нажимаем Добавить музей", () ->
                 $(byText("Добавить музей")).click());
+    }
+
+    public void editMuseum() {
+        step("Нажимаем Редактировать", () ->
+                $(byText("Редактировать")).click());
     }
 }

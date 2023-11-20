@@ -93,4 +93,23 @@ public class MuseumTest extends BaseWebTest {
         museumPage.checkCountMuseums(1);
         museumPage.checkByTextShouldBeVisible("Проверяем что отображается именно " + MUSEUM, MUSEUM);
     }
+
+    @DisplayName("Редактирование музея")
+    @ApiLogin(
+            username = "max",
+            password = "12345")
+    void editMuseumTest() {
+        final String MUSEUM = "Британский музей";
+        final String DESC = "Измененное описание";
+        mainPage.openPage();
+        mainPage.goToMuseumPage();
+        museumPage.checkTitleMuseum();
+        museumPage.clickMuseumCard(MUSEUM);
+        museumPage.editMuseum();
+        museumPage.inputMuseumDescription(DESC);
+        museumPage.saveMuseum();
+        museumPage.checkByTextShouldBeVisible("Проверяем что отображается тостер Обновлен музей: " + MUSEUM,
+                "Обновлен музей: " + MUSEUM);
+        museumPage.checkByTextShouldBeVisible("Проверяем что отображается измененное описание " + DESC, DESC);
+    }
 }

@@ -73,7 +73,7 @@ public class PaintingPage extends BasePage {
 
 
     public void inputPaintingName(String name) {
-        step("Вводим название музея - " + name, () ->
+        step("Вводим название картины - " + name, () ->
                 $("input[name='title']").val(name));
     }
 
