@@ -105,7 +105,7 @@ create
 create
     database "rococo-museum" with owner postgres;   
 create
-database "rococo-painting" with owner postgres;
+    database "rococo-painting" with owner postgres;
 create
     database "rococo-artist" with owner postgres;
 create
