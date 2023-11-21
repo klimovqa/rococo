@@ -1,5 +1,13 @@
 #!/bin/bash
 
+docker_containers="$(docker ps -a -q)"
+
+if [ ! -z "$docker_containers" ]; then
+  echo "### Stop containers: $docker_containers ###"
+  docker stop $(docker ps -a -q)
+  docker rm $(docker ps -a -q)
+fi
+
 docker run --name rococo-all -p 5432:5432 -e POSTGRES_PASSWORD=secret -v rococo:/var/lib/postgresql/data -d postgres:15.1
 
 docker run --name=zookeeper -e ZOOKEEPER_CLIENT_PORT=2181 -e ZOOKEEPER_TICK_TIME=2000 -p 2181:2181 -d confluentinc/cp-zookeeper:7.3.2
