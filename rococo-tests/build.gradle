@@ -2,7 +2,7 @@ buildscript {
     ext {
         junitVersion = '5.10.0'
         allureVersion = '2.24.0'
-        selenideVersion = '7.0.2'
+        selenideVersion = '6.19.1'
         retrofitVersion = '2.9.0'
         okhttp3Version = '3.14.9'
     }
@@ -48,6 +48,8 @@ dependencies {
     implementation 'commons-logging:commons-logging:1.2'
     implementation 'org.apache.commons:commons-csv:1.8'
     implementation 'org.modelmapper:modelmapper:2.4.4'
+    testImplementation 'org.projectlombok:lombok:1.18.28'
+    implementation 'org.assertj:assertj-core:3.24.0'
 
 
     // Lombok
@@ -59,7 +61,7 @@ dependencies {
     implementation 'org.hibernate:hibernate-core:6.1.7.Final'
     implementation 'com.github.vertical-blank:sql-formatter:2.0.3'
     implementation 'org.springframework.security:spring-security-crypto:6.1.0'
-
+    implementation 'org.springframework.data:spring-data-jpa:3.2.0'
 }
 
 tasks.withType(JavaCompile) {

@@ -104,6 +104,8 @@ public class MuseumTest extends BaseWebTest {
         mainPage.openPage();
         mainPage.goToMuseumPage();
         museumPage.checkTitleMuseum();
+        museumPage.inputSearch(MUSEUM);
+        museumPage.searchClick();
         museumPage.clickMuseumCard(MUSEUM);
         museumPage.editMuseum();
         museumPage.inputMuseumDescription(DESC);

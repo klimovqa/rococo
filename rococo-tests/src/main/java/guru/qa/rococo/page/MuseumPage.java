@@ -42,8 +42,10 @@ public class MuseumPage extends BasePage {
     }
 
     public void inputMuseumDescription(String desc) {
-        step("Вводим описание музея", () ->
-                $("textarea[name='description']").val(desc));
+        step("Вводим описание музея", () -> {
+            $("textarea[name='description']").shouldBe(visible);
+            $("textarea[name='description']").val(desc);
+        });
     }
 
     public void inputMuseumCountry(String country) {
@@ -75,6 +77,7 @@ public class MuseumPage extends BasePage {
     }
 
     public void clickMuseumCard(String name) {
+        $("img[alt='" + name + "']").shouldBe(visible);
         step("Нажать на музей - " + name, () ->
                 $("img[alt='" + name + "']").click());
     }

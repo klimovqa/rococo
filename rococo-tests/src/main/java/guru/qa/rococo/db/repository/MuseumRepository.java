@@ -3,6 +3,8 @@ package guru.qa.rococo.db.repository;
 import guru.qa.rococo.db.entity.geo.CountryEntity;
 import guru.qa.rococo.db.entity.museum.MuseumEntity;
 
+import java.util.List;
+
 public interface MuseumRepository {
 
     void create(MuseumEntity museum);
@@ -12,4 +14,6 @@ public interface MuseumRepository {
     MuseumEntity findByNameMuseum(String title);
 
     void removeAll();
+
+    List<MuseumEntity> findByMuseum(int size, int page);
 }

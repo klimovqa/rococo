@@ -6,6 +6,8 @@ import guru.qa.rococo.db.entity.museum.MuseumEntity;
 import guru.qa.rococo.db.jpa.EntityManagerFactoryProvider;
 import guru.qa.rococo.db.jpa.JpaService;
 
+import java.util.List;
+
 public class MuseumDAOHibernate extends JpaService implements MuseumDAO {
 
     public MuseumDAOHibernate() {
@@ -28,5 +30,13 @@ public class MuseumDAOHibernate extends JpaService implements MuseumDAO {
     @Override
     public void removeAll() {
         removeAll("delete from MuseumEntity ");
+    }
+
+    @Override
+    public List<MuseumEntity> findMuseum(int size, int page) {
+        return em.createQuery("select u from MuseumEntity u")
+                .setFirstResult(page * size)
+                .setMaxResults(size)
+                .getResultList();
     }
 }

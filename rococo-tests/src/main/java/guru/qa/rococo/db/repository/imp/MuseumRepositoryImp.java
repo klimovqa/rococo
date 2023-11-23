@@ -7,6 +7,9 @@ import guru.qa.rococo.db.dao.impl.MuseumDAOHibernate;
 import guru.qa.rococo.db.entity.geo.CountryEntity;
 import guru.qa.rococo.db.entity.museum.MuseumEntity;
 import guru.qa.rococo.db.repository.MuseumRepository;
+import io.qameta.allure.Step;
+
+import java.util.List;
 
 public class MuseumRepositoryImp implements MuseumRepository {
 
@@ -36,5 +39,11 @@ public class MuseumRepositoryImp implements MuseumRepository {
     @Override
     public void removeAll() {
         museumDAO.removeAll();
+    }
+
+    @Override
+    @Step("Поиск музеев в БД")
+    public List<MuseumEntity> findByMuseum(int size, int page) {
+        return museumDAO.findMuseum(size, page);
     }
 }
