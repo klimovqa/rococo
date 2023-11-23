@@ -1,5 +1,6 @@
 package guru.qa.rococo.web;
 
+import guru.qa.rococo.BaseTest;
 import guru.qa.rococo.jupiter.annotation.ApiLogin;
 import guru.qa.rococo.page.ArtistPage;
 import guru.qa.rococo.page.MainPage;
@@ -14,7 +15,7 @@ import org.junit.jupiter.api.Test;
 @Story("Художники")
 @DisplayName("[WEB] Страница Художники")
 @Tag("WEB")
-public class ArtistTest extends BaseWebTest {
+public class ArtistTest extends BaseTest {
 
 
     private final MainPage mainPage = new MainPage();

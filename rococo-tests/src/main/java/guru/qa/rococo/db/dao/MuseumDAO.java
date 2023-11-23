@@ -4,6 +4,7 @@ package guru.qa.rococo.db.dao;
 import guru.qa.rococo.db.entity.museum.MuseumEntity;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface MuseumDAO {
 
@@ -14,4 +15,6 @@ public interface MuseumDAO {
     void removeAll();
 
     List<MuseumEntity> findMuseum(int size, int page);
+
+    MuseumEntity findById(UUID uuid);
 }

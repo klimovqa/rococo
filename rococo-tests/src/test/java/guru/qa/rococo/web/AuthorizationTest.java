@@ -1,5 +1,6 @@
 package guru.qa.rococo.web;
 
+import guru.qa.rococo.BaseTest;
 import guru.qa.rococo.jupiter.annotation.CreateUser;
 import guru.qa.rococo.page.LoginPage;
 import guru.qa.rococo.page.MainPage;
@@ -15,7 +16,7 @@ import org.junit.jupiter.api.Test;
 @Story("Авторизация")
 @DisplayName("[WEB] Авторизация")
 @Tag("WEB")
-public class AuthorizationTest extends BaseWebTest {
+public class AuthorizationTest extends BaseTest {
 
     private final MainPage mainPage = new MainPage();
     private final LoginPage loginPage = new LoginPage();

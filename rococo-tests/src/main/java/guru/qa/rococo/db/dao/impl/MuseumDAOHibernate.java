@@ -7,6 +7,7 @@ import guru.qa.rococo.db.jpa.EntityManagerFactoryProvider;
 import guru.qa.rococo.db.jpa.JpaService;
 
 import java.util.List;
+import java.util.UUID;
 
 public class MuseumDAOHibernate extends JpaService implements MuseumDAO {
 
@@ -34,9 +35,17 @@ public class MuseumDAOHibernate extends JpaService implements MuseumDAO {
 
     @Override
     public List<MuseumEntity> findMuseum(int size, int page) {
-        return em.createQuery("select u from MuseumEntity u")
+        return em.createQuery("select u from MuseumEntity u", MuseumEntity.class)
                 .setFirstResult(page * size)
                 .setMaxResults(size)
                 .getResultList();
+    }
+
+    @Override
+    public MuseumEntity findById(UUID uuid) {
+        return em.createQuery("select u from MuseumEntity u where u.id=:uuid",
+                        MuseumEntity.class)
+                .setParameter("uuid", uuid)
+                .getResultStream().findFirst().orElse(null);
     }
 }

@@ -18,5 +18,5 @@ import java.lang.annotation.Target;
         ContextHolderExtension.class,
         ApiLoginExtension.class,
         BrowserExtension.class})
-public @interface WebTest {
+public @interface BaseAnnTest {
 }

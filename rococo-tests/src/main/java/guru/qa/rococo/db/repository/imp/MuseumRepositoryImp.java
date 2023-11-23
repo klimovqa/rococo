@@ -10,6 +10,7 @@ import guru.qa.rococo.db.repository.MuseumRepository;
 import io.qameta.allure.Step;
 
 import java.util.List;
+import java.util.UUID;
 
 public class MuseumRepositoryImp implements MuseumRepository {
 
@@ -32,6 +33,7 @@ public class MuseumRepositoryImp implements MuseumRepository {
     }
 
     @Override
+    @Step("Поиск музея в БД")
     public MuseumEntity findByNameMuseum(String title) {
         return museumDAO.findByName(title);
     }
@@ -45,5 +47,11 @@ public class MuseumRepositoryImp implements MuseumRepository {
     @Step("Поиск музеев в БД")
     public List<MuseumEntity> findByMuseum(int size, int page) {
         return museumDAO.findMuseum(size, page);
+    }
+
+    @Override
+    @Step("Поиск музея в БД по Id")
+    public MuseumEntity findById(UUID uuid) {
+        return museumDAO.findById(uuid);
     }
 }

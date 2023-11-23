@@ -1,5 +1,6 @@
 package guru.qa.rococo.web;
 
+import guru.qa.rococo.BaseTest;
 import guru.qa.rococo.jupiter.annotation.ApiLogin;
 import guru.qa.rococo.page.*;
 import io.qameta.allure.Epic;
@@ -12,7 +13,7 @@ import org.junit.jupiter.api.Test;
 @Story("Музеи")
 @DisplayName("[WEB] Страница Музеи")
 @Tag("WEB")
-public class MuseumTest extends BaseWebTest {
+public class MuseumTest extends BaseTest {
 
 
     private final MainPage mainPage = new MainPage();
