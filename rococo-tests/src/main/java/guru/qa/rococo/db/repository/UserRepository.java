@@ -13,4 +13,6 @@ public interface UserRepository {
     UserDataEntity findByUsername(AuthUserEntity user);
 
     UserDataEntity findByUsername(String username);
+
+    void removeAll();
 }

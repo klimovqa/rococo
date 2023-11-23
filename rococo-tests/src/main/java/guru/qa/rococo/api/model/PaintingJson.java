@@ -37,4 +37,19 @@ public class PaintingJson {
         paintingEntity.setArtistId(painting.getArtist().getId());
         return paintingEntity;
     }
+
+    public static PaintingJson fromEntity(PaintingEntity entity) {
+        PaintingJson painting = new PaintingJson();
+        ArtistJson artist = new ArtistJson();
+        MuseumJson museum = new MuseumJson();
+        painting.setId(entity.getId());
+        painting.setTitle(entity.getTitle());
+        painting.setDescription(entity.getDescription());
+        painting.setContent(entity.getContent());
+        artist.setId(entity.getArtistId());
+        museum.setId(entity.getMuseumId());
+        painting.setArtist(artist);
+        painting.setMuseum(museum);
+        return painting;
+    }
 }

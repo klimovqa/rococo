@@ -1,4 +1,12 @@
-## **Технологии, использованные в Rococo**
+# ![](readme/favicon.ico) Rococo
+**Дипломная работа по курсу QA.GURU Advanced**
+<hr>
+
+## О проекте
++ Rococo - web-приложение для хранения картин, художников и музеев
+
+
+### Технологии, использованные в Rococo
 - [Spring Authorization Server](https://spring.io/projects/spring-authorization-server)
 - [Spring OAuth 2.0 Resource Server](https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/index.html)
 - [Spring data JPA](https://spring.io/projects/spring-data-jpa)
@@ -18,22 +26,30 @@
 - [Allure-docker-service](https://github.com/fescobar/allure-docker-service)
 - [Java 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
 - [Gradle 7.6](https://docs.gradle.org/7.6/release-notes.html)
-- And much more:)
 
-**Минимальные предусловия для работы с проектом Rococo**
+### Микросервисы в Rococo
++ [Rococo-auth]() - *Сервис авторизации*
++ [Rococo-gateway]() - *Api-шлюз*
++ [Rococo-userdata]() - *Сервис для работы с профилями пользователей*
++ [Rococo-geo]() - *Сервис для работы с геоданными*
++ [Rococo-museum]() - *Сервис для работы с музеями*
++ [Rococo-painting]() - *Сервис для работы с картинами*
++ [Rococo-artist]() - *Сервис для работы с художниками*
+
+## Схема микросервисов Rococo
+![](readme/shema.png)
+
+<hr>
+
+### Минимальные предусловия для работы с проектом Rococo
 
 #### 0. Если у вас ОС Windows
 
-Во-первых, и в-главных, необходимо использовать bash terminal, а не powershell.
+Во-первых, необходимо использовать **bash terminal**, а не powershell.
 Во-вторых, для запуска фронтенда локально необходимо использовать команду
-`npm run build:windows`, если не работает стандартная команда `npm run build:dev`
-В-третьих, если у вас что-то не работает - пишите в TG чат группы - будем вместе дополнять README, т.к. изначально
-проект разработан под nix
+`npm run build:windows`, если не работает стандартная команда `npm run dev`
 
 #### 1. Установить docker (Если не установлен)
-
-Мы будем использовать docker для БД (Postgres), кроме того, будем запускать микросервисы в едином docker network при
-помощи docker-compose
 
 [Установка на Windows](https://docs.docker.com/desktop/install/windows-install/)
 
@@ -48,80 +64,7 @@ michailklimov@Michails-MacBook-Air ~ % docker -v
 Docker version 20.10.14, build a224086
 ```
 
-#### 2. Спуллить контейнер postgres:15.1, zookeeper и kafka версии 7.3.2
-
-```posh
-docker pull postgres:15.1
-docker pull confluentinc/cp-zookeeper:7.3.2
-docker pull confluentinc/cp-kafka:7.3.2
-```
-
-После `pull` вы увидите спуленный image командой `docker images`
-
-```posh
-mitriis-MacBook-Pro ~ % docker images            
-REPOSITORY                 TAG              IMAGE ID       CREATED         SIZE
-postgres                   15.1             9f3ec01f884d   10 days ago     379MB
-confluentinc/cp-kafka      7.3.2            db97697f6e28   12 months ago   457MB
-confluentinc/cp-zookeeper  7.3.2            6fe5551964f5   7 years ago     451MB
-
-```
-
-#### 3. Создать volume для сохранения данных из БД в docker на вашем компьютере
-
-```posh
-docker volume create rococo
-```
-
-#### 4. Запустить БД, zookeeper и kafka 4-мя последовательными командами:
-
-Для *nix:
-```posh
-docker run --name rococo-all -p 5432:5432 -e POSTGRES_PASSWORD=secret -v rococo:/var/lib/postgresql/data -d postgres:15.1
-
-docker run --name=zookeeper -e ZOOKEEPER_CLIENT_PORT=2181 -e ZOOKEEPER_TICK_TIME=2000 -p 2181:2181 -d confluentinc/cp-zookeeper:7.3.2
-
-docker run --name=kafka -e KAFKA_BROKER_ID=1 \
--e KAFKA_ZOOKEEPER_CONNECT=$(docker inspect zookeeper --format='{{ .NetworkSettings.IPAddress }}'):2181 \
--e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092 \
--e KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1 \
--e KAFKA_TRANSACTION_STATE_LOG_MIN_ISR=1 \
--e KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR=1 \
--p 9092:9092 -d confluentinc/cp-kafka:7.3.2
-```
-Для Windows:
-```posh
-docker run --name niffler-all -p 5432:5432 -e POSTGRES_PASSWORD=secret -v niffler-st3:/var/lib/postgresql/data -d postgres:15.1
-
-docker run --name=zookeeper -e ZOOKEEPER_CLIENT_PORT=2181 -e ZOOKEEPER_TICK_TIME=2000 -p 2181:2181 -d confluentinc/cp-zookeeper:7.3.2
-
-docker run --name=kafka -e KAFKA_BROKER_ID=1 -e KAFKA_ZOOKEEPER_CONNECT=$(docker inspect zookeeper --format='{{ .NetworkSettings.IPAddress }}'):2181 -e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092 -e KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1 -e KAFKA_TRANSACTION_STATE_LOG_MIN_ISR=1 -e KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR=1 -p 9092:9092 -d confluentinc/cp-kafka:7.3.2
-```
-
-https://github.com/confluentinc/cp-docker-images/issues/801#issuecomment-692085103
-
-#### 5. Установить одну из программ для визуальной работы с Postgres
-
-Например, DBeaver.
-
-#### 6. Подключиться к БД postgres (host: localhost, port: 5432, user: postgres, pass: secret, database name: postgres) и создать пустые БД микросервисов
-
-```sql
-create
-    database "rococo-userdata" with owner postgres;
-create
-    database "rococo-auth" with owner postgres;
-create
-    database "rococo-museum" with owner postgres;   
-create
-database "rococo-painting" with owner postgres;
-create
-    database "rococo-artist" with owner postgres;
-create
-    database "rococo-geo" with owner postgres;
-```
-
-#### 7. Установить Java версии 17 или новее. Это необходимо, т.к. проект не поддерживает версии <17
+#### 2. Установить Java версии 17 или новее. Это необходимо, т.к. проект не поддерживает версии <17
 
 Версию установленной Java необходимо проверить командой `java -version`
 
@@ -131,66 +74,75 @@ openjdk version "19.0.1" 2022-10-18
 OpenJDK Runtime Environment Homebrew (build 19.0.1)
 ```
 
-Если у вас несколько версий Java одновременно - то хотя бы одна из них должна быть 17+
-Если java не установлена вовсе, то рекомендую установить OpenJDK (например, из https://adoptium.net/en-GB/)
-
-#### 8. Установить пакетый менеджер для сборки front-end npm
+#### 3. Установить пакетый менеджер для сборки front-end npm
 
 [Инструкция](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
 Рекомендованная версия Node.js - 18.13.0 (LTS)
 
-# Запуск Niffler локальное в IDE:
-
-#### 1. Выбрать какой фронтенд предполагается запускать - REST или GraphQL, и перейти в соответсвующий каталог
-
-для REST:
+#### 4. Создать volume для сохранения данных из БД в docker на вашем компьютере
 
 ```posh
-michailklimov@Michails-MacBook-Air niffler % cd niffler-frontend
+docker volume create rococo
 ```
 
-или для GraphQL:
+#### 5. Запустить БД, zookeeper и kafka используя bash
+В терминале IDE выполнить
+```posh
+bash localenv.sh
+```
+
+#### 6. Установить одну из программ для визуальной работы с Postgres
+
+Например, DBeaver.
+
+#### 7. Подключиться к БД postgres (host: localhost, port: 5432, user: postgres, pass: secret, database name: postgres) и создать пустые БД микросервисов
+
+```sql
+create
+    database "rococo-userdata" with owner postgres;
+create
+    database "rococo-auth" with owner postgres;
+create
+    database "rococo-museum" with owner postgres;   
+create
+    database "rococo-painting" with owner postgres;
+create
+    database "rococo-artist" with owner postgres;
+create
+    database "rococo-geo" with owner postgres;
+```
+<hr>
+
+# Запуск Rococo локальное в IDE:
+
+#### 1. В IDE выполнить bash скрипт:
 
 ```posh
-michailklimov@Michails-MacBook-Air niffler % cd niffler-frontend-gql
+bash localenv.sh
 ```
 
-#### 2. Запустить фронтенд (сначала обновить зависимости)
-Для *nix:
-
-```posh
-michailklimov@Michails-MacBook-Air niffler-frontend % npm i
-michailklimov@Michails-MacBook-Air niffler-frontend % npm run build:dev
-```
-
-Для Windows:
-
-```posh
-michailklimov@Michails-MacBook-Air niffler-frontend % npm i
-michailklimov@Michails-MacBook-Air niffler-frontend % npm run build:windows
-```
-
-#### 3. Прописать run конфигурацию для всех сервисов niffler-* - Active profiles local
+#### 2. Прописать run конфигурацию для всех сервисов rococo-* - Active profiles local
 
 Для этого зайти в меню Run -> Edit Configurations -> выбрать main класс -> указать Active profiles: local
 [Инструкция](https://stackoverflow.com/questions/39738901/how-do-i-activate-a-spring-boot-profile-when-running-from-intellij).
 
-#### 4 Запустить сервис Niffler-auth c помощью gradle или командой Run в IDE:
-- 
+#### 3 Запустить сервис Rococo-auth c помощью gradle или командой Run в IDE:
 
 - Запустить сервис auth
 
 ```posh
-michailklimov@Michails-MacBook-Air niffler % cd niffler-auth
-michailklimov@Michails-MacBook-Air niffler-auth % gradle bootRun --args='--spring.profiles.active=local'
+michailklimov@Michails-MacBook-Air rococo % cd rococo-auth
+michailklimov@Michails-MacBook-Air rococo-auth % gradle bootRun --args='--spring.profiles.active=local'
 ```
 
-Или просто перейдя к main-классу приложения NifflerAuthApplication выбрать run в IDEA (предварительно удостовериться что
+Или просто перейдя к main-классу приложения RococoAuthApplication выбрать run в IDEA (предварительно удостовериться что
 выполнен предыдущий пункт)
 
-#### 5  Запустить в любой последовательности другие сервисы: niffler-currency, niffler-spend, niffler-gateway, niffler-userdata
+#### 4  Запустить в любой последовательности другие сервисы: rococo-geo, rococo-userdata, rococo-gateway, rococo-museum, rococo-artist, rococo-painting
 
-# Запуск Niffler в докере:
+<hr>
+
+# Запуск Rococo в докере:
 
 #### 1. Создать бесплатную учетную запись на https://hub.docker.com/ (если отсутствует)
 
@@ -202,14 +154,12 @@ michailklimov@Michails-MacBook-Air niffler-auth % gradle bootRun --args='--sprin
 
 #### 4. Прописать в etc/hosts элиас для Docker-имени
 
-#### frontend:  127.0.0.1 frontend.niffler.dc,
-
-#### auth:      127.0.0.1 auth.niffler.dc
-
-#### gateway:   127.0.0.1 gateway.niffler.dc
+- frontend:  127.0.0.1 client.rococo.dc,
+- auth:      127.0.0.1 auth.rococo.dc
+- gateway:   127.0.0.1 api.rococo.dc
 
 ```posh
-michailklimov@Michails-MacBook-Air niffler % vi /etc/hosts
+michailklimov@Michails-MacBook-Air rococo % vi /etc/hosts
 ```
 
 ```posh
@@ -220,110 +170,41 @@ michailklimov@Michails-MacBook-Air niffler % vi /etc/hosts
 # when the system is booting.  Do not change this entry.
 ##
 127.0.0.1       localhost
-127.0.0.1       frontend.niffler.dc
-127.0.0.1       auth.niffler.dc
-127.0.0.1       gateway.niffler.dc
+127.0.0.1       client.rococo.dc
+127.0.0.1       auth.rococo.dc
+127.0.0.1       api.rococo.dc
 ```
 
 #### 5. Перейти в корневой каталог проекта
 
 ```posh
-michailklimov@Michails-MacBook-Air niffler % cd niffler
+michailklimov@Michails-MacBook-Air rococo % cd rococo
 ```
 
-#### 6. Запустить все сервисы, если необходим фронтенд GraphQL, то это указывается аргументом к скрипту:
-
-для REST:
+#### 6. Запустить все сервисы:
 
 ```posh
-michailklimov@Michails-MacBook-Air  niffler % bash docker-compose-dev.sh
+michailklimov@Michails-MacBook-Air  rococo % bash docker-compose-dev.sh
 ```
 
-для GraphQL:
+Rococo при запуске в докере будет работать для вас по адресу http://client.rococo.dc
 
-```posh
-michailklimov@Michails-MacBook-Air  niffler % bash docker-compose-dev.sh gql
-```
+<hr>
 
-Niffler при запуске в докере будет работать для вас по адресу http://niffler-frontend:80/, этот порт НЕ НУЖНО указывать
-в браузере, таким образом переходить напрямую по ссылке http://niffler-frontend/
-*ВАЖНО!* из docker-network Вам будут доступны только следующие порты:
-
-- порт 80 (все запросы с него перенаправляются nginx-ом на frontend)
-- порт 9000 (сервис niffler-auth)
-- порт 8090 (сервис niffler-gateway)
-- порт 5432 (бд niffler-all)
-
-# Создание своего docker repository для форка Niffler и сборка своих докер контейнеров
-
-#### 1. Войти в свою УЗ на https://hub.docker.com/ и последовательно создать публичные репозитории
-
-- niffler-frontend
-- niffler-frontend-gql
-- niffler-userdata
-- niffler-spend
-- niffler-gateway
-- niffler-currency
-- niffler-auth
-
-Допустим, что ваш username на https://hub.docker.com - *foobazz*
-
-#### 2. заменить в проекте все имена image dtuchs/niffler на foobazz/niffler
-
-- где foobazz - ваш юзернэйм на https://hub.docker.com/
-
-!К замене надо отнестись внимательно, вот список мест на текущий момент:!
-
-- build.gradle всех сервисов Spring
-- docker-compose.yaml в корне проекта
-- docker-compose.test.yaml в корне проекта
-- docker.properties в модуле niffler-frontend
-- docker.properties в модуле niffler-frontend-gql
-
-#### 3. Перейти в корневой каталог проекта
-
-```posh
-michailklimov@Michails-MacBook-Air niffler % cd niffler
-```
-
-#### 4. Собрать все имеджи, запушить и запустить niffler одной командой, если необходим фронтенд GraphQL, то это указывается аргументом к скрипту:
-
-для REST:
-
-```posh
-michailklimov@Michails-MacBook-Air  niffler % bash docker-compose-dev.sh push
-```
-
-для GraphQL:
-
-```posh
-michailklimov@Michails-MacBook-Air  niffler % bash docker-compose-dev.sh gql push
-```
-
-# Запуск e-2-e тестов в Docker network изолированно Niffler в докере:
+# Запуск e-2-e тестов в Docker network изолированно Rococo в докере:
 
 #### 1. Перейти в корневой каталог проекта
 
 ```posh
-michailklimov@Michails-MacBook-Air niffler % cd niffler
+michailklimov@Michails-MacBook-Air rococo % cd rococo
 ```
 
-#### 2. Запустить все сервисы и тесты, если необходим фронтенд GraphQL, то это указывается аргументом к скрипту:
-
-для REST:
+#### 2. Запустить все сервисы и тесты:
 
 ```posh
-michailklimov@Michails-MacBook-Air  niffler % bash docker-compose-e2e.sh
-```
-
-для GraphQL:
-
-```posh
-michailklimov@Michails-MacBook-Air  niffler % bash docker-compose-e2e.sh gql
+michailklimov@Michails-MacBook-Air rococo % bash docker-compose-tests.sh
 ```
 
 #### 3. Selenoid UI доступен по адресу: http://localhost:9090/
 
-#### 4. Allure доступен по адресу: http://localhost:5050/allure-docker-service/projects/niffler-e-2-e-tests/reports/latest/index.html
-
-![Enjoy the Niffler](/niffler-frontend/public/images/niffler-logo.png)
+#### 4. Allure доступен по адресу: http://localhost:5050/allure-docker-service/projects/rococo-tests/reports/latest/index.html
