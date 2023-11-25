@@ -68,6 +68,6 @@ public class DockerConfig implements Config {
 
     @Override
     public String rococoGatewayUrl() {
-        return "http://userdata.rococo.dc:8080/";
+        return "http://api.rococo.dc:8080/";
     }
 }
