@@ -86,9 +86,9 @@ docker volume create rococo
 ```
 
 #### 5. Запустить БД, zookeeper и kafka используя bash
-В терминале IDE выполнить
+В терминале выполнить
 ```posh
-bash localenv.sh
+michailklimov@Michails-MacBook-Air rococo %  bash localenv.sh 
 ```
 
 #### 6. Установить одну из программ для визуальной работы с Postgres
@@ -118,7 +118,7 @@ create
 #### 1. В IDE выполнить bash скрипт:
 
 ```posh
-bash localenv.sh
+michailklimov@Michails-MacBook-Air rococo %  bash localenv.sh 
 ```
 
 #### 2. Прописать run конфигурацию для всех сервисов rococo-* - Active profiles local
@@ -139,6 +139,8 @@ michailklimov@Michails-MacBook-Air rococo-auth % gradle bootRun --args='--spring
 выполнен предыдущий пункт)
 
 #### 4  Запустить в любой последовательности другие сервисы: rococo-geo, rococo-userdata, rococo-gateway, rococo-museum, rococo-artist, rococo-painting
+
+Rococo при запуске локально будет работать для вас по адресу http://localhost:3000
 
 <hr>
 
@@ -191,7 +193,35 @@ Rococo при запуске в докере будет работать для 
 
 <hr>
 
-# Запуск e-2-e тестов в Docker network изолированно Rococo в докере:
+# Запуск тестов локально:
+
+#### 1. Перейти в корневой каталог проекта
+
+```posh
+michailklimov@Michails-MacBook-Air rococo % cd rococo
+```
+
+#### 2. Сервисы успешно запущены с помощью
+
+```posh
+michailklimov@Michails-MacBook-Air rococo %  bash localenv.sh 
+```
+
+#### 3. Запускаем тесты
+
+```posh
+michailklimov@Michails-MacBook-Air rococo %  ./gradlew :rococo-tests:clean test
+```
+
+#### 4. После прогона тестов выполняем запуск Allure отчета
+
+```posh
+michailklimov@Michails-MacBook-Air rococo %  ./gradlew :rococo-tests:allureServe --host localhost --port 9999
+```
+
+<hr>
+
+# Запуск тестов в Docker network изолированно Rococo в докере:
 
 #### 1. Перейти в корневой каталог проекта
 
