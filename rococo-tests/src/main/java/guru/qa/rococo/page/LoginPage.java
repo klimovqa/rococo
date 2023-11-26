@@ -43,8 +43,10 @@ public class LoginPage extends BasePage {
     }
 
     public void checkInvalidUserCredentials() {
+        String error = "docker".equals(System.getProperty("test.env")) ? "Bad credentials" :
+                "Неверные учетные данные пользователя";
         step("Проверяем что отображается ошибка \"Неверные учетные данные пользователя\"", () ->
-                $(byText("Неверные учетные данные пользователя")).shouldBe(visible));
+                $(byText(error)).shouldBe(visible));
     }
 
     public void registerClick() {

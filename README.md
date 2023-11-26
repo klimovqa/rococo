@@ -5,7 +5,6 @@
 ## О проекте
 + Rococo - web-приложение для хранения картин, художников и музеев
 
-
 ### Технологии, использованные в Rococo
 - [Spring Authorization Server](https://spring.io/projects/spring-authorization-server)
 - [Spring OAuth 2.0 Resource Server](https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/index.html)
