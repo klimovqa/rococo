@@ -1,196 +1,239 @@
-# Rococo
+# ![](readme/favicon.ico) Rococo
+**Дипломная работа по курсу QA.GURU Advanced**
+<hr>
 
-Приветствую тебя, мой дорогой друг!
-Если ты это читаешь - то ты собираешься сделать первый шаг в написании диплома QA.GURU Advanced.
-Далее я опишу основные направления работы, но помни, что этот диплом - не шаблонная работа, а место
-для творчества - прояви себя!
+## О проекте
++ Rococo - web-приложение для хранения картин, художников и музеев
 
-Кстати, Rococo - стиль в искусстве (живопись и не только), а значит дело пахнет микросервисами, 
-отвечающими за художников, их картины и музеи. И тестами на все это, которые должны быть искусством
+### Технологии, использованные в Rococo
+- [Spring Authorization Server](https://spring.io/projects/spring-authorization-server)
+- [Spring OAuth 2.0 Resource Server](https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/index.html)
+- [Spring data JPA](https://spring.io/projects/spring-data-jpa)
+- [Spring Web](https://docs.spring.io/spring-framework/docs/current/reference/html/web.html#spring-web)
+- [Spring actuator](https://docs.spring.io/spring-boot/docs/current/reference/html/actuator.html)
+- [Apache Kafka](https://developer.confluent.io/quickstart/kafka-docker/)
+- [Docker](https://www.docker.com/resources/what-container/)
+- [Docker-compose](https://docs.docker.com/compose/)
+- [Postgres](https://www.postgresql.org/about/)
+- [Svelte](https://svelte.dev/)
+- [Jakarta Bean Validation](https://beanvalidation.org/)
+- [JUnit 5 (Extensions, Resolvers, etc)](https://junit.org/junit5/docs/current/user-guide/)
+- [Retrofit 2](https://square.github.io/retrofit/)
+- [Allure](https://docs.qameta.io/allure/)
+- [Selenide](https://selenide.org/)
+- [Selenoid & Selenoid-UI](https://aerokube.com/selenoid/latest/)
+- [Allure-docker-service](https://github.com/fescobar/allure-docker-service)
+- [Java 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
+- [Gradle 7.6](https://docs.gradle.org/7.6/release-notes.html)
 
-# Что будет являться готовым дипломом?
+### Микросервисы в Rococo
++ [Rococo-auth]() - *Сервис авторизации*
++ [Rococo-gateway]() - *Api-шлюз*
++ [Rococo-userdata]() - *Сервис для работы с профилями пользователей*
++ [Rococo-geo]() - *Сервис для работы с геоданными*
++ [Rococo-museum]() - *Сервис для работы с музеями*
++ [Rococo-painting]() - *Сервис для работы с картинами*
++ [Rococo-artist]() - *Сервис для работы с художниками*
 
-Тут все просто, диплом глобально требует от тебя реализовать три вещи:
+## Схема микросервисов Rococo
+![](readme/shema.png)
 
-- Реализовать бэкенд на микросервисах (Spring boot, но если вдруг есть желание использовать что-то другое - мы не против)
-- Реализовать полноценное покрытие тестами микросервисов и frontend (если будут какие-то
-  unit-тесты - это большой плюс!)
-- Красиво оформить репозиторий на гихабе, что бы любой, кто зайдет на твою страничку, смог понять,
-  как все запустить, как прогнать тесты. Удели внимание этому пункту. Если я не смогу все запустить по твоему README - диплом останется без проверки
+<hr>
 
-# С чего начать?
+### Минимальные предусловия для работы с проектом Rococo
 
-Мы подготовили для тебя полностью рабочий frontend, а так же страницы регистрации и логина. Кроме
-того, у тебя есть и простой бэкенд - по сути своей, мок. В этом бекенде есть контроллеры, по которым
-можно понять, какие микросервисы тебе предстоит реализовать. И самое главное - у тебя есть проект
-niffler, который будет выступать образцом для подражания в разработке микросервисов. Тестовое
-покрытие niffler, однако, является достаточно слабым - учтите это при написании тестов на Rococ - это,
-все-таки, диплом для SDET / Senior QA Automation и падать в грязь лицом с десятком тестов на весь сервис
-точно не стоит. Итак, приступим!
+#### 0. Если у вас ОС Windows
 
-#### 1. Запусти фронт Rococ, для этого перейти в соответсвующий каталог
+Во-первых, необходимо использовать **bash terminal**, а не powershell.
+Во-вторых, для запуска фронтенда локально необходимо использовать команду
+`npm run build:windows`, если не работает стандартная команда `npm run dev`
+
+#### 1. Установить docker (Если не установлен)
+
+[Установка на Windows](https://docs.docker.com/desktop/install/windows-install/)
+
+[Установка на Mac](https://docs.docker.com/desktop/install/mac-install/) (Для ARM и Intel разные пакеты)
+
+[Установка на Linux](https://docs.docker.com/desktop/install/linux-install/)
+
+После установки и запуска docker daemon необходимо убедиться в работе команд docker, например `docker -v`:
 
 ```posh
-Dmitriis-MacBook-Pro rococo % cd rococo-client
+michailklimov@Michails-MacBook-Air ~ % docker -v
+Docker version 20.10.14, build a224086
 ```
 
-#### 2. Обнови зависимости и запускай фронт:
+#### 2. Установить Java версии 17 или новее. Это необходимо, т.к. проект не поддерживает версии <17
+
+Версию установленной Java необходимо проверить командой `java -version`
 
 ```posh
-Dmitriis-MacBook-Pro rococo-client % npm i
-Dmitriis-MacBook-Pro rococo-client % npm run dev
+michailklimov@Michails-MacBook-Air ~ % java -version
+openjdk version "19.0.1" 2022-10-18
+OpenJDK Runtime Environment Homebrew (build 19.0.1)
 ```
 
-Фронт стартанет в твоем браузере на порту 3000: http://127.0.0.1:3000/
-Обрати внимание! Надо использовать именно 127.0.0.1, а не localhost
+#### 3. Установить пакетый менеджер для сборки front-end npm
 
-#### 3. Запустите бэкенд rococo-api
+[Инструкция](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
+Рекомендованная версия Node.js - 18.13.0 (LTS)
+
+#### 4. Создать volume для сохранения данных из БД в docker на вашем компьютере
 
 ```posh
-Dmitriis-MacBook-Pro rococo % ./gradlew :rococo-api:bootRun --args='--spring.profiles.active=local'
+docker volume create rococo
 ```
 
-Бэк стартанет на порту 8080: http://127.0.0.1:8080/
-
-# Что дальше?
-
-#### 1. В первую очередь, необходимо реализовать сервис rococo-auth
-
-Фронтенд полностью готов к использованию сервиса auth на порту 9000,
-твоя задача взять сервис niffler-auth и аккуратно переделать его для работы с rococo.
-Страницы логина / регистрации, а так же стили и графику мы даем:
-
-- deer-logo.svg
-- favicon.ico
-- styles.css
-- login.html
-- register.html
-
-Основная задача - аккуратно заменить упоминания о niffler в этом сервисе, а в идеале - еще и
-разобраться, как он работает. В этом будет полезно
-видео
-[Implementing an OAuth 2 authorization server with Spring Security - the new way! by Laurentiu Spilca](https://youtu.be/DaUGKnA7aro)
-[Full Stack OAuth 2 - With Spring Security / React / Angular Part 1](https://youtu.be/SfNIjS_2H4M)
-[Full Stack OAuth 2 - With Spring Security / React / Angular Part 2](https://youtu.be/3bGer6-6mdY)
-
-#### 2. Как только у вас появилось уже 2 сервиса, есть смысл подумать о докеризации
-
-Чем раньше у ваc получится запустить в докере фронт и все бэкенды, тем проще будет дальше.
-На самом деле, докеризация не является строго обязательным требованием, но если вы хотите в будущем
-задеплоить свой сервис на прод, прикрутить CI/CD, без этого никак не обойдется
-
-#### 3. Подумать о необходимых микросервисах.
-
-У вас должен остаться основной бэкенд (rococ-api), куда будет ходить фронт, но он будет играть роль прокси,
-проверяющего вашу аутентифкацию. Все, как и в niffler. Это значит, что основная логика уйдет в свои
-микросервисы со своими БД. На мой вззгляд, здесь будут уместны сервисы rococo-artist,
-rococo-painting, rococo-museum, rococo-userdata. Возможно, у вас другие мысли, какие микросервисы создать - вы
-можете проявить свою фантазию
-
-#### 4. Выбрать протокол взаимодействия между сервисами
-
-В поставляемом фронтенде классический REST. Его можно поменять на GraphQL - но это потребует
-переписывания фронта, и тебе придется делать это самому. Поэтому я бы посоветовал оставить между
-фронтом и rococo-gateway старый добрый REST. А вот взаимодействие между микросервисами можно
-делать как угодно! REST, gRPC, SOAP. Делай проект я, однозначно взял бы gRPC - не писать руками кучу
-model-классов, получить перформанс и простое написание тестов. Стоит сказать, что здесь не
-понадобятся streaming rpc, и все ограничится простыми унарными запросами. Однако если вы хотите
-использовать REST или SOAP - мы не будем возражать.
-
-#### 5. Реализовать микросервисный backend
-
-Это место где, внезапно, СОВА НАРИСОВАНА! :)
-На самом деле, концептуально и технически каждый сервис будет похож на что-то из niffler, поэтому
-главное внимательность и аккуратность. Любые отхождения от niffler возможны - ты можешь захотеть
-использовать, например, NoSQL базы или по другому организовать конфигурацию / структуру проекта -
-никаких ограничений, лишь бы сервис выполнял свое прямое назначение
-
-##### Особенности реализации backend
-
-###### Сервис gateway
-
-1) Pageble контроллеры;
-Пример:
-```java
-  @GetMapping()
-  public Page<ArtistJson> getAll(@RequestParam(required = false) String name,
-                                 @PageableDefault Pageable pageable) {
-    return artistService.getAll(name, pageable);
-  }
+#### 5. Запустить БД, zookeeper и kafka используя bash
+В терминале выполнить
+```posh
+michailklimov@Michails-MacBook-Air rococo %  bash localenv.sh 
 ```
-Здесь объект `Pageable` - приходит в виде GET параметров с фронта. 
-Так же GET парметром может прийти (а может и нет) параметр name. Тогда запрос в БД должен включать фильтрацию по полю name (`ContainsIgnoreCase`)
-Пример репозитория с запросом к БД с учетом Pageable и name
-```java
-public interface ArtistRepository extends JpaRepository<ArtistEntity, UUID> {
 
-  @Nonnull
-  Page<ArtistEntity> findAllByNameContainsIgnoreCase(
-          @Nonnull String name,
-          @Nonnull Pageable pageable
-  );
-}
+#### 6. Установить одну из программ для визуальной работы с Postgres
+
+Например, DBeaver.
+
+#### 7. Подключиться к БД postgres (host: localhost, port: 5432, user: postgres, pass: secret, database name: postgres) и создать пустые БД микросервисов
+
+```sql
+create
+    database "rococo-userdata" with owner postgres;
+create
+    database "rococo-auth" with owner postgres;
+create
+    database "rococo-museum" with owner postgres;   
+create
+    database "rococo-painting" with owner postgres;
+create
+    database "rococo-artist" with owner postgres;
+create
+    database "rococo-geo" with owner postgres;
 ```
-Почитать, дополнительно, тут: https://www.baeldung.com/spring-data-jpa-pagination-sorting
+<hr>
 
+# Запуск Rococo локальное в IDE:
 
-2) необходим доступ без авторизации к эндпойнту `/api/session` без необходимости быть
-аторизованным, для этого пропишем его в security config:
-```java
-@EnableWebSecurity
-@Configuration
-@Profile("!local")
-public class SecurityConfigMain {
+#### 1. В IDE выполнить bash скрипт:
 
-    private final CorsCustomizer corsCustomizer;
-
-    @Autowired
-    public SecurityConfigMain(CorsCustomizer corsCustomizer) {
-        this.corsCustomizer = corsCustomizer;
-    }
-
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        corsCustomizer.corsCustomizer(http);
-
-        http.authorizeHttpRequests(customizer ->
-                customizer.requestMatchers(
-                                antMatcher(HttpMethod.GET, "/api/session"),
-                                antMatcher(HttpMethod.GET, "/api/artist/**"),
-                                antMatcher(HttpMethod.GET, "/api/museum/**"),
-                                antMatcher(HttpMethod.GET, "/api/painting/**"))
-                        .permitAll()
-                        .anyRequest()
-                        .authenticated()
-        ).oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()));
-        return http.build();
-    }
-}
+```posh
+michailklimov@Michails-MacBook-Air rococo %  bash localenv.sh 
 ```
-test
-Все прочие эндпойнты должны требовать авторизацию
 
-#### 6. Подготовить структуру тестового "фреймворка", подумать о том какие прекондишены и как вы будете создавать
+#### 2. Прописать run конфигурацию для всех сервисов rococo-* - Active profiles local
 
-Здесь однозначно понадобится возможность API-логина и работы со всеми возможными preconditions проекта - картинами,
-художниками, музеями. 
+Для этого зайти в меню Run -> Edit Configurations -> выбрать main класс -> указать Active profiles: local
+[Инструкция](https://stackoverflow.com/questions/39738901/how-do-i-activate-a-spring-boot-profile-when-running-from-intellij).
 
-#### 7. Реализовать достаточное, на твой взгляд, покрытие e-2-e тестами
+#### 3 Запустить сервис Rococo-auth c помощью gradle или командой Run в IDE:
 
-На наш взгляд, только основны позитивных сценариев тут не менее трех десятков.
+- Запустить сервис auth
 
-#### 8. Оформить все красиво!
+```posh
+michailklimov@Michails-MacBook-Air rococo % cd rococo-auth
+michailklimov@Michails-MacBook-Air rococo-auth % gradle bootRun --args='--spring.profiles.active=local'
+```
 
-Да, тут еще раз намекну про важность ридми, важность нарисовать топологию (схему) твоих сервисов, важность скриншотиков и прочих красот
+Или просто перейдя к main-классу приложения RococoAuthApplication выбрать run в IDEA (предварительно удостовериться что
+выполнен предыдущий пункт)
 
+#### 4  Запустить в любой последовательности другие сервисы: rococo-geo, rococo-userdata, rococo-gateway, rococo-museum, rococo-artist, rococo-painting
 
+Rococo при запуске локально будет работать для вас по адресу http://localhost:3000
 
+<hr>
 
+# Запуск Rococo в докере:
 
+#### 1. Создать бесплатную учетную запись на https://hub.docker.com/ (если отсутствует)
 
+#### 2. Создать в настройках своей учетной записи access_token
 
+[Инструкция](https://docs.docker.com/docker-hub/access-tokens/).
 
+#### 3. Выполнить docker login с созданным access_token (в инструкции это описано)
 
+#### 4. Прописать в etc/hosts элиас для Docker-имени
 
+- frontend:  127.0.0.1 client.rococo.dc,
+- auth:      127.0.0.1 auth.rococo.dc
+- gateway:   127.0.0.1 api.rococo.dc
 
+```posh
+michailklimov@Michails-MacBook-Air rococo % vi /etc/hosts
+```
 
+```posh
+##
+# Host Database
+#
+# localhost is used to configure the loopback interface
+# when the system is booting.  Do not change this entry.
+##
+127.0.0.1       localhost
+127.0.0.1       client.rococo.dc
+127.0.0.1       auth.rococo.dc
+127.0.0.1       api.rococo.dc
+```
+
+#### 5. Перейти в корневой каталог проекта
+
+```posh
+michailklimov@Michails-MacBook-Air rococo % cd rococo
+```
+
+#### 6. Запустить все сервисы:
+
+```posh
+michailklimov@Michails-MacBook-Air  rococo % bash docker-compose-dev.sh
+```
+
+Rococo при запуске в докере будет работать для вас по адресу http://client.rococo.dc
+
+<hr>
+
+# Запуск тестов локально:
+
+#### 1. Перейти в корневой каталог проекта
+
+```posh
+michailklimov@Michails-MacBook-Air rococo % cd rococo
+```
+
+#### 2. Сервисы успешно запущены с помощью
+
+```posh
+michailklimov@Michails-MacBook-Air rococo %  bash localenv.sh 
+```
+
+#### 3. Запускаем тесты
+
+```posh
+michailklimov@Michails-MacBook-Air rococo %  ./gradlew :rococo-tests:clean test
+```
+
+#### 4. После прогона тестов выполняем запуск Allure отчета
+
+```posh
+michailklimov@Michails-MacBook-Air rococo %  ./gradlew :rococo-tests:allureServe --host localhost --port 9999
+```
+
+<hr>
+
+# Запуск тестов в Docker network изолированно Rococo в докере:
+
+#### 1. Перейти в корневой каталог проекта
+
+```posh
+michailklimov@Michails-MacBook-Air rococo % cd rococo
+```
+
+#### 2. Запустить все сервисы и тесты:
+
+```posh
+michailklimov@Michails-MacBook-Air rococo % bash docker-compose-tests.sh
+```
+
+#### 3. Selenoid UI доступен по адресу: http://localhost:9090/
+
+#### 4. Allure доступен по адресу: http://localhost:5050/allure-docker-service/projects/rococo-tests/reports/latest/index.html

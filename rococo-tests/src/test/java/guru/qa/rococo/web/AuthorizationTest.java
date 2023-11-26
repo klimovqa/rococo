@@ -10,6 +10,11 @@ import io.qameta.allure.Story;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 
 @Epic("[WEB]")
@@ -78,36 +83,45 @@ public class AuthorizationTest extends BaseTest {
         loginPage.clickSubmit();
         loginPage.checkErrorPasswordShouldBeEqual();
     }
-    @DisplayName("Регистрация пользователя (проверка граничных значений)")
-    @Test
-    void userRegistrationPasswordLengthTest() {
+
+    private static Stream<Arguments> provideSuccessRegistration() {
+        return Stream.of(
+                Arguments.of("USER_REG_PASSWORD_LENGTH", "123"),
+                Arguments.of("USER_REG_PASSWORD_LENGTH2", "123456789012"));
+    }
+
+    @ParameterizedTest(name = "Успешная регистрация пользователя с граничными значения пароля {0} {1}")
+    @MethodSource("provideSuccessRegistration")
+    void userRegistrationPasswordLengthSuccessTest(String login, String password) {
         mainPage.openPage();
         mainPage.goToLogin();
         loginPage.registerClick();
-        loginPage.inputUsername("USER_REG_PASSWORD_LENGTH");
-        loginPage.inputPassword("12");
-        loginPage.inputPasswordSubmit("12");
-        loginPage.clickSubmit();
-        loginPage.checkError("Allowed password length should be from 3 to 12 characters");
-
-        loginPage.inputPassword("1234567890123");
-        loginPage.inputPasswordSubmit("1234567890123");
-        loginPage.clickSubmit();
-        loginPage.checkError("Allowed password length should be from 3 to 12 characters");
-
-        loginPage.inputPassword("123");
-        loginPage.inputPasswordSubmit("123");
-        loginPage.clickSubmit();
-        loginPage.checkSuccessRegistered();
-
-        loginPage.signInSystem();
-        loginPage.registerClick();
-        loginPage.inputUsername("USER_REG_PASSWORD_LENGTH2");
-        loginPage.inputPassword("123456789012");
-        loginPage.inputPasswordSubmit("123456789012");
+        loginPage.inputUsername(login);
+        loginPage.inputPassword(password);
+        loginPage.inputPasswordSubmit(password);
         loginPage.clickSubmit();
         loginPage.checkSuccessRegistered();
     }
+
+    private static Stream<Arguments> provideErrorRegistration() {
+        return Stream.of(
+                Arguments.of("USER_REG_PASSWORD_LENGTH", "12", "Allowed password length should be from 3 to 12 characters"),
+                Arguments.of("USER_REG_PASSWORD_LENGTH2", "1234567890123", "Allowed password length should be from 3 to 12 characters"));
+    }
+
+    @ParameterizedTest(name = "Пользователь должен получить сообщение об ошибке : {2} при вводе некорректных данных")
+    @MethodSource("provideErrorRegistration")
+    void userRegistrationPasswordLengthTest(String login, String password, String error) {
+        mainPage.openPage();
+        mainPage.goToLogin();
+        loginPage.registerClick();
+        loginPage.inputUsername(login);
+        loginPage.inputPassword(password);
+        loginPage.inputPasswordSubmit(password);
+        loginPage.clickSubmit();
+        loginPage.checkError(error);
+    }
+
     @DisplayName("Регистрация пользователя (пароль не введен повторно)")
     @Test
     void userRegistrationPasswordWastEnteredAgainTest() {
@@ -134,9 +148,10 @@ public class AuthorizationTest extends BaseTest {
         loginPage.clickSubmit();
         loginPage.checkErrorNotUniqueUsername(USERNAME_NOT_UNIQ);
     }
+
     @DisplayName("Разлогин пользователя")
     @CreateUser(username = USERNAME_LOGOUT,
-                password = PASSWORD)
+            password = PASSWORD)
     @Test
     void userLogoutTest() {
         mainPage.openPage();
@@ -148,9 +163,10 @@ public class AuthorizationTest extends BaseTest {
         loginPage.clickLogout();
         loginPage.checkSessionIsOver();
     }
+
     @DisplayName("Вход через кнопку войти на форме регистрации нового пользователя")
     @CreateUser(username = USERNAME2,
-                password = PASSWORD)
+            password = PASSWORD)
     @Test
     void loginViaLoginButtonOnNewUserRegistrationFormTest() {
         mainPage.openPage();

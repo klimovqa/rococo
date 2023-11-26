@@ -35,7 +35,7 @@ else
   docker build --build-arg DOCKER=eclipse-temurin:19-jdk -t "${IMAGE_NAME}":"${VERSION}" -t "${IMAGE_NAME}":latest -f ./rococo-tests/Dockerfile .
 fi
 
-docker pull selenoid/vnc:chrome_110.0
+docker pull selenoid/vnc:chrome_117.0
 docker images
 ARCH="$docker_arch" docker-compose -f docker-compose.test.yml up -d
 docker ps -a

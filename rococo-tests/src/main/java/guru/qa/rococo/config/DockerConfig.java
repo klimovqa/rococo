@@ -12,9 +12,8 @@ public class DockerConfig implements Config {
         Configuration.remote = "http://selenoid:4444/wd/hub";
         Configuration.timeout = 10000;
         Configuration.browser = "chrome";
-        Configuration.browserVersion = "110.0";
+        Configuration.browserVersion = "117.0";
         Configuration.browserCapabilities = new ChromeOptions().addArguments("--no-sandbox");
-
     }
 
     private DockerConfig() {
@@ -68,6 +67,6 @@ public class DockerConfig implements Config {
 
     @Override
     public String rococoGatewayUrl() {
-        return "http://userdata.rococo.dc:8080/";
+        return "http://api.rococo.dc:8080/";
     }
 }
