@@ -1,7 +1,6 @@
 package guru.qa.rococo.db.dao;
 
 
-import guru.qa.rococo.db.entity.artist.ArtistEntity;
 import guru.qa.rococo.db.entity.painting.PaintingEntity;
 
 import java.util.List;

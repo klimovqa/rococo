@@ -1,8 +1,6 @@
 package guru.qa.rococo.api;
 
-import guru.qa.rococo.api.model.ArtistJson;
 import guru.qa.rococo.api.model.MuseumJson;
-import guru.qa.rococo.api.model.PaintingJson;
 import guru.qa.rococo.api.pageable.MyPage;
 import retrofit2.Call;
 import retrofit2.http.*;

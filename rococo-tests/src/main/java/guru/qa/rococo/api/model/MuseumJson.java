@@ -31,7 +31,6 @@ public class MuseumJson {
         MuseumEntity museumEntity = new MuseumEntity();
         LocationEntity locationEntity = new LocationEntity();
 
-        //locationEntity.setId(UUID.randomUUID());
         locationEntity.setCity(museum.getGeo().getCity());
         locationEntity.setCountryId(museum.getGeo().getCountry().getId());
         locationEntity.setCountryName(museum.getGeo().getCountry().getName());

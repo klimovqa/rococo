@@ -24,7 +24,6 @@ public class ArtistJson {
     @JsonProperty("photo")
     private String photo;
 
-
     public static ArtistJson fromEntity(ArtistEntity entity) {
         ArtistJson museum = new ArtistJson();
         museum.setId(entity.getId());
