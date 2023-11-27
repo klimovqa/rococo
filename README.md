@@ -73,7 +73,7 @@ openjdk version "19.0.1" 2022-10-18
 OpenJDK Runtime Environment Homebrew (build 19.0.1)
 ```
 
-#### 3. Установить пакетый менеджер для сборки front-end npm
+#### 3. Установить пакетный менеджер для сборки front-end npm
 
 [Инструкция](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
 Рекомендованная версия Node.js - 18.13.0 (LTS)
