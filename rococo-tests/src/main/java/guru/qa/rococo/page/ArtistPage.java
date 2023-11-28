@@ -21,17 +21,17 @@ public class ArtistPage extends BasePage {
                 $(".text-3xl.m-4").shouldBe(text("Художники")));
     }
 
-    public void checkCountArtists(int count) {
+    public void checkNumberOfArtistsInSearchResults(int count) {
         step("Проверяем количество отображаемых Художников, должно быть - " + count, () ->
                 $$(".w-100 li").shouldHave(size(count)));
     }
 
-    public void inputSearch(String name) {
+    public void enterArtistIntoSearch(String name) {
         step("Вводим название художника - " + name, () ->
                 $("input.input").val(name));
     }
 
-    public void searchClick() {
+    public void clickSearchButton() {
         step("Нажимаем на поиск", () ->
                 $("button img[alt='Иконка поиска']").click());
     }
@@ -42,17 +42,17 @@ public class ArtistPage extends BasePage {
                 $(byText(name)).click());
     }
 
-    public void checkArtistNameOfArtistCard(String name) {
+    public void checkArtistPhotoViewOfArtistCard(String name) {
         step("Проверить что отображается картинка у художника - " + name, () ->
                 $("section img").shouldBe(visible));
     }
 
-    public void checkNameOfArtistCard(String artistName) {
+    public void checkViewOfArtistCard(String artistName) {
         step("Проверяем что в карточке отображается - " + artistName, () ->
                 $("header.card-header").shouldBe(text(artistName)));
     }
 
-    public void checkDescription(String description) {
+    public void checkDescriptionOfArtistCard(String description) {
         step("Проверяем что в карточке отображается описание", () ->
                 $(byText(description)).shouldBe(visible));
     }
@@ -62,18 +62,18 @@ public class ArtistPage extends BasePage {
                 $(byText("Добавить художника")).click());
     }
 
-    public void clickAddPainting() {
+    public void clickPaintingAddButton() {
         step("Нажимаем Добавить картину", () ->
                 $(byText("Добавить картину")).click());
     }
 
 
-    public void inputArtistName(String name) {
+    public void enterArtistName(String name) {
         step("Вводим имя художника - " + name, () ->
                 $("input[name='name']").val(name));
     }
 
-    public void inputArtistBiography(String bio) {
+    public void enterArtistBiography(String bio) {
         step("Вводим описание художника", () ->
                 $("textarea[name='biography']").val(bio));
     }
@@ -84,19 +84,19 @@ public class ArtistPage extends BasePage {
                         .uploadFromClasspath(pathPhoto));
     }
 
-    public void addedArtist() {
+    public void clickAddArtistButton() {
         step("Нажимаем кнопку Добавить", () ->
                 $(byText("Добавить"))
                         .click());
     }
 
-    public void saveArtist() {
+    public void clickArtistSaveButton() {
         step("Нажимаем кнопку Сохранить", () ->
                 $(byText("Сохранить"))
                         .click());
     }
 
-    public void editArtist() {
+    public void clickArtistEditButton() {
         step("Нажимаем кнопку Редактировать", () ->
                 $(byText("Редактировать"))
                         .click());
