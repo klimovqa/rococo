@@ -21,34 +21,34 @@ public class MuseumPage extends BasePage {
                 $(".text-3xl.m-4").shouldBe(text("Музеи")));
     }
 
-    public void checkCountMuseums(int count) {
+    public void checkNumberOfMuseumsInSearchResults(int count) {
         step("Проверяем количество отображаемых Музеев, должно быть - " + count, () ->
                 $$(".w-100 li").shouldHave(size(count)));
     }
 
-    public void inputSearch(String name) {
+    public void enterMuseumIntoSearch(String name) {
         step("Вводим название музея - " + name, () ->
                 $("input.input").val(name));
     }
 
-    public void inputMuseumName(String name) {
+    public void enterMuseumName(String name) {
         step("Вводим название музея - " + name, () ->
                 $("input[name='title']").val(name));
     }
 
-    public void inputMuseumCity(String city) {
+    public void enterMuseumCity(String city) {
         step("Вводим название города - " + city, () ->
                 $("input[name='city']").val(city));
     }
 
-    public void inputMuseumDescription(String desc) {
+    public void enterMuseumDescription(String desc) {
         step("Вводим описание музея", () -> {
             $("textarea[name='description']").shouldBe(visible);
             $("textarea[name='description']").val(desc);
         });
     }
 
-    public void inputMuseumCountry(String country) {
+    public void enterMuseumCountry(String country) {
         step("Выбираем страну - " + country, () ->
                 $("select.select").selectOptionContainingText(country));
     }
@@ -59,19 +59,19 @@ public class MuseumPage extends BasePage {
                         .uploadFromClasspath(pathPhoto));
     }
 
-    public void addedMuseum() {
+    public void clickMuseumAddButton() {
         step("Нажимаем кнопку Добавить", () ->
                 $(byText("Добавить"))
                         .click());
     }
 
-    public void saveMuseum() {
+    public void clickSaveMuseum() {
         step("Нажимаем кнопку Сохранить", () ->
                 $(byText("Сохранить"))
                         .click());
     }
 
-    public void searchClick() {
+    public void clickSearchButton() {
         step("Нажимаем на поиск", () ->
                 $("button img[alt='Иконка поиска']").click());
     }

@@ -38,9 +38,9 @@ public class SuccessLoginTest extends BaseTest {
     void signInRegisteredUserTest() {
         mainPage.openPage();
         mainPage.goToLogin();
-        loginPage.inputUsername(USERNAME);
-        loginPage.inputPassword(PASSWORD);
-        loginPage.clickSubmit();
+        loginPage.enterUsername(USERNAME);
+        loginPage.enterPassword(PASSWORD);
+        loginPage.clickLogInButton();
         loginPage.checkAvatarExist();
     }
 
@@ -49,11 +49,11 @@ public class SuccessLoginTest extends BaseTest {
     void userRegistrationPositiveCaseTest() {
         mainPage.openPage();
         mainPage.goToLogin();
-        loginPage.registerClick();
-        loginPage.inputUsername("USER_REG_POSITIVE");
-        loginPage.inputPassword(PASSWORD);
-        loginPage.inputPasswordSubmit(PASSWORD);
-        loginPage.clickSubmit();
+        loginPage.clickOnRegisterLink();
+        loginPage.enterUsername("USER_REG_POSITIVE");
+        loginPage.enterPassword(PASSWORD);
+        loginPage.enterPasswordSubmit(PASSWORD);
+        loginPage.clickLogInButton();
         loginPage.checkSuccessRegistered();
     }
 
@@ -68,11 +68,11 @@ public class SuccessLoginTest extends BaseTest {
     void userRegistrationPasswordLengthSuccessTest(String login, String password) {
         mainPage.openPage();
         mainPage.goToLogin();
-        loginPage.registerClick();
-        loginPage.inputUsername(login);
-        loginPage.inputPassword(password);
-        loginPage.inputPasswordSubmit(password);
-        loginPage.clickSubmit();
+        loginPage.clickOnRegisterLink();
+        loginPage.enterUsername(login);
+        loginPage.enterPassword(password);
+        loginPage.enterPasswordSubmit(password);
+        loginPage.clickLogInButton();
         loginPage.checkSuccessRegistered();
     }
 
@@ -83,11 +83,11 @@ public class SuccessLoginTest extends BaseTest {
     void loginViaLoginButtonOnNewUserRegistrationFormTest() {
         mainPage.openPage();
         mainPage.goToLogin();
-        loginPage.registerClick();
+        loginPage.clickOnRegisterLink();
         loginPage.signIn();
-        loginPage.inputUsername(USERNAME2);
-        loginPage.inputPassword(PASSWORD);
-        loginPage.clickSubmit();
+        loginPage.enterUsername(USERNAME2);
+        loginPage.enterPassword(PASSWORD);
+        loginPage.clickLogInButton();
         mainPage.checkTitleMainPage();
     }
 }

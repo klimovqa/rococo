@@ -17,7 +17,6 @@ import org.junit.jupiter.api.Test;
 @Tag("WEB")
 public class ViewArtistTest extends BaseTest {
 
-
     private final MainPage mainPage = new MainPage();
     private final ArtistPage artistPage = new ArtistPage();
 
@@ -27,7 +26,7 @@ public class ViewArtistTest extends BaseTest {
         mainPage.openPage();
         mainPage.goToArtistPage();
         artistPage.checkTitleArtist();
-        artistPage.checkCountArtists(9);
+        artistPage.checkNumberOfArtistsInSearchResults(9);
     }
 
     @DisplayName("Просмотр художника без картины")
@@ -40,9 +39,9 @@ public class ViewArtistTest extends BaseTest {
         mainPage.goToArtistPage();
         artistPage.checkTitleArtist();
         artistPage.clickArtistCard(ARTIST_NAME);
-        artistPage.checkNameOfArtistCard(ARTIST_NAME);
-        artistPage.checkDescription(DESCRIPTION);
-        artistPage.checkArtistNameOfArtistCard(ARTIST_NAME);
+        artistPage.checkViewOfArtistCard(ARTIST_NAME);
+        artistPage.checkDescriptionOfArtistCard(DESCRIPTION);
+        artistPage.checkArtistPhotoViewOfArtistCard(ARTIST_NAME);
         artistPage.checkByTextShouldBeVisible("Проверить что отображается тостер " + TOSTER, TOSTER);
     }
 
@@ -56,9 +55,9 @@ public class ViewArtistTest extends BaseTest {
         mainPage.goToArtistPage();
         artistPage.checkTitleArtist();
         artistPage.clickArtistCard(ARTIST_NAME);
-        artistPage.checkNameOfArtistCard(ARTIST_NAME);
-        artistPage.checkDescription(DESCRIPTION);
-        artistPage.checkArtistNameOfArtistCard(ARTIST_NAME);
+        artistPage.checkViewOfArtistCard(ARTIST_NAME);
+        artistPage.checkDescriptionOfArtistCard(DESCRIPTION);
+        artistPage.checkArtistPhotoViewOfArtistCard(ARTIST_NAME);
         artistPage.checkByTextShouldBeVisible("Проверить что отображается картина " + PAINTING, PAINTING);
     }
 }

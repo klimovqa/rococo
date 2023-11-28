@@ -27,9 +27,9 @@ public class SearchPaintingTest extends BaseTest {
         mainPage.openPage();
         mainPage.goToPaintingPage();
         paintingPage.checkTitlePainting();
-        paintingPage.inputSearch("евре");
-        paintingPage.searchClick();
-        paintingPage.checkCountPaintings(1);
+        paintingPage.enterPaintingIntoSearch("евре");
+        paintingPage.clickSearchButton();
+        paintingPage.checkNumberOfPaintingInSearchResults(1);
         paintingPage.checkByTextShouldBeVisible("Проверяем что отображается именно - Старый еврей с мальчиком",
                 "Старый еврей с мальчиком");
     }
@@ -40,9 +40,9 @@ public class SearchPaintingTest extends BaseTest {
         mainPage.openPage();
         mainPage.goToPaintingPage();
         paintingPage.checkTitlePainting();
-        paintingPage.inputSearch("Васнецлдл");
-        paintingPage.searchClick();
-        paintingPage.checkCountPaintings(0);
+        paintingPage.enterPaintingIntoSearch("Васнецлдл");
+        paintingPage.clickSearchButton();
+        paintingPage.checkNumberOfPaintingInSearchResults(0);
         paintingPage.checkByTextShouldBeVisible("Проверяем что отображается заглушка - Картины не найдены",
                 "Картины не найдены");
     }

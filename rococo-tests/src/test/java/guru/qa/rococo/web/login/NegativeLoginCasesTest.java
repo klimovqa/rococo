@@ -4,7 +4,6 @@ import guru.qa.rococo.BaseTest;
 import guru.qa.rococo.jupiter.annotation.CreateUser;
 import guru.qa.rococo.page.LoginPage;
 import guru.qa.rococo.page.MainPage;
-import guru.qa.rococo.page.UserPage;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
@@ -35,10 +34,10 @@ public class NegativeLoginCasesTest extends BaseTest {
     void signInNotRegisteredUserTest() {
         mainPage.openPage();
         mainPage.goToLogin();
-        loginPage.inputUsername("NOT_REGISTERED_USER");
-        loginPage.inputPassword(PASSWORD);
-        loginPage.clickSubmit();
-        loginPage.checkInvalidUserCredentials();
+        loginPage.enterUsername("NOT_REGISTERED_USER");
+        loginPage.enterPassword(PASSWORD);
+        loginPage.clickLogInButton();
+        loginPage.checkDisplayInvalidUserCredentials();
     }
 
     @DisplayName("Регистрация пользователя (пароли не совпадают)")
@@ -46,12 +45,12 @@ public class NegativeLoginCasesTest extends BaseTest {
     void userRegistrationPasswordDontMatchTest() {
         mainPage.openPage();
         mainPage.goToLogin();
-        loginPage.registerClick();
-        loginPage.inputUsername("USER_REG_PASSWORD_DONT_MATCH");
-        loginPage.inputPassword("12345");
-        loginPage.inputPasswordSubmit("123456");
-        loginPage.clickSubmit();
-        loginPage.checkErrorPasswordShouldBeEqual();
+        loginPage.clickOnRegisterLink();
+        loginPage.enterUsername("USER_REG_PASSWORD_DONT_MATCH");
+        loginPage.enterPassword("12345");
+        loginPage.enterPasswordSubmit("123456");
+        loginPage.clickLogInButton();
+        loginPage.checkDisplayErrorPasswordShouldBeEqual();
     }
 
     private static Stream<Arguments> provideErrorRegistration() {
@@ -65,12 +64,12 @@ public class NegativeLoginCasesTest extends BaseTest {
     void userRegistrationPasswordLengthTest(String login, String password, String error) {
         mainPage.openPage();
         mainPage.goToLogin();
-        loginPage.registerClick();
-        loginPage.inputUsername(login);
-        loginPage.inputPassword(password);
-        loginPage.inputPasswordSubmit(password);
-        loginPage.clickSubmit();
-        loginPage.checkError(error);
+        loginPage.clickOnRegisterLink();
+        loginPage.enterUsername(login);
+        loginPage.enterPassword(password);
+        loginPage.enterPasswordSubmit(password);
+        loginPage.clickLogInButton();
+        loginPage.checkDisplayError(error);
     }
 
     @DisplayName("Регистрация пользователя (пароль не введен повторно)")
@@ -78,11 +77,11 @@ public class NegativeLoginCasesTest extends BaseTest {
     void userRegistrationPasswordWastEnteredAgainTest() {
         mainPage.openPage();
         mainPage.goToLogin();
-        loginPage.registerClick();
-        loginPage.inputUsername("USER_REG_PASSWORD_WAS_NOT_ENTERED_AGAIN");
-        loginPage.inputPassword("12345");
-        loginPage.clickSubmit();
-        loginPage.checkNotSuccessRegistered();
+        loginPage.clickOnRegisterLink();
+        loginPage.enterUsername("USER_REG_PASSWORD_WAS_NOT_ENTERED_AGAIN");
+        loginPage.enterPassword("12345");
+        loginPage.clickLogInButton();
+        loginPage.checkDisplayNotSuccessRegistered();
     }
 
     @DisplayName("Регистрация пользователя (пользователь с таким логином существует)")
@@ -92,11 +91,11 @@ public class NegativeLoginCasesTest extends BaseTest {
     void userRegistrationUserWithThisUsernameExistsTest() {
         mainPage.openPage();
         mainPage.goToLogin();
-        loginPage.registerClick();
-        loginPage.inputUsername(USERNAME_NOT_UNIQ);
-        loginPage.inputPassword(PASSWORD);
-        loginPage.inputPasswordSubmit(PASSWORD);
-        loginPage.clickSubmit();
-        loginPage.checkErrorNotUniqueUsername(USERNAME_NOT_UNIQ);
+        loginPage.clickOnRegisterLink();
+        loginPage.enterUsername(USERNAME_NOT_UNIQ);
+        loginPage.enterPassword(PASSWORD);
+        loginPage.enterPasswordSubmit(PASSWORD);
+        loginPage.clickLogInButton();
+        loginPage.checkDisplayErrorNotUniqueUsername(USERNAME_NOT_UNIQ);
     }
 }

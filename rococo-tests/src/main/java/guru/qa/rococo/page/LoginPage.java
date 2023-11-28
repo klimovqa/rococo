@@ -17,22 +17,22 @@ public class LoginPage extends BasePage {
                 $(byText("Войти в систему")).click());
     }
 
-    public void inputUsername(String username) {
+    public void enterUsername(String username) {
         step("Вводим имя пользователя - " + username, () ->
                 $("input[name='username']").setValue(username));
     }
 
-    public void inputPassword(String password) {
+    public void enterPassword(String password) {
         step("Вводим пароль - " + password, () ->
                 $("input[name='password']").setValue(password));
     }
 
-    public void inputPasswordSubmit(String password) {
+    public void enterPasswordSubmit(String password) {
         step("Вводим повторно пароль - " + password, () ->
                 $("input[name='passwordSubmit']").setValue(password));
     }
 
-    public void clickSubmit() {
+    public void clickLogInButton() {
         step("Нажимаем Войти", () ->
                 $(".form__submit").click());
     }
@@ -42,14 +42,14 @@ public class LoginPage extends BasePage {
                 $(".avatar-initials").shouldBe(exist));
     }
 
-    public void checkInvalidUserCredentials() {
+    public void checkDisplayInvalidUserCredentials() {
         String error = "docker".equals(System.getProperty("test.env")) ? "Bad credentials" :
                 "Неверные учетные данные пользователя";
         step("Проверяем что отображается ошибка \"Неверные учетные данные пользователя\"", () ->
                 $(byText(error)).shouldBe(visible));
     }
 
-    public void registerClick() {
+    public void clickOnRegisterLink() {
         step("Нажимаем на ссылку Зарегистрироваться", () ->
                 $(byText("Зарегистрироваться")).click());
     }
@@ -62,7 +62,7 @@ public class LoginPage extends BasePage {
             $(byText("Войти в систему")).shouldBe(visible);
         });
     }
-    public void checkNotSuccessRegistered() {
+    public void checkDisplayNotSuccessRegistered() {
         step("Проверяем что не появилась надпись Добро пожаловать " +
                 "в Rococo и кнопка Войти в систему", () -> {
             $(byText("Добро пожаловать в Ro")).shouldBe(disappear);
@@ -70,12 +70,12 @@ public class LoginPage extends BasePage {
         });
     }
 
-    public void checkErrorPasswordShouldBeEqual() {
+    public void checkDisplayErrorPasswordShouldBeEqual() {
         step("Проверяем что появилась ошибка Passwords should be equal", () ->
                 $(byText("Passwords should be equal")).shouldBe(visible));
     }
 
-    public void checkErrorNotUniqueUsername(String username) {
+    public void checkDisplayErrorNotUniqueUsername(String username) {
         step("Проверяем что появилась ошибка Username `" + username + "` already exists", () ->
                 $(byText("Username `" + username + "` already exists")).shouldBe(visible));
     }
@@ -99,7 +99,7 @@ public class LoginPage extends BasePage {
                 $(byText("Сессия завершена")).shouldBe(visible));
     }
 
-    public void checkError(String errorText) {
+    public void checkDisplayError(String errorText) {
         step("Проверяем что отображается " + errorText, () ->
                 $(byText(errorText)).shouldBe(visible));
     }

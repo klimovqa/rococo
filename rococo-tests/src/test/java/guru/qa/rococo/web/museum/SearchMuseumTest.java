@@ -26,9 +26,9 @@ public class SearchMuseumTest extends BaseTest {
         mainPage.openPage();
         mainPage.goToMuseumPage();
         museumPage.checkTitleMuseum();
-        museumPage.inputSearch("Эрмит");
-        museumPage.searchClick();
-        museumPage.checkCountMuseums(1);
+        museumPage.enterMuseumIntoSearch("Эрмит");
+        museumPage.clickSearchButton();
+        museumPage.checkNumberOfMuseumsInSearchResults(1);
         museumPage.checkByTextShouldBeVisible("Проверяем что отображается именно Эрмитаж",
                 "Эрмитаж");
     }
@@ -39,9 +39,9 @@ public class SearchMuseumTest extends BaseTest {
         mainPage.openPage();
         mainPage.goToMuseumPage();
         museumPage.checkTitleMuseum();
-        museumPage.inputSearch("Ротердам");
-        museumPage.searchClick();
-        museumPage.checkCountMuseums(0);
+        museumPage.enterMuseumIntoSearch("Ротердам");
+        museumPage.clickSearchButton();
+        museumPage.checkNumberOfMuseumsInSearchResults(0);
         museumPage.checkByTextShouldBeVisible("Проверяем что отображается заглушка - Музеи не найдены",
                 "Музеи не найдены");
     }

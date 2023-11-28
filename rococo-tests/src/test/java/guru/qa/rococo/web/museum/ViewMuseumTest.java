@@ -17,7 +17,6 @@ import org.junit.jupiter.api.Test;
 @Tag("WEB")
 public class ViewMuseumTest extends BaseTest {
 
-
     private final MainPage mainPage = new MainPage();
     private final MuseumPage museumPage = new MuseumPage();
 
@@ -27,7 +26,7 @@ public class ViewMuseumTest extends BaseTest {
         mainPage.openPage();
         mainPage.goToMuseumPage();
         museumPage.checkTitleMuseum();
-        museumPage.checkCountMuseums(4);
+        museumPage.checkNumberOfMuseumsInSearchResults(4);
     }
 
     @DisplayName("Просмотр Музея")

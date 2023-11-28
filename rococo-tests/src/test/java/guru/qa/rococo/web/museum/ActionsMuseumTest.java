@@ -24,24 +24,24 @@ public class ActionsMuseumTest extends BaseTest {
     @ApiLogin(
             username = "misha",
             password = "12345")
-    void addMuseumTest() {
+    void museumShouldBeAddedTest() {
         final String MUSEUM = "Национальный музей икон Онуфрия";
         mainPage.openPage();
         mainPage.goToMuseumPage();
         museumPage.checkTitleMuseum();
         museumPage.clickAddMuseum();
-        museumPage.inputMuseumName(MUSEUM);
-        museumPage.inputMuseumCountry("Албания");
-        museumPage.inputMuseumCity("Берат");
+        museumPage.enterMuseumName(MUSEUM);
+        museumPage.enterMuseumCountry("Албания");
+        museumPage.enterMuseumCity("Берат");
         museumPage.uploadMuseumPhoto("photo/museum/museum.jpeg");
-        museumPage.inputMuseumDescription("Национальный музей икон (иконографики) Онуфрия (алб. Muzeu Ikonografik Onufri) — национальный музей Албании, расположен в помещении церкви «Сон Девы Марии», в крепости города Берат.");
-        museumPage.addedMuseum();
+        museumPage.enterMuseumDescription("Национальный музей икон (иконографики) Онуфрия (алб. Muzeu Ikonografik Onufri) — национальный музей Албании, расположен в помещении церкви «Сон Девы Марии», в крепости города Берат.");
+        museumPage.clickMuseumAddButton();
         museumPage.checkByTextShouldBeVisible("Проверяем что отображается тостер Добавлен музей: " + MUSEUM,
                 "Добавлен музей: " + MUSEUM);
 
-        museumPage.inputSearch(MUSEUM);
-        museumPage.searchClick();
-        museumPage.checkCountMuseums(1);
+        museumPage.enterMuseumIntoSearch(MUSEUM);
+        museumPage.clickSearchButton();
+        museumPage.checkNumberOfMuseumsInSearchResults(1);
         museumPage.checkByTextShouldBeVisible("Проверяем что отображается именно " + MUSEUM, MUSEUM);
     }
 
@@ -55,12 +55,12 @@ public class ActionsMuseumTest extends BaseTest {
         mainPage.openPage();
         mainPage.goToMuseumPage();
         museumPage.checkTitleMuseum();
-        museumPage.inputSearch(MUSEUM);
-        museumPage.searchClick();
+        museumPage.enterMuseumIntoSearch(MUSEUM);
+        museumPage.clickSearchButton();
         museumPage.clickMuseumCard(MUSEUM);
         museumPage.editMuseum();
-        museumPage.inputMuseumDescription(DESC);
-        museumPage.saveMuseum();
+        museumPage.enterMuseumDescription(DESC);
+        museumPage.clickSaveMuseum();
         museumPage.checkByTextShouldBeVisible("Проверяем что отображается тостер Обновлен музей: " + MUSEUM,
                 "Обновлен музей: " + MUSEUM);
         museumPage.checkByTextShouldBeVisible("Проверяем что отображается измененное описание " + DESC, DESC);

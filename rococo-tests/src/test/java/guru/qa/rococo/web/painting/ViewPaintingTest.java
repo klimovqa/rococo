@@ -26,7 +26,7 @@ public class ViewPaintingTest extends BaseTest {
         mainPage.openPage();
         mainPage.goToPaintingPage();
         paintingPage.checkTitlePainting();
-        paintingPage.checkCountPaintings(4);
+        paintingPage.checkNumberOfPaintingInSearchResults(4);
     }
 
     @DisplayName("Просмотр Картины")

@@ -34,9 +34,9 @@ public class ProfileTest extends BaseTest {
     void userLogoutTest() {
         mainPage.openPage();
         mainPage.goToLogin();
-        loginPage.inputUsername(USERNAME_LOGOUT);
-        loginPage.inputPassword(PASSWORD);
-        loginPage.clickSubmit();
+        loginPage.enterUsername(USERNAME_LOGOUT);
+        loginPage.enterPassword(PASSWORD);
+        loginPage.clickLogInButton();
         loginPage.clickAvatar(USERNAME_LOGOUT);
         loginPage.clickLogout();
         loginPage.checkSessionIsOver();
@@ -49,9 +49,9 @@ public class ProfileTest extends BaseTest {
     void fillUserProfileTest() {
         mainPage.openPage();
         mainPage.goToLogin();
-        loginPage.inputUsername(USERNAME3);
-        loginPage.inputPassword(PASSWORD);
-        loginPage.clickSubmit();
+        loginPage.enterUsername(USERNAME3);
+        loginPage.enterPassword(PASSWORD);
+        loginPage.clickLogInButton();
         loginPage.clickAvatar(USERNAME3);
         userPage.uploadAvatar();
         userPage.fillFirstname("Иван");

@@ -17,7 +17,6 @@ import org.junit.jupiter.api.Test;
 @Tag("WEB")
 public class SearchArtistTest extends BaseTest {
 
-
     private final MainPage mainPage = new MainPage();
     private final ArtistPage artistPage = new ArtistPage();
 
@@ -27,9 +26,9 @@ public class SearchArtistTest extends BaseTest {
         mainPage.openPage();
         mainPage.goToArtistPage();
         artistPage.checkTitleArtist();
-        artistPage.inputSearch("винч");
-        artistPage.searchClick();
-        artistPage.checkCountArtists(1);
+        artistPage.enterArtistIntoSearch("винч");
+        artistPage.clickSearchButton();
+        artistPage.checkNumberOfArtistsInSearchResults(1);
         artistPage.checkByTextShouldBeVisible("Проверяем что отображается именно - Леонардо да Винчи",
                 "Леонардо да Винчи");
     }
@@ -40,9 +39,9 @@ public class SearchArtistTest extends BaseTest {
         mainPage.openPage();
         mainPage.goToArtistPage();
         artistPage.checkTitleArtist();
-        artistPage.inputSearch("Васнец");
-        artistPage.searchClick();
-        artistPage.checkCountArtists(0);
+        artistPage.enterArtistIntoSearch("Васнец");
+        artistPage.clickSearchButton();
+        artistPage.checkNumberOfArtistsInSearchResults(0);
         artistPage.checkByTextShouldBeVisible("Проверяем что отображается заглушка - Художники не найдены",
                 "Художники не найдены");
     }

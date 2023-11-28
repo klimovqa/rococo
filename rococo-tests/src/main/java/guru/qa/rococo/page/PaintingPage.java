@@ -22,21 +22,21 @@ public class PaintingPage extends BasePage {
                 $(".text-3xl.m-4").shouldBe(text("Картины")));
     }
 
-    public void checkCountPaintings(int count) {
+    public void checkNumberOfPaintingInSearchResults(int count) {
         step("Проверяем количество отображаемых Картин, должно быть - " + count, () -> {
             if ($$(".w-100 li").size() != count) {
-                searchClick();
+                clickSearchButton();
             }
             $$(".w-100 li").shouldHave(size(count));
         });
     }
 
-    public void inputSearch(String name) {
+    public void enterPaintingIntoSearch(String name) {
         step("Вводим название картины - " + name, () ->
                 $("input.input").val(name));
     }
 
-    public void searchClick() {
+    public void clickSearchButton() {
         step("Нажимаем на поиск", () ->
                 $("button img[alt='Иконка поиска']").click());
     }
@@ -72,7 +72,7 @@ public class PaintingPage extends BasePage {
     }
 
 
-    public void inputPaintingName(String name) {
+    public void enterNamePainting(String name) {
         step("Вводим название картины - " + name, () ->
                 $("input[name='title']").val(name));
     }
@@ -82,7 +82,7 @@ public class PaintingPage extends BasePage {
                 $("select.select[name=museumId]").selectOptionContainingText(museum));
     }
 
-    public void inputPaintingDescription(String desc) {
+    public void enterPaintingDescription(String desc) {
         step("Вводим описание картины", () ->
                 $("textarea[name='description']").val(desc));
     }
@@ -98,7 +98,7 @@ public class PaintingPage extends BasePage {
                         .uploadFromClasspath(pathPhoto));
     }
 
-    public void addedPainting() {
+    public void clickPaintingAddButton() {
         step("Нажимаем кнопку Добавить", () ->
                 $(byText("Добавить"))
                         .click());
