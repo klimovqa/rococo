@@ -1,5 +1,4 @@
 # ![](readme/favicon.ico) Rococo
-**Дипломная работа по курсу QA.GURU Advanced**
 <hr>
 
 ## О проекте
