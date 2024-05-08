@@ -3,12 +3,14 @@ package guru.qa.rococo.data;
 import guru.qa.rococo.model.ArtistJson;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.UUID;
 
 @Entity
 @Table(name = "artist")
 @Data
+@EqualsAndHashCode
 public class ArtistEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

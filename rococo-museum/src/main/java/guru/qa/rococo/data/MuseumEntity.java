@@ -5,6 +5,7 @@ import guru.qa.rococo.model.GeoJson;
 import guru.qa.rococo.model.MuseumJson;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.modelmapper.ModelMapper;
 
 import java.util.UUID;
@@ -12,6 +13,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "museum")
 @Data
+@EqualsAndHashCode
 public class MuseumEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
