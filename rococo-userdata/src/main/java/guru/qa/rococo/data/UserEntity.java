@@ -2,12 +2,14 @@ package guru.qa.rococo.data;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.UUID;
 
 @Entity
 @Table(name = "users")
 @Data
+@EqualsAndHashCode
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

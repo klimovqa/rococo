@@ -83,7 +83,7 @@ OpenJDK Runtime Environment Homebrew (build 19.0.1)
 docker volume create rococo
 ```
 
-#### 5. Запустить БД, zookeeper и kafka используя bash
+#### 5. Запустить Frontend, БД, zookeeper и kafka используя bash
 В терминале выполнить
 ```posh
 michailklimov@Michails-MacBook-Air rococo %  bash localenv.sh 
@@ -113,7 +113,7 @@ create
 
 # Запуск Rococo локальное в IDE:
 
-#### 1. В IDE выполнить bash скрипт:
+#### 1. В IDE выполнить bash скрипт (если ранее не выполнялся):
 
 ```posh
 michailklimov@Michails-MacBook-Air rococo %  bash localenv.sh 

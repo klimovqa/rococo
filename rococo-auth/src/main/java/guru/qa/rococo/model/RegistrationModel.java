@@ -3,8 +3,14 @@ package guru.qa.rococo.model;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 @EqualPasswords
+@Getter
+@Setter
+@EqualsAndHashCode
 public class RegistrationModel {
     @NotNull(message = "Username can not be null")
     @NotEmpty(message = "Username can not be empty")
@@ -15,28 +21,4 @@ public class RegistrationModel {
     private String password;
     @NotNull(message = "Password submit can not be null")
     private String passwordSubmit;
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getPasswordSubmit() {
-        return passwordSubmit;
-    }
-
-    public void setPasswordSubmit(String passwordSubmit) {
-        this.passwordSubmit = passwordSubmit;
-    }
 }

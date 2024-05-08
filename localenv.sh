@@ -21,4 +21,5 @@ docker run --name=kafka -e KAFKA_BROKER_ID=1 \
 -p 9092:9092 -d confluentinc/cp-kafka:7.3.2
 
 cd ./rococo-client
+npm i
 npm run dev

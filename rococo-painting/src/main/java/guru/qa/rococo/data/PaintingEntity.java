@@ -3,6 +3,7 @@ package guru.qa.rococo.data;
 import guru.qa.rococo.model.PaintingJson;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.modelmapper.ModelMapper;
 
 import java.util.UUID;
@@ -10,6 +11,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "painting")
 @Data
+@EqualsAndHashCode
 public class PaintingEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

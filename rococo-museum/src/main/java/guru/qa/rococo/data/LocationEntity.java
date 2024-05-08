@@ -2,12 +2,14 @@ package guru.qa.rococo.data;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.UUID;
 
 @Entity
 @Table(name = "location")
 @Data
+@EqualsAndHashCode
 public class LocationEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
