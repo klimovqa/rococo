@@ -23,7 +23,7 @@ public class SearchMuseumTest extends BaseTest {
     @DisplayName("Поиск существующего музея")
     @Test
     void searchForMuseumThatExistsTest() {
-        mainPage.openPage();
+        mainPage.openMainPage();
         mainPage.goToMuseumPage();
         museumPage.checkTitleMuseum();
         museumPage.enterMuseumIntoSearch("Эрмит");
@@ -36,7 +36,7 @@ public class SearchMuseumTest extends BaseTest {
     @DisplayName("Поиск не существующего музея")
     @Test
     void searchForMuseumThatNotExistsTest() {
-        mainPage.openPage();
+        mainPage.openMainPage();
         mainPage.goToMuseumPage();
         museumPage.checkTitleMuseum();
         museumPage.enterMuseumIntoSearch("Ротердам");

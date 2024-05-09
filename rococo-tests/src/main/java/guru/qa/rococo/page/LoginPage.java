@@ -1,106 +1,110 @@
 package guru.qa.rococo.page;
 
+import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
+
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
-import static io.qameta.allure.Allure.step;
 
 public class LoginPage extends BasePage {
+    SelenideElement username = $("input[name='username']");
+    SelenideElement password = $("input[name='password']");
+    SelenideElement rePassword = $("input[name='passwordSubmit']");
+    SelenideElement register = $(byText("Зарегистрироваться"));
 
-    public void signIn() {
-        step("Нажимаем кнопку Войти на форме регистрации пользователя", () ->
-                $(byText("Войти")).click());
+    @Step("Нажимаем кнопку Войти на форме регистрации нового пользователя")
+    public LoginPage signIn() {
+        signIn.click();
+        return this;
     }
 
-    public void signInSystem() {
-        step("Нажимаем кнопку Войти в систему", () ->
-                $(byText("Войти в систему")).click());
+    @Step("Вводим имя пользователя - {name}")
+    public LoginPage enterUsername(String name) {
+        username.setValue(name);
+        return this;
     }
 
-    public void enterUsername(String username) {
-        step("Вводим имя пользователя - " + username, () ->
-                $("input[name='username']").setValue(username));
+    @Step("Вводим пароль - {pass}")
+    public LoginPage enterPassword(String pass) {
+        password.setValue(pass);
+        return this;
     }
 
-    public void enterPassword(String password) {
-        step("Вводим пароль - " + password, () ->
-                $("input[name='password']").setValue(password));
+    @Step("Вводим повторно пароль - {pass}")
+    public LoginPage enterRePassword(String pass) {
+        rePassword.setValue(pass);
+        return this;
     }
 
-    public void enterPasswordSubmit(String password) {
-        step("Вводим повторно пароль - " + password, () ->
-                $("input[name='passwordSubmit']").setValue(password));
+    @Step("Нажимаем Войти")
+    public MainPage clickEnterButton() {
+        signIn.click();
+        return new MainPage();
     }
 
-    public void clickLogInButton() {
-        step("Нажимаем Войти", () ->
-                $(".form__submit").click());
+    @Step("Нажимаем Войти")
+    public LoginPage clickEnterButtonFail() {
+        signIn.click();
+        return this;
     }
 
-    public void checkAvatarExist() {
-        step("Проверяем что появилась аватарка", () ->
-                $(".avatar-initials").shouldBe(exist));
+    @Step("Нажимаем Зарегистрировать")
+    public LoginPage clickRegisterButtonFail() {
+        register.click();
+        return this;
     }
 
-    public void checkDisplayInvalidUserCredentials() {
+    @Step("Проверяем что отображается ошибка \"Неверные учетные данные пользователя\"")
+    public LoginPage checkDisplayInvalidUserCredentials() {
         String error = "docker".equals(System.getProperty("test.env")) ? "Bad credentials" :
                 "Неверные учетные данные пользователя";
-        step("Проверяем что отображается ошибка \"Неверные учетные данные пользователя\"", () ->
-                $(byText(error)).shouldBe(visible));
+        $(byText(error)).shouldBe(visible);
+        return this;
     }
 
-    public void clickOnRegisterLink() {
-        step("Нажимаем на ссылку Зарегистрироваться", () ->
-                $(byText("Зарегистрироваться")).click());
+    @Step("Нажимаем на ссылку Зарегистрироваться")
+    public LoginPage clickRegisterLink() {
+        register.click();
+        return this;
     }
 
-    public void checkSuccessRegistered() {
-        step("Проверяем что появилась надпись Добро пожаловать " +
-                "в Rococo и кнопка Войти в систему", () -> {
-            $(byText("Добро пожаловать в Ro")).shouldBe(visible);
-            $(byText("coco")).shouldBe(visible);
-            $(byText("Войти в систему")).shouldBe(visible);
-        });
-    }
-    public void checkDisplayNotSuccessRegistered() {
-        step("Проверяем что не появилась надпись Добро пожаловать " +
-                "в Rococo и кнопка Войти в систему", () -> {
-            $(byText("Добро пожаловать в Ro")).shouldBe(disappear);
-            $(byText("Войти в систему")).shouldBe(disappear);
-        });
+    @Step("Нажимаем на кнопку Зарегистрироваться")
+    public LoginPage clickRegisterButton() {
+        register.click();
+        return this;
     }
 
-    public void checkDisplayErrorPasswordShouldBeEqual() {
-        step("Проверяем что появилась ошибка Passwords should be equal", () ->
-                $(byText("Passwords should be equal")).shouldBe(visible));
+    @Step("Проверяем что появилась надпись Добро пожаловать в Rococo и кнопка Войти в систему")
+    public LoginPage checkSuccessRegistered() {
+        $(byText("Добро пожаловать в Ro")).shouldBe(visible);
+        $(byText("coco")).shouldBe(visible);
+        $(byText("Войти в систему")).shouldBe(visible);
+        return this;
     }
 
-    public void checkDisplayErrorNotUniqueUsername(String username) {
-        step("Проверяем что появилась ошибка Username `" + username + "` already exists", () ->
-                $(byText("Username `" + username + "` already exists")).shouldBe(visible));
+    @Step("Проверяем что не появилась надпись Добро пожаловать в Rococo и кнопка Войти в систему")
+    public LoginPage checkDisplayNotSuccessRegistered() {
+        $(byText("Добро пожаловать в Ro")).shouldBe(disappear);
+        $(byText("Войти в систему")).shouldBe(disappear);
+        return this;
     }
 
-    public void clickAvatar(String username) {
-        step("Нажимаем на аватар и ждем пока появится МО с профилем", () -> {
-                $("figure[data-testid]").shouldBe(visible).click();
-                if (!$(byText(username)).isDisplayed()) {
-                    $("figure[data-testid]").shouldBe(visible).click();
-                }
-        });
+    @Step("Проверяем что появилась ошибка Passwords should be equal")
+    public LoginPage checkDisplayErrorPasswordShouldBeEqual() {
+        $(byText("Passwords should be equal")).shouldBe(visible);
+        return this;
     }
 
-    public void clickLogout() {
-        step("Нажимаем на кнопку Выйти", () ->
-                $(byText("Выйти")).click());
+    @Step("Проверяем что появилась ошибка Username {username} already exists")
+    public LoginPage checkDisplayErrorNotUniqueUsername(String username) {
+        $(byText("Username `" + username + "` already exists")).shouldBe(visible);
+        return this;
     }
 
-    public void checkSessionIsOver() {
-        step("Проверяем что отображается тостер Сессия завершена", () ->
-                $(byText("Сессия завершена")).shouldBe(visible));
-    }
-
-    public void checkDisplayError(String errorText) {
-        step("Проверяем что отображается " + errorText, () ->
-                $(byText(errorText)).shouldBe(visible));
+    @Step("Проверяем что отображается {errorText}")
+    public LoginPage checkDisplayError(String errorText) {
+        $(byText(errorText)).shouldBe(visible);
+        return this;
     }
 }

@@ -25,7 +25,7 @@ public class ActionsPaintingTest extends BaseTest {
             password = "12345")
     void paintingShouldBeAddedTest() {
         final String PAINTING = "Портрет старушки";
-        mainPage.openPage();
+        mainPage.openMainPage();
         mainPage.goToPaintingPage();
         paintingPage.checkTitlePainting();
         paintingPage.clickAddPainting();

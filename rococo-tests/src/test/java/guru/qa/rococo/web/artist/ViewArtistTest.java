@@ -23,7 +23,7 @@ public class ViewArtistTest extends BaseTest {
     @DisplayName("Отображение страницы Художники")
     @Test
     void checkViewedArtistPageTest() {
-        mainPage.openPage();
+        mainPage.openMainPage();
         mainPage.goToArtistPage();
         artistPage.checkTitleArtist();
         artistPage.checkNumberOfArtistsInSearchResults(9);
@@ -35,7 +35,7 @@ public class ViewArtistTest extends BaseTest {
         final String ARTIST_NAME = "Клод Моне";
         final String TOSTER = "Пока что список картин этого художника пуст.";
         final String DESCRIPTION = "Оска́р Клод Моне́ (фр. Oscar-Claude Monet 14 ноября 1840, Париж, Франция — 5 декабря 1926, Живерни, Франция) — французский живописец, один из основателей импрессионизма.";
-        mainPage.openPage();
+        mainPage.openMainPage();
         mainPage.goToArtistPage();
         artistPage.checkTitleArtist();
         artistPage.clickArtistCard(ARTIST_NAME);
@@ -51,7 +51,7 @@ public class ViewArtistTest extends BaseTest {
         final String ARTIST_NAME = "Пабло Пикассо";
         final String PAINTING = "Старый еврей с мальчиком";
         final String DESCRIPTION = "Пабло Пикассо (полное имя — Пабло Диего Хосе Франсиско де Паула Хуан Непомусенo Мария де лос Ремедиос Сиприано де ла Сантисима Тринидад Мартир Патрисио Руис-и-Пикассо) — испанский и французский художник, скульптор, график, театральный художник";
-        mainPage.openPage();
+        mainPage.openMainPage();
         mainPage.goToArtistPage();
         artistPage.checkTitleArtist();
         artistPage.clickArtistCard(ARTIST_NAME);

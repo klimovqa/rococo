@@ -2,7 +2,6 @@ package guru.qa.rococo.web.login;
 
 import guru.qa.rococo.BaseTest;
 import guru.qa.rococo.jupiter.annotation.CreateUser;
-import guru.qa.rococo.page.LoginPage;
 import guru.qa.rococo.page.MainPage;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
@@ -23,34 +22,31 @@ import java.util.stream.Stream;
 @DisplayName("[WEB] Неуспешные сценарии входа в личный кабинет")
 @Tag("WEB")
 public class NegativeLoginCasesTest extends BaseTest {
-
-    private final MainPage mainPage = new MainPage();
-    private final LoginPage loginPage = new LoginPage();
     private final static String USERNAME_NOT_UNIQ = "igor777";
     private final static String PASSWORD = "12345";
 
     @DisplayName("Вход под НЕ зарегистрированным пользователем")
     @Test
     void signInNotRegisteredUserTest() {
-        mainPage.openPage();
-        mainPage.goToLogin();
-        loginPage.enterUsername("NOT_REGISTERED_USER");
-        loginPage.enterPassword(PASSWORD);
-        loginPage.clickLogInButton();
-        loginPage.checkDisplayInvalidUserCredentials();
+        new MainPage().openMainPage()
+                .goToLogin()
+                .enterUsername("NOT_REGISTERED_USER")
+                .enterPassword(PASSWORD)
+                .clickEnterButtonFail()
+                .checkDisplayInvalidUserCredentials();
     }
 
     @DisplayName("Регистрация пользователя (пароли не совпадают)")
     @Test
     void userRegistrationPasswordDontMatchTest() {
-        mainPage.openPage();
-        mainPage.goToLogin();
-        loginPage.clickOnRegisterLink();
-        loginPage.enterUsername("USER_REG_PASSWORD_DONT_MATCH");
-        loginPage.enterPassword("12345");
-        loginPage.enterPasswordSubmit("123456");
-        loginPage.clickLogInButton();
-        loginPage.checkDisplayErrorPasswordShouldBeEqual();
+        new MainPage().openMainPage()
+                .goToLogin()
+                .clickRegisterLink()
+                .enterUsername("USER_REG_PASSWORD_DONT_MATCH")
+                .enterPassword("12345")
+                .enterRePassword("123456")
+                .clickRegisterButtonFail()
+                .checkDisplayErrorPasswordShouldBeEqual();
     }
 
     private static Stream<Arguments> provideErrorRegistration() {
@@ -62,26 +58,26 @@ public class NegativeLoginCasesTest extends BaseTest {
     @ParameterizedTest(name = "Пользователь должен получить сообщение об ошибке : {2} при вводе некорректных данных")
     @MethodSource("provideErrorRegistration")
     void userRegistrationPasswordLengthTest(String login, String password, String error) {
-        mainPage.openPage();
-        mainPage.goToLogin();
-        loginPage.clickOnRegisterLink();
-        loginPage.enterUsername(login);
-        loginPage.enterPassword(password);
-        loginPage.enterPasswordSubmit(password);
-        loginPage.clickLogInButton();
-        loginPage.checkDisplayError(error);
+        new MainPage().openMainPage()
+                .goToLogin()
+                .clickRegisterLink()
+                .enterUsername(login)
+                .enterPassword(password)
+                .enterRePassword(password)
+                .clickRegisterButtonFail()
+                .checkDisplayError(error);
     }
 
     @DisplayName("Регистрация пользователя (пароль не введен повторно)")
     @Test
     void userRegistrationPasswordWastEnteredAgainTest() {
-        mainPage.openPage();
-        mainPage.goToLogin();
-        loginPage.clickOnRegisterLink();
-        loginPage.enterUsername("USER_REG_PASSWORD_WAS_NOT_ENTERED_AGAIN");
-        loginPage.enterPassword("12345");
-        loginPage.clickLogInButton();
-        loginPage.checkDisplayNotSuccessRegistered();
+        new MainPage().openMainPage()
+                .goToLogin()
+                .clickRegisterLink()
+                .enterUsername("USER_REG_PASSWORD_WAS_NOT_ENTERED_AGAIN")
+                .enterPassword("12345")
+                .clickRegisterButtonFail()
+                .checkDisplayNotSuccessRegistered();
     }
 
     @DisplayName("Регистрация пользователя (пользователь с таким логином существует)")
@@ -89,13 +85,13 @@ public class NegativeLoginCasesTest extends BaseTest {
             password = PASSWORD)
     @Test
     void userRegistrationUserWithThisUsernameExistsTest() {
-        mainPage.openPage();
-        mainPage.goToLogin();
-        loginPage.clickOnRegisterLink();
-        loginPage.enterUsername(USERNAME_NOT_UNIQ);
-        loginPage.enterPassword(PASSWORD);
-        loginPage.enterPasswordSubmit(PASSWORD);
-        loginPage.clickLogInButton();
-        loginPage.checkDisplayErrorNotUniqueUsername(USERNAME_NOT_UNIQ);
+        new MainPage().openMainPage()
+                .goToLogin()
+                .clickRegisterLink()
+                .enterUsername(USERNAME_NOT_UNIQ)
+                .enterPassword(PASSWORD)
+                .enterRePassword(PASSWORD)
+                .clickRegisterButtonFail()
+                .checkDisplayErrorNotUniqueUsername(USERNAME_NOT_UNIQ);
     }
 }

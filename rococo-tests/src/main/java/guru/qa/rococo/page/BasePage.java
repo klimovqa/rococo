@@ -1,5 +1,6 @@
 package guru.qa.rococo.page;
 
+import com.codeborne.selenide.SelenideElement;
 import guru.qa.rococo.config.Config;
 
 import static com.codeborne.selenide.Condition.*;
@@ -9,6 +10,8 @@ import static io.qameta.allure.Allure.step;
 
 public class BasePage {
     protected static final Config CFG = Config.getInstance();
+
+    protected SelenideElement signIn = $(byText("Войти"));
 
     public void checkByTextShouldBeVisible(String step, String text) {
         step(step, () ->

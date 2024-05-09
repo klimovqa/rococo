@@ -1,39 +1,49 @@
 package guru.qa.rococo.page;
 
+import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
+
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static io.qameta.allure.Allure.step;
 
-public class UserPage extends BasePage{
+public class UserPage extends BasePage {
 
-    public void uploadAvatar() {
-        step("Загружаем аватар юзеру", () ->
-                $("input[type='file'][name]")
-                        .uploadFromClasspath("photo/avatar/avatar.png"));
+    SelenideElement exit = $(byText("Выйти"));
+    SelenideElement file = $("input[type='file'][name]");
+    SelenideElement firstName = $("input[name='firstname']");
+    SelenideElement surname = $("input[name='surname']");
+    SelenideElement updateProfile = $(byText("Обновить профиль"));
+
+    @Step("Загружаем аватар пользователю")
+    public UserPage uploadAvatar() {
+        file.shouldBe(visible)
+                .uploadFromClasspath("photo/avatar/avatar.png");
+        return this;
     }
 
-    public void fillFirstname(String firstname) {
-        step("Заполняем имя - " + firstname, () ->
-                $("input[name='firstname']").setValue(firstname));
+    @Step("Заполняем имя - {val}")
+    public UserPage enterFirstname(String val) {
+        firstName.setValue(val);
+        return this;
     }
 
-    public void fillSurname(String surname) {
-        step("Заполняем фамилию - " + surname, () ->
-                $("input[name='surname']").setValue(surname));
+    @Step("Заполняем имя - {val}")
+    public UserPage enterSurname(String val) {
+        surname.setValue(val);
+        return this;
     }
 
-    public void updateProfileClick() {
-        step("Нажимаем обновить профиль", () ->
-                $(byText("Обновить профиль")).click());
+    @Step("Нажимаем обновить профиль")
+    public MainPage clickProfileUpdateButton() {
+        updateProfile.click();
+        return new MainPage();
     }
 
-    public void checkUpdateProfile() {
-        step("Проверяем что появился тостер Профиль обновлен", () ->
-                $(byText("Профиль обновлен")).shouldBe(visible));
-    }
-    public void checkAvatarImage() {
-        step("Проверяем что аватарка загружена", () ->
-                $(".avatar-image").shouldBe(visible));
+    @Step("Нажимаем на кнопку Выйти")
+    public MainPage clickLogout() {
+        exit.click();
+        return new MainPage();
     }
 }

@@ -23,7 +23,7 @@ public class SearchArtistTest extends BaseTest {
     @DisplayName("Поиск существующего Художника")
     @Test
     void searchForArtistThatExistsTest() {
-        mainPage.openPage();
+        mainPage.openMainPage();
         mainPage.goToArtistPage();
         artistPage.checkTitleArtist();
         artistPage.enterArtistIntoSearch("винч");
@@ -36,7 +36,7 @@ public class SearchArtistTest extends BaseTest {
     @DisplayName("Поиск не существующего Художника")
     @Test
     void searchForArtistThatNotExistsTest() {
-        mainPage.openPage();
+        mainPage.openMainPage();
         mainPage.goToArtistPage();
         artistPage.checkTitleArtist();
         artistPage.enterArtistIntoSearch("Васнец");

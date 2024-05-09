@@ -23,7 +23,7 @@ public class ViewPaintingTest extends BaseTest {
     @DisplayName("Отображение страницы Картины")
     @Test
     void checkViewedPaintingPageTest() {
-        mainPage.openPage();
+        mainPage.openMainPage();
         mainPage.goToPaintingPage();
         paintingPage.checkTitlePainting();
         paintingPage.checkNumberOfPaintingInSearchResults(4);
@@ -35,7 +35,7 @@ public class ViewPaintingTest extends BaseTest {
         final String PAINTING_NAME = "Большой рейд в Кронштадте";
         final String ARTIST = "Иван Константинович Айвазовский";
         final String DESCRIPTION = "Большой рейд в Кронштадте. Айвазовский И. К. 1817, Феодосия – 1900, там же. ... Экспонировалась на выставке 1836 в ИАХ под названием \"Вид части Кронштадта с идущим на парусах стопушечным кораблем в бурную погоду\"";
-        mainPage.openPage();
+        mainPage.openMainPage();
         mainPage.goToPaintingPage();
         paintingPage.checkTitlePainting();
         paintingPage.clickPaintingCard(PAINTING_NAME);
