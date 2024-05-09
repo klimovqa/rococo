@@ -26,7 +26,7 @@ public class ActionsMuseumTest extends BaseTest {
             password = "12345")
     void museumShouldBeAddedTest() {
         final String MUSEUM = "Национальный музей икон Онуфрия";
-        mainPage.openPage();
+        mainPage.openMainPage();
         mainPage.goToMuseumPage();
         museumPage.checkTitleMuseum();
         museumPage.clickAddMuseum();
@@ -52,7 +52,7 @@ public class ActionsMuseumTest extends BaseTest {
     void editMuseumTest() {
         final String MUSEUM = "Британский музей";
         final String DESC = "Измененное описание";
-        mainPage.openPage();
+        mainPage.openMainPage();
         mainPage.goToMuseumPage();
         museumPage.checkTitleMuseum();
         museumPage.enterMuseumIntoSearch(MUSEUM);

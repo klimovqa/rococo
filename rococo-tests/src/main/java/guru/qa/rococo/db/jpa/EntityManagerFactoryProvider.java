@@ -25,6 +25,7 @@ public enum EntityManagerFactoryProvider {
             props.put("hibernate.connection.password", cfg.databasePassword());
             props.put("hibernate.connection.driver_class", "com.p6spy.engine.spy.P6SpyDriver");
             props.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
+            props.put("hibernate.show_sql", "false");
 
             EntityManagerFactory entityManagerFactory =
                     new ThreadLocalEntityManagerFactory(

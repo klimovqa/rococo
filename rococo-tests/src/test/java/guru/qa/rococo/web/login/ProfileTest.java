@@ -2,9 +2,7 @@ package guru.qa.rococo.web.login;
 
 import guru.qa.rococo.BaseTest;
 import guru.qa.rococo.jupiter.annotation.CreateUser;
-import guru.qa.rococo.page.LoginPage;
 import guru.qa.rococo.page.MainPage;
-import guru.qa.rococo.page.UserPage;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
@@ -19,10 +17,6 @@ import org.junit.jupiter.api.Test;
 @DisplayName("[WEB] Действия в личном кабинете")
 @Tag("WEB")
 public class ProfileTest extends BaseTest {
-
-    private final MainPage mainPage = new MainPage();
-    private final LoginPage loginPage = new LoginPage();
-    private final UserPage userPage = new UserPage();
     private final static String USERNAME_LOGOUT = "igor888";
     private final static String USERNAME3 = "igor333";
     private final static String PASSWORD = "12345";
@@ -32,14 +26,14 @@ public class ProfileTest extends BaseTest {
             password = PASSWORD)
     @Test
     void userLogoutTest() {
-        mainPage.openPage();
-        mainPage.goToLogin();
-        loginPage.enterUsername(USERNAME_LOGOUT);
-        loginPage.enterPassword(PASSWORD);
-        loginPage.clickLogInButton();
-        loginPage.clickAvatar(USERNAME_LOGOUT);
-        loginPage.clickLogout();
-        loginPage.checkSessionIsOver();
+        new MainPage().openMainPage()
+                .goToLogin()
+                .enterUsername(USERNAME_LOGOUT)
+                .enterPassword(PASSWORD)
+                .clickEnterButton()
+                .clickAvatar()
+                .clickLogout()
+                .checkSessionIsOver();
     }
 
     @DisplayName("Заполнение профиля у зарегистрированного пользователя")
@@ -47,17 +41,17 @@ public class ProfileTest extends BaseTest {
             password = PASSWORD)
     @Test
     void fillUserProfileTest() {
-        mainPage.openPage();
-        mainPage.goToLogin();
-        loginPage.enterUsername(USERNAME3);
-        loginPage.enterPassword(PASSWORD);
-        loginPage.clickLogInButton();
-        loginPage.clickAvatar(USERNAME3);
-        userPage.uploadAvatar();
-        userPage.fillFirstname("Иван");
-        userPage.fillSurname("Петров");
-        userPage.updateProfileClick();
-        userPage.checkUpdateProfile();
-        userPage.checkAvatarImage();
+        new MainPage().openMainPage()
+                .goToLogin()
+                .enterUsername(USERNAME3)
+                .enterPassword(PASSWORD)
+                .clickEnterButton()
+                .clickAvatar()
+                .uploadAvatar()
+                .enterFirstname("Иван")
+                .enterSurname("Петров")
+                .clickProfileUpdateButton()
+                .checkUpdateProfile()
+                .checkAvatarImage();
     }
 }

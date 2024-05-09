@@ -27,7 +27,7 @@ public class MainPageTest extends BaseTest {
     @DisplayName("Проверка главной страницы")
     @Test
     void checkMainPageTest(){
-        mainPage.openPage();
+        mainPage.openMainPage();
         mainPage.checkTitleMainPage();
         mainPage.checkByTextShouldBeVisible("Проверяем отображение надписи Картины",
                 "Картины");
@@ -46,7 +46,7 @@ public class MainPageTest extends BaseTest {
     @DisplayName("Проверка переключения темы")
     @Test
     void checkChangeThemeTest(){
-        mainPage.openPage();
+        mainPage.openMainPage();
         String theme = mainPage.getCurrentTheme();
         mainPage.checkChangeTheme(theme);
         mainPage.changeThemeClick();

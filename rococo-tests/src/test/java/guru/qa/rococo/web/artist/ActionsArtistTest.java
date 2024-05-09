@@ -28,7 +28,7 @@ public class ActionsArtistTest extends BaseTest {
             password = "12345")
     void artistShouldBeAddedTest() {
         final String ARTIST = "Рембрандт";
-        mainPage.openPage();
+        mainPage.openMainPage();
         mainPage.goToArtistPage();
         artistPage.checkTitleArtist();
         artistPage.clickAddArtist();
@@ -51,7 +51,7 @@ public class ActionsArtistTest extends BaseTest {
     void artistShouldBeEditedTest() {
         final String ARTIST = "Серов, Валентин Александрович";
         final String BIO = "Серов, Валентин Александрович.";
-        mainPage.openPage();
+        mainPage.openMainPage();
         mainPage.goToArtistPage();
         artistPage.checkTitleArtist();
         artistPage.clickArtistCard(ARTIST);
@@ -70,7 +70,7 @@ public class ActionsArtistTest extends BaseTest {
     void addingPaintingsThroughArtistFormTest() {
         final String ARTIST = "Малевич, Казимир Северинович";
         final String PAINTING = "Черный квадрат";
-        mainPage.openPage();
+        mainPage.openMainPage();
         mainPage.goToArtistPage();
         artistPage.checkTitleArtist();
         artistPage.clickArtistCard(ARTIST);

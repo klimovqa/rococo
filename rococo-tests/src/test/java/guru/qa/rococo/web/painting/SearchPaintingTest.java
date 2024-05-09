@@ -24,7 +24,7 @@ public class SearchPaintingTest extends BaseTest {
     @DisplayName("Поиск существующей картины")
     @Test
     void searchForPaintingThatExistsTest() {
-        mainPage.openPage();
+        mainPage.openMainPage();
         mainPage.goToPaintingPage();
         paintingPage.checkTitlePainting();
         paintingPage.enterPaintingIntoSearch("евре");
@@ -37,7 +37,7 @@ public class SearchPaintingTest extends BaseTest {
     @DisplayName("Поиск не существующей картины")
     @Test
     void searchForPaintingThatNotExistsTest() {
-        mainPage.openPage();
+        mainPage.openMainPage();
         mainPage.goToPaintingPage();
         paintingPage.checkTitlePainting();
         paintingPage.enterPaintingIntoSearch("Васнецлдл");
