@@ -1,7 +1,9 @@
 package guru.qa.rococo.db.logging;
 
 import io.qameta.allure.attachment.AttachmentData;
+import lombok.Getter;
 
+@Getter
 public class SqlAttachment implements AttachmentData {
 
     private final String name;
@@ -12,18 +14,5 @@ public class SqlAttachment implements AttachmentData {
         this.name = name;
         this.sql = sql;
         this.statement = statement;
-    }
-
-    public String getSql() {
-        return sql;
-    }
-
-    public String getStatement() {
-        return statement;
-    }
-
-    @Override
-    public String getName() {
-        return name;
     }
 }

@@ -9,7 +9,7 @@ import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 public class AllureSqlLogger extends StdoutLogger {
 
     private final AttachmentProcessor<AttachmentData> attachmentProcessor = new DefaultAttachmentProcessor();
-    private final AttachmentRenderer attachmentRenderer = new FreemarkerAttachmentRenderer("sql-query.ftl");
+    private final AttachmentRenderer<AttachmentData> attachmentRenderer = new FreemarkerAttachmentRenderer("sql-query.ftl");
 
     @Override
     public void logSQL(int connectionId, String now, long elapsed, Category category, String prepared, String sql, String url) {
