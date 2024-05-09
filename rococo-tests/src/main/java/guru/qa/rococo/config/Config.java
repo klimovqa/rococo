@@ -1,6 +1,13 @@
 package guru.qa.rococo.config;
 
+import java.util.Objects;
+
 public interface Config {
+
+    ClassLoader classLoader = Config.class.getClassLoader();
+    String ARTIST_PATH = "data/artist.csv";
+    String MUSEUM_PATH = "data/museum.csv";
+    String PAINTING_PATH = "data/painting.csv";
 
     static Config getInstance() {
         if ("docker".equals(System.getProperty("test.env"))) {
@@ -43,13 +50,13 @@ public interface Config {
     }
 
     default String pathArtistCsv() {
-        return "rococo-tests/src/main/resources/data/artist.csv";
+        return Objects.requireNonNull(classLoader.getResource(ARTIST_PATH)).getPath();
     }
     default String pathMuseumCsv() {
-        return "rococo-tests/src/main/resources/data/museum.csv";
+        return Objects.requireNonNull(classLoader.getResource(MUSEUM_PATH)).getPath();
     }
     default String pathPaintingCsv() {
-        return "rococo-tests/src/main/resources/data/painting.csv";
+        return Objects.requireNonNull(classLoader.getResource(PAINTING_PATH)).getPath();
     }
 
 
