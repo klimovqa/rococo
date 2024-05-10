@@ -1,7 +1,5 @@
 package guru.qa.rococo.page;
 
-
-import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 
@@ -93,9 +91,8 @@ public class MuseumPage extends BasePage {
     }
 
     @Step("Проверить что отображается картинка у музея - {name}")
-    public MuseumPage checkMuseumNameOfMuseumCard(String name) {
+    public void checkMuseumNameOfMuseumCard(String name) {
         $("img[alt='" + name + "']").shouldBe(visible);
-        return this;
     }
 
     @Step("Проверяем что в карточке отображается - {museumName}")
@@ -135,8 +132,7 @@ public class MuseumPage extends BasePage {
     }
 
     @Step("Проверяем что отображается именно {museum}")
-    public MuseumPage checkMuseumDisplay(String museum) {
+    public void checkMuseumDisplay(String museum) {
         $(byText(museum)).shouldBe(visible);
-        return this;
     }
 }

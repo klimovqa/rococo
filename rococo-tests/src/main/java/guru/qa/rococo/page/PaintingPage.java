@@ -8,7 +8,6 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
-import static io.qameta.allure.Allure.step;
 
 public class PaintingPage extends BasePage {
     SelenideElement painting = $("input[name='title']");
@@ -50,9 +49,8 @@ public class PaintingPage extends BasePage {
     }
 
     @Step("Проверить что отображается картинка у картины - {name}")
-    public PaintingPage checkPaintingNameOfPaintingCard(String name) {
+    public void checkPaintingNameOfPaintingCard(String name) {
         $("img[alt='" + name + "']").shouldBe(visible);
-        return this;
     }
 
     @Step("Проверяем что в карточке отображается - {museumName}")
@@ -123,8 +121,7 @@ public class PaintingPage extends BasePage {
 
 
     @Step("Проверяем что отображается именно {painting}")
-    public PaintingPage checkPaintingDisplay(String painting) {
+    public void checkPaintingDisplay(String painting) {
         $(byText(painting)).shouldBe(visible);
-        return this;
     }
 }

@@ -33,9 +33,8 @@ public class ArtistPage extends BasePage {
     }
 
     @Step("Проверяем количество отображаемых Художников, должно быть больше или равно - {count}")
-    public ArtistPage checkNumberOfArtistsGreaterThanOrEqual(int count) {
+    public void checkNumberOfArtistsGreaterThanOrEqual(int count) {
         resultOfSearch.shouldHave(sizeGreaterThanOrEqual(count));
-        return this;
     }
 
     @Step("Вводим название художника - {name}")
@@ -56,8 +55,8 @@ public class ArtistPage extends BasePage {
         return this;
     }
 
-    @Step("Проверить что отображается картинка у художника - {name}")
-    public ArtistPage checkArtistPhotoViewOfArtistCard(String name) {
+    @Step("Проверить что отображается картинка у художника")
+    public ArtistPage checkArtistPhotoViewOfArtistCard() {
         imageArtist.shouldBe(visible);
         return this;
     }

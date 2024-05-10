@@ -17,13 +17,13 @@ public class BrowserExtension implements BeforeAllCallback, AfterEachCallback, T
 
 
     @Override
-    public void beforeAll(ExtensionContext context) throws Exception {
+    public void beforeAll(ExtensionContext context) {
         Configuration.browser = "chrome";
         Configuration.browserSize = "1980x1024";
     }
 
     @Override
-    public void afterEach(ExtensionContext context) throws Exception {
+    public void afterEach(ExtensionContext context) {
         if (WebDriverRunner.hasWebDriverStarted()) {
             Selenide.closeWindow();
             Selenide.closeWebDriver();
