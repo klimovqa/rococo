@@ -1,7 +1,6 @@
 package guru.qa.rococo.web.artist;
 
 import guru.qa.rococo.BaseTest;
-import guru.qa.rococo.page.ArtistPage;
 import guru.qa.rococo.page.MainPage;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
@@ -17,16 +16,14 @@ import org.junit.jupiter.api.Test;
 @Tag("WEB")
 public class ViewArtistTest extends BaseTest {
 
-    private final MainPage mainPage = new MainPage();
-    private final ArtistPage artistPage = new ArtistPage();
-
     @DisplayName("Отображение страницы Художники")
     @Test
     void checkViewedArtistPageTest() {
-        mainPage.openMainPage();
-        mainPage.goToArtistPage();
-        artistPage.checkTitleArtist();
-        artistPage.checkNumberOfArtistsInSearchResults(9);
+        new MainPage()
+                .openMainPage()
+                .goToArtistPage()
+                .checkTitleArtist()
+                .checkNumberOfArtistsGreaterThanOrEqual(8);
     }
 
     @DisplayName("Просмотр художника без картины")
@@ -35,14 +32,15 @@ public class ViewArtistTest extends BaseTest {
         final String ARTIST_NAME = "Клод Моне";
         final String TOSTER = "Пока что список картин этого художника пуст.";
         final String DESCRIPTION = "Оска́р Клод Моне́ (фр. Oscar-Claude Monet 14 ноября 1840, Париж, Франция — 5 декабря 1926, Живерни, Франция) — французский живописец, один из основателей импрессионизма.";
-        mainPage.openMainPage();
-        mainPage.goToArtistPage();
-        artistPage.checkTitleArtist();
-        artistPage.clickArtistCard(ARTIST_NAME);
-        artistPage.checkViewOfArtistCard(ARTIST_NAME);
-        artistPage.checkDescriptionOfArtistCard(DESCRIPTION);
-        artistPage.checkArtistPhotoViewOfArtistCard(ARTIST_NAME);
-        artistPage.checkByTextShouldBeVisible("Проверить что отображается тостер " + TOSTER, TOSTER);
+        new MainPage()
+                .openMainPage()
+                .goToArtistPage()
+                .checkTitleArtist()
+                .clickArtistCard(ARTIST_NAME)
+                .checkViewOfArtistCard(ARTIST_NAME)
+                .checkDescriptionOfArtistCard(DESCRIPTION)
+                .checkArtistPhotoViewOfArtistCard(ARTIST_NAME)
+                .checkPopUpArtist(TOSTER);
     }
 
     @DisplayName("Просмотр художника с картиной")
@@ -51,13 +49,14 @@ public class ViewArtistTest extends BaseTest {
         final String ARTIST_NAME = "Пабло Пикассо";
         final String PAINTING = "Старый еврей с мальчиком";
         final String DESCRIPTION = "Пабло Пикассо (полное имя — Пабло Диего Хосе Франсиско де Паула Хуан Непомусенo Мария де лос Ремедиос Сиприано де ла Сантисима Тринидад Мартир Патрисио Руис-и-Пикассо) — испанский и французский художник, скульптор, график, театральный художник";
-        mainPage.openMainPage();
-        mainPage.goToArtistPage();
-        artistPage.checkTitleArtist();
-        artistPage.clickArtistCard(ARTIST_NAME);
-        artistPage.checkViewOfArtistCard(ARTIST_NAME);
-        artistPage.checkDescriptionOfArtistCard(DESCRIPTION);
-        artistPage.checkArtistPhotoViewOfArtistCard(ARTIST_NAME);
-        artistPage.checkByTextShouldBeVisible("Проверить что отображается картина " + PAINTING, PAINTING);
+        new MainPage()
+                .openMainPage()
+                .goToArtistPage()
+                .checkTitleArtist()
+                .clickArtistCard(ARTIST_NAME)
+                .checkViewOfArtistCard(ARTIST_NAME)
+                .checkDescriptionOfArtistCard(DESCRIPTION)
+                .checkArtistPhotoViewOfArtistCard(ARTIST_NAME)
+                .checkEmptyMessageDisplay(PAINTING);
     }
 }

@@ -6,12 +6,10 @@ import io.qameta.allure.Step;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
-import static io.qameta.allure.Allure.step;
 
 public class UserPage extends BasePage {
 
     SelenideElement exit = $(byText("Выйти"));
-    SelenideElement file = $("input[type='file'][name]");
     SelenideElement firstName = $("input[name='firstname']");
     SelenideElement surname = $("input[name='surname']");
     SelenideElement updateProfile = $(byText("Обновить профиль"));

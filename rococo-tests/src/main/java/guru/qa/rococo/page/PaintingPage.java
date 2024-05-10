@@ -1,107 +1,127 @@
 package guru.qa.rococo.page;
 
+import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
+
 import static com.codeborne.selenide.CollectionCondition.size;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
-import static io.qameta.allure.Allure.step;
 
 public class PaintingPage extends BasePage {
+    SelenideElement painting = $("input[name='title']");
+    SelenideElement museumSelected = $("select.select[name=museumId]");
+    SelenideElement description = $("textarea[name='description']");
+    SelenideElement titlePainting = $(".text-3xl.m-4");
+    SelenideElement viewPaintingName = $("header.card-header");
+    SelenideElement viewArtist = $("article div.text-center");
+    SelenideElement selectArtist = $("select.select[name=authorId]");
 
-    public void openPage() {
-        step("Открываем страницу Картины", () -> {
-            open(CFG.rococoFrontUrl() + "/painting");
-            $(byText("Картины")).shouldBe(visible);
-        });
+    @Step("Проверяем что отображается title - Картины")
+    public PaintingPage checkTitlePainting() {
+        titlePainting.shouldBe(text("Картины"));
+        return this;
     }
 
-
-    public void checkTitlePainting() {
-        step("Проверяем что отображается title - Картины", () ->
-                $(".text-3xl.m-4").shouldBe(text("Картины")));
+    @Step("Проверяем количество отображаемых Картин, должно быть - {count}")
+    public PaintingPage checkNumberOfPaintingInSearchResults(int count) {
+        resultOfSearch.shouldHave(size(count));
+        return this;
     }
 
-    public void checkNumberOfPaintingInSearchResults(int count) {
-        step("Проверяем количество отображаемых Картин, должно быть - " + count, () -> {
-            if ($$(".w-100 li").size() != count) {
-                clickSearchButton();
-            }
-            $$(".w-100 li").shouldHave(size(count));
-        });
+    @Step("Вводим название картины - {name}")
+    public PaintingPage enterPaintingIntoSearch(String name) {
+        inputSearch.val(name);
+        return this;
     }
 
-    public void enterPaintingIntoSearch(String name) {
-        step("Вводим название картины - " + name, () ->
-                $("input.input").val(name));
+    @Step("Нажимаем на поиск")
+    public PaintingPage clickSearchButton() {
+        searchButton.click();
+        return this;
     }
 
-    public void clickSearchButton() {
-        step("Нажимаем на поиск", () ->
-                $("button img[alt='Иконка поиска']").click());
+    @Step("Нажать на художника - {name}")
+    public PaintingPage clickPaintingCard(String name) {
+        $("img[alt='" + name + "']").click();
+        return this;
     }
 
-    public void clickPaintingCard(String name) {
-        step("Нажать на художника - " + name, () ->
-                $("img[alt='" + name + "']").click());
-    }
-
+    @Step("Проверить что отображается картинка у картины - {name}")
     public void checkPaintingNameOfPaintingCard(String name) {
-        step("Проверить что отображается картинка у картины - " + name, () ->
-                $("img[alt='" + name + "']").shouldBe(visible));
+        $("img[alt='" + name + "']").shouldBe(visible);
     }
 
-    public void checkNameOfPaintingCard(String museumName) {
-        step("Проверяем что в карточке отображается - " + museumName, () ->
-                $("header.card-header").shouldBe(text(museumName)));
+    @Step("Проверяем что в карточке отображается - {museumName}")
+    public PaintingPage checkNameOfPaintingCard(String museumName) {
+        viewPaintingName.shouldBe(text(museumName));
+        return this;
     }
 
-    public void checkArtist(String artist) {
-        step("Проверяем что в карточке отображается художник - " + artist, () ->
-                $("article div.text-center").shouldBe(text(artist)));
+    @Step("Проверяем что в карточке отображается художник - {artist}")
+    public PaintingPage checkArtist(String artist) {
+        viewArtist.shouldBe(text(artist));
+        return this;
     }
 
-    public void checkDescription(String description) {
-        step("Проверяем что в карточке отображается описание", () ->
-                $(byText(description)).shouldBe(visible));
+    @Step("Проверяем что в карточке отображается описание")
+    public PaintingPage checkDescription(String description) {
+        $(byText(description)).shouldBe(visible);
+        return this;
     }
-    
-    public void clickAddPainting() {
-        step("Нажимаем Добавить картину", () ->
-                $(byText("Добавить картину")).click());
+
+    @Step("Нажимаем Добавить картину")
+    public PaintingPage clickAddPainting() {
+        $(byText("Добавить картину")).shouldBe(visible).click();
+        return this;
+    }
+
+    @Step("Вводим название картины - {name}")
+    public PaintingPage enterNamePainting(String name) {
+        painting.shouldBe(visible).val(name);
+        return this;
+    }
+
+    @Step("Выбираем музей - {museum}")
+    public PaintingPage selectMuseum(String museum) {
+        museumSelected.selectOptionContainingText(museum);
+        return this;
+    }
+
+    @Step("Вводим описание картины")
+    public PaintingPage enterPaintingDescription(String desc) {
+        description.shouldBe(visible).val(desc);
+        return this;
+    }
+
+    @Step("Выбираем художника - {artist}")
+    public PaintingPage selectArtist(String artist) {
+        selectArtist.selectOptionContainingText(artist);
+        return this;
+    }
+
+    @Step("Загружаем фото картины")
+    public PaintingPage uploadPaintingContent(String pathPhoto) {
+        file.uploadFromClasspath(pathPhoto);
+        return this;
+    }
+
+    @Step("Нажимаем кнопку Добавить")
+    public PaintingPage clickPaintingAddButton() {
+        addButton.click();
+        return this;
+    }
+
+    @Step("Проверяем что отображается тостер Добавлена картина")
+    public PaintingPage checkPopUpPainting(String textPopUp) {
+        $(byText(textPopUp)).shouldBe(visible);
+        return this;
     }
 
 
-    public void enterNamePainting(String name) {
-        step("Вводим название картины - " + name, () ->
-                $("input[name='title']").val(name));
+    @Step("Проверяем что отображается именно {painting}")
+    public void checkPaintingDisplay(String painting) {
+        $(byText(painting)).shouldBe(visible);
     }
-
-    public void selectMuseum(String museum) {
-        step("Выбираем музей - " + museum, () ->
-                $("select.select[name=museumId]").selectOptionContainingText(museum));
-    }
-
-    public void enterPaintingDescription(String desc) {
-        step("Вводим описание картины", () ->
-                $("textarea[name='description']").val(desc));
-    }
-
-    public void selectArtist(String artist) {
-        step("Выбираем художника - " + artist, () ->
-                $("select.select[name=authorId]").selectOptionContainingText(artist));
-    }
-
-    public void uploadPaintingContent(String pathPhoto) {
-        step("Загружаем фото картины", () ->
-                $("input[type='file'][name]")
-                        .uploadFromClasspath(pathPhoto));
-    }
-
-    public void clickPaintingAddButton() {
-        step("Нажимаем кнопку Добавить", () ->
-                $(byText("Добавить"))
-                        .click());
-    }
-
 }

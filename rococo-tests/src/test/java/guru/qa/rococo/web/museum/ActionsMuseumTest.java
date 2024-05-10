@@ -3,7 +3,6 @@ package guru.qa.rococo.web.museum;
 import guru.qa.rococo.BaseTest;
 import guru.qa.rococo.jupiter.annotation.ApiLogin;
 import guru.qa.rococo.page.MainPage;
-import guru.qa.rococo.page.MuseumPage;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
@@ -17,32 +16,30 @@ import org.junit.jupiter.api.Tag;
 @Tag("WEB")
 public class ActionsMuseumTest extends BaseTest {
 
-    private final MainPage mainPage = new MainPage();
-    private final MuseumPage museumPage = new MuseumPage();
-
     @DisplayName("Добавление музея")
     @ApiLogin(
             username = "misha",
             password = "12345")
     void museumShouldBeAddedTest() {
         final String MUSEUM = "Национальный музей икон Онуфрия";
-        mainPage.openMainPage();
-        mainPage.goToMuseumPage();
-        museumPage.checkTitleMuseum();
-        museumPage.clickAddMuseum();
-        museumPage.enterMuseumName(MUSEUM);
-        museumPage.enterMuseumCountry("Албания");
-        museumPage.enterMuseumCity("Берат");
-        museumPage.uploadMuseumPhoto("photo/museum/museum.jpeg");
-        museumPage.enterMuseumDescription("Национальный музей икон (иконографики) Онуфрия (алб. Muzeu Ikonografik Onufri) — национальный музей Албании, расположен в помещении церкви «Сон Девы Марии», в крепости города Берат.");
-        museumPage.clickMuseumAddButton();
-        museumPage.checkByTextShouldBeVisible("Проверяем что отображается тостер Добавлен музей: " + MUSEUM,
-                "Добавлен музей: " + MUSEUM);
-
-        museumPage.enterMuseumIntoSearch(MUSEUM);
-        museumPage.clickSearchButton();
-        museumPage.checkNumberOfMuseumsInSearchResults(1);
-        museumPage.checkByTextShouldBeVisible("Проверяем что отображается именно " + MUSEUM, MUSEUM);
+        new MainPage()
+                .openMainPage()
+                .goToMuseumPage()
+                .checkTitleMuseum()
+                .clickAddMuseum()
+                .enterMuseumName(MUSEUM)
+                .enterMuseumCountry("Албания")
+                .enterMuseumCity("Берат")
+                .uploadMuseumPhoto("photo/museum/museum.jpeg")
+                .enterMuseumDescription("Национальный музей икон (иконографики) Онуфрия " +
+                        "(алб. Muzeu Ikonografik Onufri) — национальный музей Албании, " +
+                        "расположен в помещении церкви «Сон Девы Марии», в крепости города Берат.")
+                .clickMuseumAddButton()
+                .checkPopUpMuseum("Добавлен музей: " + MUSEUM)
+                .enterMuseumIntoSearch(MUSEUM)
+                .clickSearchButton()
+                .checkNumberOfMuseumsInSearchResults(1)
+                .checkMuseumDisplay(MUSEUM);
     }
 
     @DisplayName("Редактирование музея")
@@ -52,17 +49,17 @@ public class ActionsMuseumTest extends BaseTest {
     void editMuseumTest() {
         final String MUSEUM = "Британский музей";
         final String DESC = "Измененное описание";
-        mainPage.openMainPage();
-        mainPage.goToMuseumPage();
-        museumPage.checkTitleMuseum();
-        museumPage.enterMuseumIntoSearch(MUSEUM);
-        museumPage.clickSearchButton();
-        museumPage.clickMuseumCard(MUSEUM);
-        museumPage.editMuseum();
-        museumPage.enterMuseumDescription(DESC);
-        museumPage.clickSaveMuseum();
-        museumPage.checkByTextShouldBeVisible("Проверяем что отображается тостер Обновлен музей: " + MUSEUM,
-                "Обновлен музей: " + MUSEUM);
-        museumPage.checkByTextShouldBeVisible("Проверяем что отображается измененное описание " + DESC, DESC);
+        new MainPage()
+                .openMainPage()
+                .goToMuseumPage()
+                .checkTitleMuseum()
+                .enterMuseumIntoSearch(MUSEUM)
+                .clickSearchButton()
+                .clickMuseumCard(MUSEUM)
+                .editMuseum()
+                .enterMuseumDescription(DESC)
+                .clickSaveMuseum()
+                .checkPopUpMuseum("Обновлен музей: " + MUSEUM)
+                .checkMuseumDisplay(DESC);
     }
 }

@@ -9,18 +9,26 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
-import static io.qameta.allure.Allure.step;
 
 public class MainPage extends BasePage {
-
-    private final static String DARK = "Toggle Dark Mode";
-    private final static String LIGHT = "Toggle Light Mode";
 
     SelenideElement titleMainPage = $(byText("Ваши любимые картины и художники всегда рядом"));
     SelenideElement avatarUserEmpty = $(".avatar-initials");
     SelenideElement avatarUser = $(".avatar-image");
     SelenideElement popUpSession = $(byText("Сессия завершена"));
     SelenideElement popUpProfileUpdate = $(byText("Профиль обновлен"));
+    SelenideElement museumLink = $("header a[href='/museum']");
+    SelenideElement artistLink = $("header a[href='/artist']");
+    SelenideElement paintingLink = $("header a[href='/painting']");
+    SelenideElement lightMode = $("div[role='switch'][aria-checked='true']");
+    SelenideElement darkMode = $("div[role='switch'][aria-checked='false']");
+    SelenideElement toggle = $("div[role='switch']");
+
+    @Step("{step}")
+    public MainPage checkByTextShouldBeVisible(String step, String text) {
+        $(byText(text)).shouldBe(visible);
+        return this;
+    }
 
     @Step("Нажимаем кнопку Войти на главной странице")
     public LoginPage goToLogin() {
@@ -34,35 +42,44 @@ public class MainPage extends BasePage {
         return this;
     }
 
-    public void checkLinkOfMainPage(String link) {
-        step("Проверяем ссылку на главной странице " + link, () ->
-                $("#page-content a[href='" + link + "']")).shouldBe(exist);
+    @Step("Проверяем ссылку на главной странице {link}")
+    public MainPage checkLinkOfMainPage(String link) {
+        $("#page-content a[href='" + link + "']").shouldBe(visible);
+        return this;
     }
 
-    public void checkLinkOfMenu(String link) {
-        step("Проверяем ссылку в меню " + link, () ->
-                $("nav.list-nav a[href='" + link + "']")).shouldBe(exist);
+    @Step("Проверяем ссылку в меню {link}")
+    public MainPage checkLinkOfMenu(String link) {
+        $("nav.list-nav a[href='" + link + "']").shouldBe(visible);
+        return this;
     }
 
-    public String getCurrentTheme() {
-        String currentTheme = step("Получаем текущею тему", () ->
-                $("div[aria-checked]").attr("aria-checked"));
-        return currentTheme.equals("false") ? LIGHT : DARK;
+    @Step("Устанавливаем светлую тему, если не установлена")
+    public MainPage getDefaultTheme() {
+        toggle.should(visible);
+        if (!lightMode.exists()) {
+            toggle.click();
+            lightMode.shouldBe(exist);
+        }
+        lightMode.shouldBe(exist);
+        return this;
     }
 
-    public void changeThemeClick() {
-        step("Изменяем тему", () ->
-                $("div[role='switch']")).click();
+    @Step("Изменяем тему")
+    public MainPage changeThemeClick() {
+        toggle.click();
+        return this;
     }
 
-    public void checkChangeTheme(String themeMode) {
-        step("Проверяем что текущая тема " + (themeMode.equals(LIGHT) ? DARK : LIGHT), () ->
-                $("div[role='switch'][title='" + themeMode + "']")).shouldBe(exist);
+    @Step("Проверяем что текущая тема Dark")
+    public MainPage checkDarkTheme() {
+        darkMode.shouldBe(exist);
+        return this;
     }
-
-    public void goToMainPage() {
-        step("Переходим на главную страницу", () ->
-                $("a[href='/'")).click();
+    @Step("Проверяем что текущая тема Light")
+    public MainPage checkLightTheme() {
+        lightMode.shouldBe(exist);
+        return this;
     }
 
     @Step("Проверяем заголовок на главной странице Rococo")
@@ -83,20 +100,22 @@ public class MainPage extends BasePage {
         return new UserPage();
     }
 
-
-    public void goToMuseumPage() {
-        step("Переходим на страницу Музеи", () ->
-                $("header a[href='/museum']").click());
+    @Step("Переходим на страницу Музеи")
+    public MuseumPage goToMuseumPage() {
+        museumLink.click();
+        return new MuseumPage();
     }
 
-    public void goToPaintingPage() {
-        step("Переходим на страницу Картинки", () ->
-                $("header a[href='/painting']").click());
+    @Step("Переходим на страницу Художники")
+    public ArtistPage goToArtistPage() {
+        artistLink.click();
+        return new ArtistPage();
     }
 
-    public void goToArtistPage() {
-        step("Переходим на страницу Художники", () ->
-                $("header a[href='/artist']").click());
+    @Step("Переходим на страницу Картины")
+    public PaintingPage goToPaintingPage() {
+        paintingLink.click();
+        return new PaintingPage();
     }
 
     @Step("Проверяем что отображается тостер Сессия завершена")
