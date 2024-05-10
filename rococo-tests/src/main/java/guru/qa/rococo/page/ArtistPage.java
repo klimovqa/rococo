@@ -128,20 +128,17 @@ public class ArtistPage extends BasePage {
     }
 
     @Step("Проверяем что отображается именно {artist}")
-    public ArtistPage checkArtistDisplay(String artist) {
+    public void checkArtistDisplay(String artist) {
         $(byText(artist)).shouldBe(visible);
-        return this;
     }
 
     @Step("Проверяем что отображается именно {msg}")
-    public ArtistPage checkEmptyMessageDisplay(String msg) {
+    public void checkEmptyMessageDisplay(String msg) {
         $(byText(msg)).shouldBe(visible);
-        return this;
     }
 
     @Step("Проверяем что отображается измененное описание {bio}")
-    public ArtistPage checkDisplayedByChangeBio(String bio) {
+    public void checkDisplayedByChangeBio(String bio) {
         biographyDescription.shouldBe(text(bio));
-        return this;
     }
 }
