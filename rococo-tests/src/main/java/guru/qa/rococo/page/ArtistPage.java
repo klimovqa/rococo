@@ -88,13 +88,13 @@ public class ArtistPage extends BasePage {
 
     @Step("Вводим имя художника - {name}")
     public ArtistPage enterArtistName(String name) {
-        artistName.val(name);
+        artistName.shouldBe(visible).val(name);
         return this;
     }
 
     @Step("Вводим описание художника")
     public ArtistPage enterArtistBiography(String bio) {
-        biography.val(bio);
+        biography.shouldBe(visible).val(bio);
         return this;
     }
 

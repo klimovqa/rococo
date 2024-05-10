@@ -1,114 +1,142 @@
 package guru.qa.rococo.page;
 
 
+import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
+
 import static com.codeborne.selenide.CollectionCondition.size;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
-import static io.qameta.allure.Allure.step;
 
 public class MuseumPage extends BasePage {
+    SelenideElement titleMuseum = $(".text-3xl.m-4");
+    SelenideElement enterTitleMuseum = $("input[name='title']");
+    SelenideElement enterCity = $("input[name='city']");
+    SelenideElement descriptionMuseum = $("textarea[name='description']");
+    SelenideElement selectMuseum = $("select.select");
+    SelenideElement viewMuseumName = $("header.card-header");
+    SelenideElement viewAddress = $("article div.text-center");
+    SelenideElement addMuseumButton = $(byText("Добавить музей"));
 
-    public void openPage() {
-        step("Открываем страницу Музеи", () -> {
-            open(CFG.rococoFrontUrl() + "/museum");
-            $(byText("Музеи")).shouldBe(visible);
-        });
+    @Step("Проверяем что отображается title - Музеи")
+    public MuseumPage checkTitleMuseum() {
+        titleMuseum.shouldBe(text("Музеи"));
+        return this;
     }
 
-    public void checkTitleMuseum() {
-        step("Проверяем что отображается title - Музеи", () ->
-                $(".text-3xl.m-4").shouldBe(text("Музеи")));
+    @Step("Проверяем количество отображаемых Музеев, должно быть - {count}")
+    public MuseumPage checkNumberOfMuseumsInSearchResults(int count) {
+        resultOfSearch.shouldHave(size(count));
+        return this;
     }
 
-    public void checkNumberOfMuseumsInSearchResults(int count) {
-        step("Проверяем количество отображаемых Музеев, должно быть - " + count, () ->
-                $$(".w-100 li").shouldHave(size(count)));
+    @Step("Вводим название музея - {name}")
+    public MuseumPage enterMuseumIntoSearch(String name) {
+        inputSearch.shouldBe(visible).val(name);
+        return this;
     }
 
-    public void enterMuseumIntoSearch(String name) {
-        step("Вводим название музея - " + name, () ->
-                $("input.input").val(name));
+    @Step("Вводим название музея - {name}")
+    public MuseumPage enterMuseumName(String name) {
+        enterTitleMuseum.shouldBe(visible).val(name);
+        return this;
     }
 
-    public void enterMuseumName(String name) {
-        step("Вводим название музея - " + name, () ->
-                $("input[name='title']").val(name));
+    @Step("Вводим название города - {city}")
+    public MuseumPage enterMuseumCity(String city) {
+        enterCity.shouldBe(visible).val(city);
+        return this;
     }
 
-    public void enterMuseumCity(String city) {
-        step("Вводим название города - " + city, () ->
-                $("input[name='city']").val(city));
+    @Step("Вводим описание музея")
+    public MuseumPage enterMuseumDescription(String desc) {
+        descriptionMuseum.shouldBe(visible).val(desc);
+        return this;
     }
 
-    public void enterMuseumDescription(String desc) {
-        step("Вводим описание музея", () -> {
-            $("textarea[name='description']").shouldBe(visible);
-            $("textarea[name='description']").val(desc);
-        });
+    @Step("Выбираем страну - {country}")
+    public MuseumPage enterMuseumCountry(String country) {
+        selectMuseum.selectOptionContainingText(country);
+        return this;
     }
 
-    public void enterMuseumCountry(String country) {
-        step("Выбираем страну - " + country, () ->
-                $("select.select").selectOptionContainingText(country));
+    @Step("Загружаем фото музея")
+    public MuseumPage uploadMuseumPhoto(String pathPhoto) {
+        file.uploadFromClasspath(pathPhoto);
+        return this;
     }
 
-    public void uploadMuseumPhoto(String pathPhoto) {
-        step("Загружаем фото музея", () ->
-                $("input[type='file'][name]")
-                        .uploadFromClasspath(pathPhoto));
+    @Step("Нажимаем кнопку Добавить")
+    public MuseumPage clickMuseumAddButton() {
+        addButton.click();
+        return this;
     }
 
-    public void clickMuseumAddButton() {
-        step("Нажимаем кнопку Добавить", () ->
-                $(byText("Добавить"))
-                        .click());
+    @Step("Нажимаем кнопку Сохранить")
+    public MuseumPage clickSaveMuseum() {
+        saveButton.click();
+        return this;
     }
 
-    public void clickSaveMuseum() {
-        step("Нажимаем кнопку Сохранить", () ->
-                $(byText("Сохранить"))
-                        .click());
+    @Step("Нажимаем на поиск")
+    public MuseumPage clickSearchButton() {
+        searchButton.shouldBe(visible).click();
+        return this;
     }
 
-    public void clickSearchButton() {
-        step("Нажимаем на поиск", () ->
-                $("button img[alt='Иконка поиска']").click());
+    @Step("Нажать на музей - {name}")
+    public MuseumPage clickMuseumCard(String name) {
+        $("img[alt='" + name + "']").shouldBe(visible).click();
+        return this;
     }
 
-    public void clickMuseumCard(String name) {
+    @Step("Проверить что отображается картинка у музея - {name}")
+    public MuseumPage checkMuseumNameOfMuseumCard(String name) {
         $("img[alt='" + name + "']").shouldBe(visible);
-        step("Нажать на музей - " + name, () ->
-                $("img[alt='" + name + "']").click());
+        return this;
     }
 
-    public void checkMuseumNameOfMuseumCard(String name) {
-        step("Проверить что отображается картинка у музея - " + name, () ->
-                $("img[alt='" + name + "']").shouldBe(visible));
+    @Step("Проверяем что в карточке отображается - {museumName}")
+    public MuseumPage checkNameOfMuseumCard(String museumName) {
+        viewMuseumName.shouldBe(text(museumName));
+        return this;
     }
 
-    public void checkNameOfMuseumCard(String museumName) {
-        step("Проверяем что в карточке отображается - " + museumName, () ->
-                $("header.card-header").shouldBe(text(museumName)));
+    @Step("Проверяем что в карточке отображается адрес - {address}")
+    public MuseumPage checkAddress(String address) {
+        viewAddress.shouldBe(text(address));
+        return this;
     }
 
-    public void checkAddress(String address) {
-        step("Проверяем что в карточке отображается адрес- " + address, () ->
-                $("article div.text-center").shouldBe(text(address)));
+    @Step("Проверяем что в карточке отображается описание")
+    public MuseumPage checkDescription(String description) {
+        $(byText(description)).shouldBe(visible);
+        return this;
     }
 
-    public void checkDescription(String description) {
-        step("Проверяем что в карточке отображается описание", () ->
-                $(byText(description)).shouldBe(visible));
+    @Step("Нажимаем Добавить музей")
+    public MuseumPage clickAddMuseum() {
+        addMuseumButton.click();
+        return this;
     }
 
-    public void clickAddMuseum() {
-        step("Нажимаем Добавить музей", () ->
-                $(byText("Добавить музей")).click());
+    @Step("Нажимаем Редактировать")
+    public MuseumPage editMuseum() {
+        editButton.shouldBe(visible).click();
+        return this;
     }
 
-    public void editMuseum() {
-        step("Нажимаем Редактировать", () ->
-                $(byText("Редактировать")).click());
+    @Step("Проверяем что отображается тостер Добавлен музей")
+    public MuseumPage checkPopUpMuseum(String textPopUp) {
+        $(byText(textPopUp)).shouldBe(visible);
+        return this;
+    }
+
+    @Step("Проверяем что отображается именно {museum}")
+    public MuseumPage checkMuseumDisplay(String museum) {
+        $(byText(museum)).shouldBe(visible);
+        return this;
     }
 }

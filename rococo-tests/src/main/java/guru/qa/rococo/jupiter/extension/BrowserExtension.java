@@ -20,7 +20,6 @@ public class BrowserExtension implements BeforeAllCallback, AfterEachCallback, T
     public void beforeAll(ExtensionContext context) throws Exception {
         Configuration.browser = "chrome";
         Configuration.browserSize = "1980x1024";
-        Configuration.headless = false;
     }
 
     @Override

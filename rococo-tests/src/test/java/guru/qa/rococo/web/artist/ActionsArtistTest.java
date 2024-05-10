@@ -77,7 +77,7 @@ public class ActionsArtistTest extends BaseTest {
                 .enterPaintingDescription("«Чёрный квадрат» — картина Казимира Малевича," +
                         " созданная в 1915 году.")
                 .clickPaintingAddButton()
-                .checkPopUpAddPainting("Добавлена картина: " + PAINTING);
+                .checkPopUpPainting("Добавлена картина: " + PAINTING);
 
         new MainPage()
                 .goToPaintingPage()

@@ -14,19 +14,14 @@ public class PaintingPage extends BasePage {
     SelenideElement painting = $("input[name='title']");
     SelenideElement museumSelected = $("select.select[name=museumId]");
     SelenideElement description = $("textarea[name='description']");
+    SelenideElement titlePainting = $(".text-3xl.m-4");
+    SelenideElement viewPaintingName = $("header.card-header");
+    SelenideElement viewArtist = $("article div.text-center");
+    SelenideElement selectArtist = $("select.select[name=authorId]");
 
-    public PaintingPage openPage() {
-        step("Открываем страницу Картины", () -> {
-            open(CFG.rococoFrontUrl() + "/painting");
-            $(byText("Картины")).shouldBe(visible);
-        });
-        return this;
-    }
-
-
+    @Step("Проверяем что отображается title - Картины")
     public PaintingPage checkTitlePainting() {
-        step("Проверяем что отображается title - Картины", () ->
-                $(".text-3xl.m-4").shouldBe(text("Картины")));
+        titlePainting.shouldBe(text("Картины"));
         return this;
     }
 
@@ -48,45 +43,45 @@ public class PaintingPage extends BasePage {
         return this;
     }
 
+    @Step("Нажать на художника - {name}")
     public PaintingPage clickPaintingCard(String name) {
-        step("Нажать на художника - " + name, () ->
-                $("img[alt='" + name + "']").click());
+        $("img[alt='" + name + "']").click();
         return this;
     }
 
+    @Step("Проверить что отображается картинка у картины - {name}")
     public PaintingPage checkPaintingNameOfPaintingCard(String name) {
-        step("Проверить что отображается картинка у картины - " + name, () ->
-                $("img[alt='" + name + "']").shouldBe(visible));
+        $("img[alt='" + name + "']").shouldBe(visible);
         return this;
     }
 
+    @Step("Проверяем что в карточке отображается - {museumName}")
     public PaintingPage checkNameOfPaintingCard(String museumName) {
-        step("Проверяем что в карточке отображается - " + museumName, () ->
-                $("header.card-header").shouldBe(text(museumName)));
+        viewPaintingName.shouldBe(text(museumName));
         return this;
     }
 
+    @Step("Проверяем что в карточке отображается художник - {artist}")
     public PaintingPage checkArtist(String artist) {
-        step("Проверяем что в карточке отображается художник - " + artist, () ->
-                $("article div.text-center").shouldBe(text(artist)));
+        viewArtist.shouldBe(text(artist));
         return this;
     }
 
+    @Step("Проверяем что в карточке отображается описание")
     public PaintingPage checkDescription(String description) {
-        step("Проверяем что в карточке отображается описание", () ->
-                $(byText(description)).shouldBe(visible));
+        $(byText(description)).shouldBe(visible);
         return this;
     }
 
+    @Step("Нажимаем Добавить картину")
     public PaintingPage clickAddPainting() {
-        step("Нажимаем Добавить картину", () ->
-                $(byText("Добавить картину")).click());
+        $(byText("Добавить картину")).shouldBe(visible).click();
         return this;
     }
 
     @Step("Вводим название картины - {name}")
     public PaintingPage enterNamePainting(String name) {
-        painting.val(name);
+        painting.shouldBe(visible).val(name);
         return this;
     }
 
@@ -98,13 +93,13 @@ public class PaintingPage extends BasePage {
 
     @Step("Вводим описание картины")
     public PaintingPage enterPaintingDescription(String desc) {
-        description.val(desc);
+        description.shouldBe(visible).val(desc);
         return this;
     }
 
+    @Step("Выбираем художника - {artist}")
     public PaintingPage selectArtist(String artist) {
-        step("Выбираем художника - " + artist, () ->
-                $("select.select[name=authorId]").selectOptionContainingText(artist));
+        selectArtist.selectOptionContainingText(artist);
         return this;
     }
 
@@ -121,7 +116,7 @@ public class PaintingPage extends BasePage {
     }
 
     @Step("Проверяем что отображается тостер Добавлена картина")
-    public PaintingPage checkPopUpAddPainting(String textPopUp) {
+    public PaintingPage checkPopUpPainting(String textPopUp) {
         $(byText(textPopUp)).shouldBe(visible);
         return this;
     }
@@ -132,5 +127,4 @@ public class PaintingPage extends BasePage {
         $(byText(painting)).shouldBe(visible);
         return this;
     }
-
 }
