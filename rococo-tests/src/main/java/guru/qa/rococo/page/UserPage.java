@@ -11,7 +11,6 @@ import static io.qameta.allure.Allure.step;
 public class UserPage extends BasePage {
 
     SelenideElement exit = $(byText("Выйти"));
-    SelenideElement file = $("input[type='file'][name]");
     SelenideElement firstName = $("input[name='firstname']");
     SelenideElement surname = $("input[name='surname']");
     SelenideElement updateProfile = $(byText("Обновить профиль"));

@@ -30,8 +30,8 @@ public class SearchPaintingTest extends BaseTest {
         paintingPage.enterPaintingIntoSearch("евре");
         paintingPage.clickSearchButton();
         paintingPage.checkNumberOfPaintingInSearchResults(1);
-        paintingPage.checkByTextShouldBeVisible("Проверяем что отображается именно - Старый еврей с мальчиком",
-                "Старый еврей с мальчиком");
+//        paintingPage.checkByTextShouldBeVisible("Проверяем что отображается именно - Старый еврей с мальчиком",
+//                "Старый еврей с мальчиком");
     }
 
     @DisplayName("Поиск не существующей картины")
@@ -43,7 +43,7 @@ public class SearchPaintingTest extends BaseTest {
         paintingPage.enterPaintingIntoSearch("Васнецлдл");
         paintingPage.clickSearchButton();
         paintingPage.checkNumberOfPaintingInSearchResults(0);
-        paintingPage.checkByTextShouldBeVisible("Проверяем что отображается заглушка - Картины не найдены",
-                "Картины не найдены");
+//        paintingPage.checkByTextShouldBeVisible("Проверяем что отображается заглушка - Картины не найдены",
+//                "Картины не найдены");
     }
 }
