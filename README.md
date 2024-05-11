@@ -237,3 +237,7 @@ michailklimov@Michails-MacBook-Air rococo % bash docker-compose-tests.sh
 #### 3. Selenoid UI доступен по адресу: http://localhost:9090/
 
 #### 4. Allure доступен по адресу: http://localhost:5050/allure-docker-service/projects/rococo-tests/reports/latest/index.html
+
+
+# Результат выполнения
+![img.png](readme/allure.png)

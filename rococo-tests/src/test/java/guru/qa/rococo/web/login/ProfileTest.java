@@ -19,7 +19,7 @@ import org.junit.jupiter.api.Test;
 public class ProfileTest extends BaseTest {
     private final static String USERNAME_LOGOUT = "igor888";
     private final static String USERNAME3 = "igor333";
-    private final static String PASSWORD = "12345";
+    private final static String PASSWORD = "dqfwefqwefqwe23";
 
     @DisplayName("Разлогин пользователя")
     @CreateUser(username = USERNAME_LOGOUT,
@@ -31,6 +31,7 @@ public class ProfileTest extends BaseTest {
                 .enterUsername(USERNAME_LOGOUT)
                 .enterPassword(PASSWORD)
                 .clickEnterButton()
+                .checkAvatarVisible()
                 .clickAvatar()
                 .clickLogout()
                 .checkSessionIsOver();

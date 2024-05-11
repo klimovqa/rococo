@@ -39,7 +39,7 @@ public class ViewArtistTest extends BaseTest {
                 .clickArtistCard(ARTIST_NAME)
                 .checkViewOfArtistCard(ARTIST_NAME)
                 .checkDescriptionOfArtistCard(DESCRIPTION)
-                .checkArtistPhotoViewOfArtistCard(ARTIST_NAME)
+                .checkArtistPhotoViewOfArtistCard()
                 .checkPopUpArtist(TOSTER);
     }
 
@@ -56,7 +56,7 @@ public class ViewArtistTest extends BaseTest {
                 .clickArtistCard(ARTIST_NAME)
                 .checkViewOfArtistCard(ARTIST_NAME)
                 .checkDescriptionOfArtistCard(DESCRIPTION)
-                .checkArtistPhotoViewOfArtistCard(ARTIST_NAME)
+                .checkArtistPhotoViewOfArtistCard()
                 .checkEmptyMessageDisplay(PAINTING);
     }
 }
